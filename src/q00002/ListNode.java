@@ -1,4 +1,4 @@
-package d20200305;
+package q00002;
 
 public class ListNode {
     int val;

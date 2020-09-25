@@ -1,4 +1,4 @@
-package d20200430;
+package q00122_todo;
 
 public class RemoveDuplicate {
 
