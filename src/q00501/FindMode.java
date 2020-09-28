@@ -1,5 +1,7 @@
 package q00501;
 
+import tool.TreeNode;
+
 import java.util.*;
 
 /**
