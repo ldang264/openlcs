@@ -1,4 +1,4 @@
-package q00106;
+package q00106_todo;
 
 import tool.TreeNode;
 
