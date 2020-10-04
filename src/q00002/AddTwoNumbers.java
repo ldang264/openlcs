@@ -15,6 +15,18 @@ import tool.ListNode;
  * 输出：7 -> 0 -> 8
  * 原因：342 + 465 = 807
  *
+ * 输入：(4 -> 3) + (5 -> 6 -> 4)
+ * 输出：9 -> 9 -> 4
+ * 原因：34 + 465 = 499
+ *
+ * 输入：(3) + (5 -> 6 -> 4)
+ * 输出：8 -> 6 -> 4
+ * 原因：3 + 465 = 468
+ *
+ * 输入：(6) + (5 -> 6 -> 4)
+ * 输出：1 -> 7 -> 4
+ * 原因：6 + 465 = 471
+ *
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/add-two-numbers
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
@@ -22,6 +34,7 @@ import tool.ListNode;
 public class AddTwoNumbers {
 
     public static void main(String[] args) {
+        AddTwoNumbers atn = new AddTwoNumbers();
         ListNode l1 = new ListNode(9);
         l1.next = new ListNode(9);
         /*l1.next.next = new ListNode(3);
@@ -34,11 +47,181 @@ public class AddTwoNumbers {
         l2.next.next.next = new ListNode(5);*/
         System.out.println("l2:" + l2);
 
-        ListNode listNode = addTwoNumbers(l1, l2);
+        ListNode listNode = atn.addTwoNumbers(l1, l2);
         System.out.println("result:" + listNode);
     }
 
-    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode root = new ListNode(0);
+        boolean ten = false;
+        ListNode curr = root;
+        while (l1 != null && l2 != null) {
+            int sum = l1.val + l2.val;
+            ListNode now = new ListNode(0);
+            ten = set(now, sum, ten);
+            l1 = l1.next;
+            l2 = l2.next;
+            curr = curr.next = now;
+        }
+        while (l1 != null) {
+            int sum = l1.val;
+            ListNode now = new ListNode(0);
+            ten = set(now, sum, ten);
+            l1 = l1.next;
+            curr = curr.next = now;
+        }
+        while (l2 != null) {
+            int sum = l2.val;
+            ListNode now = new ListNode(0);
+            ten = set(now, sum, ten);
+            l2 = l2.next;
+            curr = curr.next = now;
+        }
+        if (ten) {
+            curr.next = new ListNode(1);
+        }
+        return root.next;
+    }
+
+    private boolean set (ListNode now, int sum, boolean ten) {
+        if (ten) {
+            if (sum < 9) {
+                now.val = sum + 1; // 1,2,3,4,5,6,7,8,9
+                ten = false;
+            } else if (sum > 9) {
+                now.val = sum - 9; // 0
+            }
+        } else {
+            if (sum <= 9) {
+                now.val = sum; // 0,1,2,3,4,5,6,7,8,9
+            } else {
+                now.val = sum - 10; // 0,1,2,3,4,5,6,7,8
+                ten = true;
+            }
+        }
+        /**
+        if (sum < 9) { // 0,1,2,3,4,5,6,7,8
+            if (ten) { // +1
+                now.val = sum + 1; // 1,2,3,4,5,6,7,8,9
+            } else {
+                now.val = sum; // 0,1,2,3,4,5,6,7,8
+            }
+            ten = false; // 不进位
+        } else if (sum == 9){ // 9
+            if (!ten) { // +1
+                now.val = sum; // 9
+            }
+        } else { // 10,11,12,13,14,15,16,17,18
+            if (ten) { // +1
+                now.val = sum - 9; // 0
+            } else {
+                now.val = sum - 10; // 0,1,2,3,4,5,6,7,8
+                ten = true;
+            }
+        }
+         */
+        return ten;
+    }
+
+    public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
+        ListNode root = new ListNode(0);
+        boolean ten = false;
+        ListNode curr = root;
+        while (l1 != null && l2 != null) {
+            int sum = l1.val + l2.val;
+            ListNode now = new ListNode(0);
+            if (sum < 9) { // 0,1,2,3,4,5,6,7,8
+                if (ten) { // +1
+                    now.val = sum + 1; // 1,2,3,4,5,6,7,8,9
+                } else {
+                    now.val = sum; // 0,1,2,3,4,5,6,7,8
+                }
+                ten = false; // 不进位
+            } else if (sum == 9){ // 9
+                if (ten) { // +1
+                    now.val = 0; // 0
+                } else {
+                    now.val = sum; // 9
+                    ten = false;
+                }
+            } else { // 10,11,12,13,14,15,16,17,18
+                if (ten) { // +1
+                    now.val = sum - 9; // 0
+                } else {
+                    now.val = sum - 10; // 0,1,2,3,4,5,6,7,8
+                    ten = true;
+                }
+            }
+            l1 = l1.next;
+            l2 = l2.next;
+            curr.next = now;
+            curr = curr.next;
+        }
+        while (l1 != null) {
+            ListNode now = new ListNode(0);
+            int sum = l1.val;
+            if (sum < 9) { // 0,1,2,3,4,5,6,7,8
+                if (ten) { // +1
+                    now.val = sum + 1; // 1,2,3,4,5,6,7,8,9
+                } else {
+                    now.val = sum; // 0,1,2,3,4,5,6,7,8
+                }
+                ten = false; // 不进位
+            } else if (sum == 9){ // 9
+                if (ten) { // +1
+                    now.val = 0; // 0
+                } else {
+                    now.val = sum; // 9
+                    ten = false;
+                }
+            } else { // 10,11,12,13,14,15,16,17,18
+                if (ten) { // +1
+                    now.val = sum - 9; // 0
+                } else {
+                    now.val = sum - 10; // 0,1,2,3,4,5,6,7,8
+                    ten = true;
+                }
+            }
+            l1 = l1.next;
+            curr.next = now;
+            curr = curr.next;
+        }
+        while (l2 != null) {
+            ListNode now = new ListNode(0);
+            int sum = l2.val;
+            if (sum < 9) { // 0,1,2,3,4,5,6,7,8
+                if (ten) { // +1
+                    now.val = sum + 1; // 1,2,3,4,5,6,7,8,9
+                } else {
+                    now.val = sum; // 0,1,2,3,4,5,6,7,8
+                }
+                ten = false; // 不进位
+            } else if (sum == 9){ // 9
+                if (ten) { // +1
+                    now.val = 0; // 0
+                } else {
+                    now.val = sum; // 9
+                    ten = false;
+                }
+            } else { // 10,11,12,13,14,15,16,17,18
+                if (ten) { // +1
+                    now.val = sum - 9; // 0
+                } else {
+                    now.val = sum - 10; // 0,1,2,3,4,5,6,7,8
+                    ten = true;
+                }
+            }
+            l2 = l2.next;
+            curr.next = now;
+            curr = curr.next;
+        }
+        if (ten) {
+            curr.next = new ListNode(1);
+        }
+        return root.next;
+    }
+
+    public ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
 
         StringBuilder sb1 = new StringBuilder();
         do {
