@@ -1,4 +1,4 @@
-package q00122_todo;
+package q00122;
 
 /**
  * 给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
@@ -45,28 +45,12 @@ public class MaxProfit {
     }
 
     public int maxProfit(int[] prices) {
-        int result = 0;
-
-        int size = prices.length;
-        if (size == 1) {
-            return result;
-        }
-        int min = prices[0];
-        int max = -1;
-        for (int i=1; i<size; i++) {
-            if (prices[i] < min) {
-                min = prices[i];
-            }
-            if (prices[i] > max) {
-                max = prices[i];
-            }
-
-            if (prices[i] <= max) {
-                result += max - min;
-                min = prices[i];
-                max = -1;
+        int p = 0;
+        for (int i=0; i<prices.length-1; i++) {
+            if (prices[i+1] > prices[i]) {
+                p += prices[i+1] - prices[i];
             }
         }
-        return result;
+        return p;
     }
 }
