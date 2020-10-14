@@ -43,9 +43,7 @@ public class MaxProfitInSingle {
                 int min = prices[i];
                 int max = min;
                 for (int j=i+1; j<prices.length;j++) {
-                    if (prices[j] <= min) {
-                        i = j-1;
-                    } else if (prices[j] > max) {
+                    if (prices[j] > max) {
                         max = prices[j];
                     }
                 }
