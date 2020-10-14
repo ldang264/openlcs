@@ -40,14 +40,12 @@ public class MaxProfitInSingle {
         int p = 0;
         for (int i=0; i<prices.length-1; i++) {
             if (prices[i+1] > prices[i]) {
-                int min = prices[i];
-                int max = min;
                 for (int j=i+1; j<prices.length;j++) {
-                    if (prices[j] > max) {
-                        max = prices[j];
+                    if (p < prices[j] - prices[i]) {
+                        p = prices[j] - prices[i];
                     }
                 }
-                p = Math.max(p, max - min);
+                i++;
             }
         }
         return p;
