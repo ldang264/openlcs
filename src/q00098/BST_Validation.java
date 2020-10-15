@@ -38,14 +38,8 @@ import java.util.List;
  */
 public class BST_Validation {
 
-    private boolean valid = true;
-
-    private int prev;
-
     public static void main(String[] args) {
         BST_Validation bstV = new BST_Validation();
-
-        bstV.valid = true;
         TreeNode root1 = new TreeNode(2);
         TreeNode l1 = new TreeNode(1);
         TreeNode r1 = new TreeNode(3);
@@ -53,7 +47,6 @@ public class BST_Validation {
         root1.right = r1;
         System.out.println(bstV.isValidBST(root1));
 
-        bstV.valid = true;
         TreeNode root2 = new TreeNode(5);
         TreeNode l11 = new TreeNode(1);
         TreeNode r11 = new TreeNode(4);
@@ -65,7 +58,6 @@ public class BST_Validation {
         r11.right = r21;
         System.out.println(bstV.isValidBST(root2));
 
-        bstV.valid = true;
         TreeNode root3 = new TreeNode(10);
         TreeNode l31 = new TreeNode(5);
         TreeNode r31 = new TreeNode(15);
@@ -77,7 +69,6 @@ public class BST_Validation {
         r31.right = r32;
         System.out.println(bstV.isValidBST(root3));
 
-        bstV.valid = true;
         TreeNode root4 = new TreeNode(1);
         TreeNode l41 = new TreeNode(1);
         root4.left = l41;
