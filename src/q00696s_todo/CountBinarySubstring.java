@@ -1,4 +1,4 @@
-package d20200810;
+package q00696s_todo;
 
 public class CountBinarySubstring {
     public int countBinarySubstrings(String s) {
