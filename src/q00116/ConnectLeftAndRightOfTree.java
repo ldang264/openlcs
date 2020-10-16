@@ -1,4 +1,4 @@
-package q00116_10;
+package q00116;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ import java.util.List;
 public class ConnectLeftAndRightOfTree {
 
     public static void main(String[] args) {
-        test4();
+        test3();
     }
 
     public static void test2() {
@@ -100,13 +100,13 @@ public class ConnectLeftAndRightOfTree {
         int height = (int) (Math.log(size + 1) / Math.log(2));
         int i = 0;
         int j = 0;
-        while(i <= (int) Math.pow(2, height-3)) {
-            int k = (int) Math.pow(2, j) - 1;
-            while (k + (int) Math.pow(2, j+1) < size) {
-                list.get(k).next = list.get(k + (int) Math.pow(2, j+1));
-                k += (int) Math.pow(2, j+1);
+        while(i <= (2<<height-3)/2) {
+            int k = (2<<j)/2 - 1;
+            while (k + (2<<j) < size) {
+                list.get(k).next = list.get(k + (2<<j));
+                k += (2<<j);
             }
-            i = (int) Math.pow(2, j);
+            i = (2<<j)/2;
             j++;
         }
         return root;
