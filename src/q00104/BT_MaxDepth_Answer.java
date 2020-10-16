@@ -1,9 +1,6 @@
-package q00104_todo;
+package q00104;
 
 import tool.TreeNode;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 给定一个二叉树，找出其最大深度。
@@ -28,10 +25,24 @@ import java.util.List;
  * 链接：https://leetcode-cn.com/problems/maximum-depth-of-binary-tree
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class BT_MaxDepth {
+public class BT_MaxDepth_Answer {
 
     public static void main(String[] args) {
-        BT_MaxDepth btMaxDepth = new BT_MaxDepth();
+        //test();
+        //test1();
+        test2();
+    }
+
+    public static void test() {
+        BT_MaxDepth_Answer btMaxDepth = new BT_MaxDepth_Answer();
+        TreeNode left1 = new TreeNode(9);
+        TreeNode root = new TreeNode(3);
+        root.left = left1;
+        System.out.println(btMaxDepth.maxDepth(root));
+    }
+
+    public static void test1() {
+        BT_MaxDepth_Answer btMaxDepth = new BT_MaxDepth_Answer();
         TreeNode left2 = new TreeNode(15);
         TreeNode right2 = new TreeNode(7);
         TreeNode right1 = new TreeNode(20);
@@ -44,28 +55,26 @@ public class BT_MaxDepth {
         System.out.println(btMaxDepth.maxDepth(root));
     }
 
+    public static void test2() {
+        BT_MaxDepth_Answer btMaxDepth = new BT_MaxDepth_Answer();
+        TreeNode left2 = new TreeNode(15);
+        TreeNode right1 = new TreeNode(20);
+        right1.left = left2;
+        TreeNode left1 = new TreeNode(9);
+        TreeNode root = new TreeNode(3);
+        root.left = left1;
+        root.right = right1;
+        System.out.println(btMaxDepth.maxDepth(root));
+    }
+
     public int maxDepth(TreeNode root) {
         if (root == null) {
             return 0;
-        }
-
-        if (root.left != null) {
-
-        }
-        List<Integer> list = new ArrayList<>();
-        return findSub(root);
-    }
-
-    private int findSub(TreeNode sub) {
-        int count = 0;
-        if (sub.left == null && sub.right == null) {
-            return 1;
-        }
-        if (sub.left != null) {
-            count += findSub(sub.left);
         } else {
-            count += findSub(sub.right);
+            int leftHeight = maxDepth(root.left);
+            int rightHeight = maxDepth(root.right);
+            return Math.max(leftHeight, rightHeight) + 1;
         }
-        return count;
     }
+
 }
