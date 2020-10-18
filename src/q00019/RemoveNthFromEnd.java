@@ -35,8 +35,32 @@ public class RemoveNthFromEnd {
         l1.next.next.next = new ListNode(4);
         l1.next.next.next.next = new ListNode(5);
         System.out.println(l1);
-        System.out.println(rnfe.removeNthFromEnd(l1, 1));
+        System.out.println(rnfe.removeNthFromEnd(l1, 5));
     }
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode slow = head, fast = head;
+        int index = 0;
+        while (index < n) {
+            fast = fast.next;
+            index++;
+        }
+        if (fast == null) {
+            return head.next;
+        }
+        fast = fast.next;
+        while (fast != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        slow.next = slow.next.next;
+        return head;
+    }
+
+
+
+
+
 
     /**
      * 快慢指针
@@ -44,7 +68,7 @@ public class RemoveNthFromEnd {
      * @param n
      * @return
      */
-    public ListNode removeNthFromEnd(ListNode head, int n) {
+    public ListNode removeNthFromEnd2(ListNode head, int n) {
         int i=1;
         ListNode fast = head, slow = head; //快慢指针均指向head
         while (fast != null) {
