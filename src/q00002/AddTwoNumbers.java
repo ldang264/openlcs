@@ -99,27 +99,6 @@ public class AddTwoNumbers {
                 ten = true;
             }
         }
-        /**
-        if (sum < 9) { // 0,1,2,3,4,5,6,7,8
-            if (ten) { // +1
-                now.val = sum + 1; // 1,2,3,4,5,6,7,8,9
-            } else {
-                now.val = sum; // 0,1,2,3,4,5,6,7,8
-            }
-            ten = false; // 不进位
-        } else if (sum == 9){ // 9
-            if (!ten) { // +1
-                now.val = sum; // 9
-            }
-        } else { // 10,11,12,13,14,15,16,17,18
-            if (ten) { // +1
-                now.val = sum - 9; // 0
-            } else {
-                now.val = sum - 10; // 0,1,2,3,4,5,6,7,8
-                ten = true;
-            }
-        }
-         */
         return ten;
     }
 
