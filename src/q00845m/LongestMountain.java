@@ -64,22 +64,16 @@ public class LongestMountain {
         int i = 0, j = A.length - 1;
         // 去掉开头非递增的
         while (i < A.length - 1) {
-            if (A[i] >= A[i+1]) {
-                i++;
-                continue;
-            }
-            break;
+            if (A[i] < A[i+1]) break;
+            i++;
         }
         if (i == A.length - 1) {
             return 0;
         }
         // 去掉结尾非递减的
         while (j > 0) {
-            if (A[j] >= A[j - 1]) {
-                j--;
-                continue;
-            }
-            break;
+            if (A[j] < A[j - 1]) break;
+            j--;
         }
         if (j - i < 2) {
             return 0;
