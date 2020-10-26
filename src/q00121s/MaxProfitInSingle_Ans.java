@@ -25,9 +25,9 @@ package q00121s;
  * 链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class MaxProfitInSingle {
+public class MaxProfitInSingle_Ans {
     public static void main(String[] args) {
-        MaxProfitInSingle main = new MaxProfitInSingle();
+        MaxProfitInSingle_Ans main = new MaxProfitInSingle_Ans();
         int profit1 = main.maxProfit(new int[]{7,1,5,3,6,4});
         System.out.println(profit1);
         int profit2 = main.maxProfit(new int[]{1,2,3,4,5});
@@ -37,18 +37,18 @@ public class MaxProfitInSingle {
     }
 
     public int maxProfit(int[] prices) {
-        int p = 0;
-        for (int i=0; i<prices.length-1; i++) {
-            if (prices[i+1] > prices[i]) { // 如果后一个比前一个大
-                for (int j=i+1; j<prices.length;j++) { //从i+1位置开始找
-                    int sub = prices[j] - prices[i];
-                    if (p < sub) { // 寻找差值作为最大利润
-                        p = sub;
-                    }
-                }
-                i++;
+        if(prices==null || prices.length==0) {
+            return 0;
+        }
+        int minPrice = prices[0];
+        int maxProfit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] < minPrice) {
+                minPrice = prices[i];
+            } else if(prices[i] - minPrice > maxProfit){
+                maxProfit = prices[i] - minPrice;
             }
         }
-        return p;
+        return maxProfit;
     }
 }
