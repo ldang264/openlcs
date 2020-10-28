@@ -51,6 +51,7 @@ public class UniqueOccurrences {
      */
     public boolean uniqueOccurrences(int[] arr) {
         Map<Integer, Integer> map = new HashMap<>();
+        // 数字及其出现的个数放入map
         for (int i = 0; i < arr.length; i++) {
             if (!map.containsKey(arr[i])) {
                 map.put(arr[i], 1);
@@ -58,6 +59,7 @@ public class UniqueOccurrences {
                 map.put(arr[i], map.get(arr[i]) + 1);
             }
         }
+        // 个数放入set，若已存在则说明重合
         Set<Integer> set = new HashSet<>(map.size());
         for (Integer i : map.values()) {
             if (set.contains(i)) {

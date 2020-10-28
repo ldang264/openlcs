@@ -34,20 +34,21 @@ public class LongestValidParentheses {
         char[] sa = new char[s.length()];
         int ans = 0, sum = 0, index = 0;
         for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '(') {
+            if (s.charAt(i) == '(') { // 是(则一直向数组中放
                 sa[index++] = s.charAt(i);
-            } else {
+            } else { // 否则向前找
                 for (int j = index - 1; j>=0; j--) {
-                    if (sa[j] == '(') {
+                    if (sa[j] == '(') { // 找到(则成对，将其设置为Y
                         sa[j] = 'Y';
                         break;
-                    } else if (j == 0) {
+                    } else if (j == 0) { // 没找到则将)放进数组
                         sa[index++] = ')';
                     }
                 }
 
             }
         }
+        // 计算连续个Y的最大长度
         for (int i = 0; i < index; i++) {
             if (sa[i] == 'Y') {
                 sum++;
