@@ -21,9 +21,47 @@ import tool.ListNode;
 public class LinkedList_Partition {
     public static void main(String[] args) {
         LinkedList_Partition p = new LinkedList_Partition();
+        ListNode head = new ListNode(1);
+        head.next = new ListNode(4);
+        head.next.next = new ListNode(3);
+        head.next.next.next = new ListNode(2);
+        head.next.next.next.next = new ListNode(5);
+        head.next.next.next.next.next = new ListNode(2);
+        System.out.println(p.partition(head, 3));
     }
 
+    /**
+     * 1.找到第一个>=x的节点t
+     * 2.将之后所有<x的节点以此插入到节点t之前
+     * @param head
+     * @param x
+     * @return
+     */
     public ListNode partition(ListNode head, int x) {
-        return null;
+        if (head == null) return null;
+        ListNode opt = new ListNode(0);
+        opt.next = head;
+        ListNode curr = opt, t = null;
+        while (curr.next != null) {
+            if (curr.next.val >= x) {
+                t = curr; // 找到插入点
+                break;
+            }
+            curr = curr.next;
+        }
+        if (curr.next == null || t == null) {
+            return head;
+        }
+        while (curr != null && curr.next != null) {
+            if (curr.next.val < x) {
+                ListNode cn = curr.next;
+                curr.next = cn.next;
+                ListNode tn = t.next;
+                cn.next = tn;
+                t.next = cn;
+            }
+            curr = curr.next;
+        }
+        return opt.next;
     }
 }
