@@ -34,34 +34,40 @@ public class LinkedList_RotateRight {
         test4();
     }
 
+    /**
+     * 快慢指针
+     * @param head
+     * @param k
+     * @return
+     */
     public ListNode rotateRight(ListNode head, int k) {
         if(head == null || k == 0) return head;
         int i = 0;
         ListNode slow = head, fast = head;
         while (i < k) {
-            fast = fast.next;
+            fast = fast.next; // 快指针走，一直走到k或者走到结尾
             i++;
-            if (fast == null) {
-                if (k % i == 0) {
+            if (fast == null) { // 当k>=链表长度时
+                if (k % i == 0) { // 如果k是i的整数倍，则不需要旋转
                     return head;
                 }
                 int j = 0;
-                i = k % i;
+                i = k % i; // i取余数，此后只需走一次即可
                 fast = head;
                 while (j < i) {
-                    fast = fast.next;
+                    fast = fast.next; // fast先走i步
                     j++;
                 }
                 break;
             }
         }
-        while (fast.next != null) {
+        while (fast.next != null) { // 快指针走到结束，慢指针跟着走到旋转点的前一个
             slow = slow.next;
             fast = fast.next;
         }
         ListNode nh = slow.next;
-        fast.next = head;
-        slow.next = null;
+        fast.next = head; // 快指针指向头(下一个由null变为head)
+        slow.next = null; // 慢指针的下一个剪断，变为空
         return nh;
     }
 
