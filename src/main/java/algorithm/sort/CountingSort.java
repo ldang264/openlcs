@@ -12,6 +12,11 @@ import java.util.Arrays;
  * 统计数组中每个值为i的元素出现的次数，存入数组C的第i项；
  * 对所有的计数累加（从C中的第一个元素开始，每一项和前一项相加）；
  * 反向填充目标数组：将每个元素i放在新数组的第C(i)项，每放一个元素就将C(i)减去1。
+ *
+ * 平均时间复杂度：O(n+k) 最好：O(n+k) 最坏：O(n+k)
+ * 空间复杂度：O(k)
+ * 是否占用额外内存：是
+ * 是否稳定：是
  */
 public class CountingSort {
     public static void main(String[] args) {

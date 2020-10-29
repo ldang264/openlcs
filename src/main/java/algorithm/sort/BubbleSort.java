@@ -10,6 +10,11 @@ import java.util.Arrays;
  * 对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对，这样在最后的元素应该会是最大的数；
  * 针对所有的元素重复以上的步骤，除了最后一个；
  * 重复步骤1~3，直到排序完成。
+ *
+ * 平均时间复杂度：O(n^2) 最好：O(n) 最坏：O(n^2)
+ * 空间复杂度：O(1)
+ * 是否占用额外内存：否
+ * 是否稳定：是
  */
 public class BubbleSort {
     public static void main(String[] args) {

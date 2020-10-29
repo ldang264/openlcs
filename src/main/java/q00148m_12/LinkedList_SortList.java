@@ -4,6 +4,7 @@ import algorithm.sort.HeapSort;
 import tool.ListNode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * 给你链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。
@@ -63,6 +64,54 @@ public class LinkedList_SortList {
     }
 
     public ListNode sortList(ListNode head) {
+        if (head == null) return head;
+        ArrayList<Integer> list = new ArrayList<>();
+        while(head != null) {
+            list.add(head.val);
+            head = head.next;
+        }
+        Integer[] array = list.toArray(new Integer[list.size()]);
+        array = sort(array);
+        ListNode ans = new ListNode(0);
+        ListNode curr = ans;
+        for (int i = 0; i < array.length; i++) {
+            curr.next = new ListNode(array[i]);
+            curr = curr.next;
+        }
+        return ans.next;
+    }
+
+    public static Integer[] sort(Integer[] array) {
+        if (array.length < 2) return array;
+        int mid = array.length / 2;
+        Integer[] left = Arrays.copyOfRange(array, 0, mid);
+        Integer[] right = Arrays.copyOfRange(array, mid, array.length);
+        return merge(sort(left), sort(right));
+    }
+
+    /**
+     * 归并排序——将两段排序好的数组结合成一个排序数组
+     *
+     * @param left
+     * @param right
+     * @return
+     */
+    public static Integer[] merge(Integer[] left, Integer[] right) {
+        Integer[] result = new Integer[left.length + right.length];
+        for (int index = 0, i = 0, j = 0; index < result.length; index++) {
+            if (i >= left.length)
+                result[index] = right[j++];
+            else if (j >= right.length)
+                result[index] = left[i++];
+            else if (left[i] > right[j])
+                result[index] = right[j++];
+            else
+                result[index] = left[i++];
+        }
+        return result;
+    }
+
+    public ListNode sortList1(ListNode head) {
         if (head == null) return head;
         ArrayList<Integer> list = new ArrayList<>();
         while(head != null) {
