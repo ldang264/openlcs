@@ -20,14 +20,8 @@ import tool.ListNode;
  */
 public class LinkedList_Partition {
     public static void main(String[] args) {
-        LinkedList_Partition p = new LinkedList_Partition();
-        ListNode head = new ListNode(1);
-        head.next = new ListNode(4);
-        head.next.next = new ListNode(3);
-        head.next.next.next = new ListNode(2);
-        head.next.next.next.next = new ListNode(5);
-        head.next.next.next.next.next = new ListNode(2);
-        System.out.println(p.partition(head, 3));
+        test1();
+        test2();
     }
 
     /**
@@ -49,19 +43,36 @@ public class LinkedList_Partition {
             }
             curr = curr.next;
         }
-        if (curr.next == null || t == null) {
-            return head;
-        }
-        while (curr != null && curr.next != null) {
-            if (curr.next.val < x) {
+        while (curr.next != null) {
+            if (curr.next.val < x) { // 凡是小于x的，都放到t后面，再赋值给t
                 ListNode cn = curr.next;
                 curr.next = cn.next;
                 ListNode tn = t.next;
                 cn.next = tn;
                 t.next = cn;
-            }
-            curr = curr.next;
+                t = cn;
+            } else
+                curr = curr.next;
         }
         return opt.next;
+    }
+
+    private static void test1() {
+        LinkedList_Partition p = new LinkedList_Partition();
+        ListNode head = new ListNode(3);
+        head.next = new ListNode(1);
+        head.next.next = new ListNode(2);
+        System.out.println(p.partition(head, 3));
+    }
+
+    private static void test2() {
+        LinkedList_Partition p = new LinkedList_Partition();
+        ListNode head = new ListNode(1);
+        head.next = new ListNode(4);
+        head.next.next = new ListNode(3);
+        head.next.next.next = new ListNode(2);
+        head.next.next.next.next = new ListNode(5);
+        head.next.next.next.next.next = new ListNode(2);
+        System.out.println(p.partition(head, 3));
     }
 }
