@@ -22,14 +22,21 @@ public class LengthOfLastWord {
 
     public int lengthOfLastWord(String s) {
         if (s == null || s.length() == 0) return 0;
-        s = s.trim();
         int i = s.length() - 1;
+        int left = 0;
         while (i >= 0) {
-            if (s.charAt(i) == ' ') {
-                return s.length() - 1 - i;
+            if (s.charAt(i) != ' ') {
+                left = i + 1; // 找到第一个非空格，left存储剩余长度
+                break;
             }
             i--;
         }
-        return s.length();
+        while (i >= 0) {
+            if (s.charAt(i) == ' ') {
+                return left - 1 - i; // 如果在剩余的字符串中找到了空格，则返回该长度差
+            }
+            i--;
+        }
+        return left; // 在剩余的字符串都没找到空格，返回left长度
     }
 }
