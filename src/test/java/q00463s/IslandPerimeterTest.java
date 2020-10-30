@@ -9,6 +9,8 @@ public class IslandPerimeterTest {
 
     private IslandPerimeter ip = new IslandPerimeter();
 
+    private IslandPerimeter_Ans ipa = new IslandPerimeter_Ans();
+
     @Test
     public void islandPerimeter() {
         Assert.assertEquals(4, ip.islandPerimeter(new int[][]{
@@ -27,6 +29,12 @@ public class IslandPerimeterTest {
     @Test
     public void islandPerimeter2() {
         Assert.assertEquals(16, ip.islandPerimeter(new int[][]{
+                {0,1,0,0},
+                {1,1,1,0},
+                {0,1,0,0},
+                {1,1,0,0}
+        }));
+        Assert.assertEquals(16, ipa.islandPerimeter(new int[][]{
                 {0,1,0,0},
                 {1,1,1,0},
                 {0,1,0,0},
