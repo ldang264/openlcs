@@ -136,6 +136,7 @@ public class MyHashMap<K,V> extends HashMap<K,V> {
 
     /**
      * Returns a power of two size for the given target capacity.
+     * 最终返回2的整数次幂
      */
     static final int tableSizeFor(int cap) {
         int n = cap - 1;

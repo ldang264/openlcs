@@ -1,5 +1,6 @@
-package q00140h_todo;
+package q00140h;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,8 +44,29 @@ import java.util.List;
  * 链接：https://leetcode-cn.com/problems/word-break-ii
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
+
+/**
+ * 会超时，垃圾
+ */
 public class WordBreak {
     public List<String> wordBreak(String s, List<String> wordDict) {
-        return null;
+        for (int i = wordDict.size() - 1; i >= 0; i--) {
+            if (s.indexOf(wordDict.get(i)) == -1) {
+                wordDict.remove(i);
+            }
+        }
+        List<String> ans = new ArrayList<>();
+        loop(s, "", wordDict, ans);
+        return ans;
+    }
+
+    private void loop(String subStr, String preStr, List<String> wordDict, List<String> ans) {
+        for (int i = 0; i < wordDict.size(); i++) {
+            if (subStr.equals(wordDict.get(i))) {
+                ans.add(/*preStr.isEmpty() ? subStr : */preStr + " " + subStr);
+            } else if (subStr.startsWith(wordDict.get(i))) {
+                loop(subStr.substring(wordDict.get(i).length()), /*preStr.isEmpty() ? wordDict.get(i) : */preStr + " " + wordDict.get(i), wordDict, ans);
+            }
+        }
     }
 }
