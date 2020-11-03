@@ -28,33 +28,17 @@ import tool.TreeNode;
  * 深度优先搜索
  */
 public class BT_IsSymmetric_DFS {
-
-    private boolean ans;
-
     public boolean isSymmetric(TreeNode root) {
-        ans = true;
-        if (root == null) {
-            return true;
-        }
-        if (root.left == null) return root.right == null;
-        if (root.right == null) return false;
-        return dfs(root.left, root.right);
+        return dfs(root, root);
     }
 
-    private boolean dfs(TreeNode left, TreeNode right) {
-        if (left == null && right == null) {
+    public boolean dfs(TreeNode p, TreeNode q) {
+        if (p == null && q == null) {
             return true;
         }
-        if (!ans || left == null || right == null || left.val != right.val) {
+        if (p == null || q == null) {
             return false;
         }
-        if (left.left != null && right.right != null) {
-            ans = dfs(left.left, right.right);
-        }
-        if (!ans) return false;
-        if (left.right != null && right.left != null) {
-            ans = dfs(left.right, right.left);
-        }
-        return ans;
+        return p.val == q.val && dfs(p.left, q.right) && dfs(p.right, q.left);
     }
 }
