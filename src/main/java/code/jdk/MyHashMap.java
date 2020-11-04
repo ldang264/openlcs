@@ -551,6 +551,125 @@ public class MyHashMap<K,V> extends HashMap<K,V> {
         }
     }
 
+    /**
+     * Copies all of the mappings from the specified map to this map.
+     * These mappings will replace any mappings that this map had for
+     * any of the keys currently in the specified map.
+     *
+     * @param m mappings to be stored in this map
+     * @throws NullPointerException if the specified map is null
+     */
+    public void putAll(Map<? extends K, ? extends V> m) {
+        putMapEntries(m, true);
+    }
+
+    /**
+     * Removes the mapping for the specified key from this map if present.
+     *
+     * @param  key key whose mapping is to be removed from the map
+     * @return the previous value associated with <tt>key</tt>, or
+     *         <tt>null</tt> if there was no mapping for <tt>key</tt>.
+     *         (A <tt>null</tt> return can also indicate that the map
+     *         previously associated <tt>null</tt> with <tt>key</tt>.)
+     */
+    public V remove(Object key) {
+        Node<K,V> e;
+        return (e = removeNode(hash(key), key, null, false, true)) == null ?
+                null : e.value;
+    }
+
+    /**
+     * Implements Map.remove and related methods
+     *
+     * @param hash hash for key
+     * @param key the key
+     * @param value the value to match if matchValue, else ignored
+     * @param matchValue if true only remove if value is equal
+     * @param movable if false do not move other nodes while removing
+     * @return the node, or null if none
+     */
+    final Node<K,V> removeNode(int hash, Object key, Object value,
+                                       boolean matchValue, boolean movable) {
+        Node<K,V>[] tab; Node<K,V> p; int n, index;
+        // 如果数组不为空且有数据，且槽点不为空
+        if ((tab = table) != null && (n = tab.length) > 0 &&
+                (p = tab[index = (n - 1) & hash]) != null) {
+            Node<K,V> node = null, e; K k; V v;
+            // 找目标节点
+            if (p.hash == hash &&
+                    ((k = p.key) == key || (key != null && key.equals(k))))
+                node = p;
+            else if ((e = p.next) != null) {
+                if (p instanceof TreeNode)
+                    node = ((TreeNode<K,V>)p).getTreeNode(hash, key);
+                else {
+                    do {
+                        if (e.hash == hash &&
+                                ((k = e.key) == key ||
+                                        (key != null && key.equals(k)))) {
+                            node = e;
+                            break;
+                        }
+                        p = e;
+                    } while ((e = e.next) != null);
+                }
+            }
+            if (node != null && (!matchValue || (v = node.value) == value ||
+                    (value != null && value.equals(v)))) {
+                // 如果是红黑树，则使用它的删除
+                if (node instanceof TreeNode)
+                    ((TreeNode<K,V>)node).removeTreeNode(this, tab, movable);
+                // 如果是头节点，则将它的next放入数组
+                else if (node == p)
+                    tab[index] = node.next;
+                // 此时链表中p是node的前一个节点，p的next指向node的next，node失去指向，将会被回收
+                else
+                    p.next = node.next;
+                ++modCount;
+                --size;
+                afterNodeRemoval(node);
+                return node;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Removes all of the mappings from this map.
+     * The map will be empty after this call returns.
+     */
+    public void clear() {
+        Node<K,V>[] tab;
+        modCount++;
+        if ((tab = table) != null && size > 0) {
+            size = 0;
+            for (int i = 0; i < tab.length; ++i)
+                tab[i] = null;
+        }
+    }
+
+    /**
+     * Returns <tt>true</tt> if this map maps one or more keys to the
+     * specified value.
+     *
+     * @param value value whose presence in this map is to be tested
+     * @return <tt>true</tt> if this map maps one or more keys to the
+     *         specified value
+     */
+    public boolean containsValue(Object value) {
+        Node<K,V>[] tab; V v;
+        if ((tab = table) != null && size > 0) {
+            for (int i = 0; i < tab.length; ++i) {
+                for (Node<K,V> e = tab[i]; e != null; e = e.next) {
+                    if ((v = e.value) == value ||
+                            (value != null && value.equals(v)))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /* ------------------------------------------------------------ */
     // LinkedHashMap support
 
@@ -586,6 +705,7 @@ public class MyHashMap<K,V> extends HashMap<K,V> {
     // Callbacks to allow LinkedHashMap post-actions
     void afterNodeAccess(Node<K,V> p) { }
     void afterNodeInsertion(boolean evict) { }
+    void afterNodeRemoval(Node<K,V> p) { }
 
     /* ------------------------------------------------------------ */
     // Tree bins
