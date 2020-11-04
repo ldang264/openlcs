@@ -21,13 +21,16 @@ public class ListNode_ReverseList {
         if (head == null) return null;
         ListNode op = new ListNode(0);
         op.next = head;
+        // op    head   next   nn
+        // 0  ->  1  ->  2  ->  3  ->  4  ->  5  ->  NULL
+        //       tail
         while (head.next != null) {
             ListNode next = head.next;
             ListNode nn = next.next;
             ListNode tail = op.next;
-            op.next = next;
-            next.next = tail;
-            head.next = nn;
+            op.next = next; // op指向next
+            next.next = tail; // next指向tail
+            head.next = nn; // head指向nn
         }
         return op.next;
     }
