@@ -1,5 +1,7 @@
 package q00015m_todo;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,6 +23,21 @@ import java.util.List;
  */
 public class ThreeSum {
     public List<List<Integer>> threeSum(int[] nums) {
-        return null;
+        List<List<Integer>> lists = new ArrayList<>();
+        if (nums == null || nums.length < 3) return lists;
+        Arrays.sort(nums); // [-4, -1, -1, 0, 1, 2]
+        int i = 0, j = 1, k = 2;
+        while (true) {
+            int sum = nums[i] + nums[j] + nums[k];
+            if (sum == 0) {
+                List<Integer> list = Arrays.asList(i, j, k);
+                lists.add(list);
+            } else if (sum < 0) {
+
+            } else {
+
+            }
+        }
+        //return null;
     }
 }
