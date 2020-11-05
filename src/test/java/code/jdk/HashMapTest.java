@@ -3,13 +3,11 @@ package code.jdk;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.HashMap;
-
 public class HashMapTest {
 
     @Test
     public void testHashMap() {
-        HashMap<String, String> map = new HashMap<>();
+        MyHashMap<String, String> map = new MyHashMap<>();
         map.put("name", "nancy");
         Assert.assertEquals(map.get("name"), "nancy");
         map.put("name", "daniel");

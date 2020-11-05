@@ -13,6 +13,10 @@ public class BFS {
     public void levelOrder(TreeNode tree) {
         if (tree == null)
             return;
+        bfs(tree);
+    }
+
+    private void bfs(TreeNode tree) {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(tree);//相当于把数据加入到队列尾部
         while (!queue.isEmpty()) {
@@ -25,5 +29,4 @@ public class BFS {
                 queue.add(node.right);
         }
     }
-
 }
