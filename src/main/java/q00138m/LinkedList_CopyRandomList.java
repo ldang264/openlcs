@@ -45,21 +45,20 @@ public class LinkedList_CopyRandomList {
 
     public Node copyRandomList(Node head) {
         if (head == null) return null;
-        Node hair = new Node(0);
-        Map<Node, Node> map = new HashMap<>(); // key是老的，value是新的
+        Node hair = new Node(0); // 指向深拷贝的head
+        Map<Node, Node> map = new HashMap<>();
         Node curr = head, h = hair;
         while (curr != null) {
             Node n = new Node(curr.val);
             h = h.next = n;
-            map.put(curr, n);
+            map.put(curr, n); // key是老的Node，value是新的Node
             curr = curr.next;
         }
         curr = head;
         h = hair.next;
         while (curr != null) {
             if (curr.random != null) {
-                Node node = map.get(curr.random);
-                h.random = node;
+                h.random = map.get(curr.random); // 如果有random，则去map中取出，赋给相对应的深拷贝节点
             }
             h = h.next;
             curr = curr.next;
