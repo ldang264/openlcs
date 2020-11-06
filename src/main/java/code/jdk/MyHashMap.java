@@ -532,8 +532,10 @@ public class MyHashMap<K,V> extends HashMap<K,V> {
      */
     final void treeifyBin(Node<K,V>[] tab, int hash) {
         int n, index; Node<K,V> e;
+        // 如果node数组的长度<64，则先resize扩容数组
         if (tab == null || (n = tab.length) < MIN_TREEIFY_CAPACITY)
             resize();
+        // 否则将当前node转化为红黑树
         else if ((e = tab[index = (n - 1) & hash]) != null) {
             TreeNode<K,V> hd = null, tl = null;
             do {
