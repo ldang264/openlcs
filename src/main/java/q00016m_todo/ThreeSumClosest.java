@@ -29,13 +29,13 @@ public class ThreeSumClosest {
             while (start < end) {
                 int sum = nums[i] + nums[start] + nums[end];
                 if (sum == target) {
-                    return 0;
+                    return target;
                 } else if (sum < 0) {
                     start++;
                 } else {
                     end--;
                 }
-                if (Math.abs(sum) < Math.abs(ans)) {
+                if (Math.abs(sum - target) < Math.abs(ans - target)) {
                     ans = sum;
                 }
             }
