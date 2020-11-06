@@ -46,7 +46,7 @@ import java.util.List;
 public class SortByBits {
     public int[] sortByBits(int[] arr) {
         int[] ans = new int[arr.length];
-        List<Integer>[] temp = new ArrayList[10];
+        List<Integer>[] temp = new ArrayList[14];
         for (int num : arr) {
             int c = Integer.bitCount(num);
             if (temp[c] == null) {
