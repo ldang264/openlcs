@@ -21,13 +21,13 @@ public class PartitionLabels_Ans {
         int[] last = new int[26];
         int length = S.length();
         for (int i = 0; i < length; i++) {
-            last[S.charAt(i) - 'a'] = i;
+            last[S.charAt(i) - 'a'] = i; // 将所有字符出现的最大下标放入数组
         }
-        List<Integer> partition = new ArrayList<Integer>();
+        List<Integer> partition = new ArrayList<>();
         int start = 0, end = 0;
         for (int i = 0; i < length; i++) {
-            end = Math.max(end, last[S.charAt(i) - 'a']);
-            if (i == end) {
+            end = Math.max(end, last[S.charAt(i) - 'a']); // end是到i之前的最大数字
+            if (i == end) { // 如果已经搜索到i，则计算一下这个区间的长度
                 partition.add(end - start + 1);
                 start = end + 1;
             }
