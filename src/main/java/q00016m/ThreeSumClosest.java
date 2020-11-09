@@ -1,4 +1,4 @@
-package q00016m_todo;
+package q00016m;
 
 import java.util.Arrays;
 
@@ -21,21 +21,21 @@ import java.util.Arrays;
  */
 public class ThreeSumClosest {
     public int threeSumClosest(int[] nums, int target) {
-        int ans = Integer.MAX_VALUE;
+        int ans = target < 0 ? Integer.MAX_VALUE + target : Integer.MAX_VALUE;
         Arrays.sort(nums);
         for (int i = 0; i < nums.length - 2; i++) {
-            if (i > 0 && nums[i] == nums[i - 1]) continue;
             int start = i + 1, end = nums.length - 1;
             while (start < end) {
                 int sum = nums[i] + nums[start] + nums[end];
-                if (sum == target) {
+                if (sum == target) { // 相等则直接返回
                     return target;
-                } else if (sum < 0) {
+                }
+                if (sum < target) { // 如果比目标值小，则右移
                     start++;
-                } else {
+                } else { // 否则左移
                     end--;
                 }
-                if (Math.abs(sum - target) < Math.abs(ans - target)) {
+                if (Math.abs(sum - target) < Math.abs(ans - target)) { // 如果差值更小，则取代
                     ans = sum;
                 }
             }
