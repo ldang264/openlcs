@@ -19,6 +19,6 @@ public class AddDigits {
     public int addDigits(int num) {
         if (num == 0) return 0; // 0对应0
         int ans = num % 9;
-        return ans == 0 ? 9 : ans; // 9的倍数对应9，其他都取余
+        return ans == 0 ? 9 : ans; // 9的倍数对应9，其他都取模
     }
 }
