@@ -1,4 +1,4 @@
-package q00236m_todo;
+package q00236m;
 
 import org.junit.Assert;
 import org.junit.Test;

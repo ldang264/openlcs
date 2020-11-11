@@ -1,6 +1,11 @@
-package q00236m_todo;
+package q00236m;
 
 import tool.TreeNode;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先。
@@ -27,32 +32,33 @@ import tool.TreeNode;
  */
 public class LowestCommonAncestor {
 
-    private boolean findP = false;
-
-    private boolean findQ = false;
-
-    private TreeNode ans;
+    private Map<Integer, TreeNode> map;
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        dfs(root, p, q);
-        return ans;
+        map = new HashMap<>(); // key是节点的值，value是父节点
+        dfs(root);
+        Set<TreeNode> visitedNodes = new HashSet<>();
+        while (p != null) {
+            visitedNodes.add(p); // 将p到根的路径都加入到visitedNodes
+            p = map.get(p.val);
+        }
+        while (q != null) {
+            if (visitedNodes.contains(q)) { // 在遍历q到根的路径过程中，如果发现包括了q，则q就是最近的公共祖先
+                return q;
+            }
+            q = map.get(q.val);
+        }
+        return null;
     }
 
-    private void dfs(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == p) {
-            findP = true;
-        } else if (root == q) {
-            findQ = true;
-        }
-        if (findP && findQ) {
-            ans = root;
-            return;
-        }
+    private void dfs(TreeNode root) {
         if (root.left != null) {
-            dfs(root.left, p, q);
+            map.put(root.left.val, root);
+            dfs(root.left);
         }
         if (root.right != null) {
-            dfs(root.right, p, q);
+            map.put(root.right.val, root);
+            dfs(root.right);
         }
     }
 }
