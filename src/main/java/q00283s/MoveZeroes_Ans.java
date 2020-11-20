@@ -23,7 +23,7 @@ public class MoveZeroes_Ans {
      * @param nums
      */
     public void moveZeroes(int[] nums) {
-        int l =0,  r = 0;
+        int l = 0,  r = 0;
         while (r < nums.length) {
             if (nums[r] != 0) {
                 swap(nums, l, r);

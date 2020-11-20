@@ -21,20 +21,20 @@ import java.util.Arrays;
  */
 public class SelectionSort {
     public static void main(String[] args) {
-        Integer[] nums = new Integer[]{5, 4, 4, 3, 2, 2, 1};
+        int[] nums = new int[]{5, 4, 4, 3, 2, 2, 1};
         System.out.println(Arrays.toString(nums));
         System.out.println(Arrays.toString(sort(nums)));
     }
 
-    public static <T> Comparable<T>[] sort(Comparable<T>[] array) {
+    public static int[] sort(int[] array) {
         if (array.length == 0) return array;
         for (int i = 0; i < array.length; i++) {
             int minIndex = i;
             for (int j = i; j < array.length; j++) {
-                if (array[j].compareTo((T) array[minIndex]) < 0) //找到最小的数
+                if (array[j] < array[minIndex]) //找到最小的数
                     minIndex = j; //将最小数的索引保存
             }
-            Comparable<T> temp = array[minIndex];
+            int temp = array[minIndex];
             array[minIndex] = array[i];
             array[i] = temp;
         }

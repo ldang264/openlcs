@@ -19,16 +19,16 @@ import java.util.Arrays;
  */
 public class MergeSort {
     public static void main(String[] args) {
-        Integer[] nums = new Integer[]{5, 4, 4, 3, 2, 2, 1};
+        int[] nums = new int[]{5, 4, 4, 3, 2, 2, 1};
         System.out.println(Arrays.toString(nums));
         System.out.println(Arrays.toString(sort(nums)));
     }
 
-    public static <T> Comparable<T>[] sort(Comparable<T>[] array) {
+    public static int[] sort(int[] array) {
         if (array.length < 2) return array;
         int mid = array.length / 2;
-        Comparable<T>[] left = Arrays.copyOfRange(array, 0, mid);
-        Comparable<T>[] right = Arrays.copyOfRange(array, mid, array.length);
+        int[] left = Arrays.copyOfRange(array, 0, mid);
+        int[] right = Arrays.copyOfRange(array, mid, array.length);
         return merge(sort(left), sort(right));
     }
     /**
@@ -38,14 +38,14 @@ public class MergeSort {
      * @param right
      * @return
      */
-    public static <T> Comparable<T>[] merge(Comparable<T>[] left, Comparable<T>[] right) {
-        Comparable<T>[] result = new Comparable[left.length + right.length];
+    public static int[] merge(int[] left, int[] right) {
+        int[] result = new int[left.length + right.length];
         for (int index = 0, i = 0, j = 0; index < result.length; index++) {
             if (i >= left.length)
                 result[index] = right[j++];
             else if (j >= right.length)
                 result[index] = left[i++];
-            else if (left[i].compareTo((T) right[j]) > 0)
+            else if (left[i] > right[j])
                 result[index] = right[j++];
             else
                 result[index] = left[i++];

@@ -18,17 +18,17 @@ import java.util.Arrays;
  */
 public class BubbleSort {
     public static void main(String[] args) {
-        Integer[] nums = new Integer[]{5, 4, 4, 3, 2, 2, 1};
+        int[] nums = new int[]{5, 4, 4, 3, 2, 2, 1};
         System.out.println(Arrays.toString(nums));
         System.out.println(Arrays.toString(sort(nums)));
     }
 
-    public static <T> Comparable<T>[] sort(Comparable<T>[] array) {
+    public static int[] sort(int[] array) {
         if (array.length == 0) return array;
         for (int i = 0; i < array.length; i++)
             for (int j = 0; j < array.length - 1 - i; j++)
-                if (array[j + 1].compareTo((T) array[j]) < 0) {
-                    Comparable<T> temp = array[j + 1];
+                if (array[j + 1] < array[j]) {
+                    int temp = array[j + 1];
                     array[j + 1] = array[j];
                     array[j] = temp;
                 }

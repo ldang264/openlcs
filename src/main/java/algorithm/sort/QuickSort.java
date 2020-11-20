@@ -21,12 +21,12 @@ import java.util.Arrays;
 public class QuickSort {
 
     public static void main(String[] args) {
-        Integer[] nums = new Integer[]{5, 4, 4, 3, 2, 2, 1};
+        int[] nums = new int[]{5, 4, 4, 3, 2, 2, 1};
         System.out.println(Arrays.toString(nums));
         System.out.println(Arrays.toString(sort(nums, 0, nums.length - 1)));
     }
 
-    public static <T> Comparable<T>[] sort(Comparable<T>[] array, int start, int end) {
+    public static int[] sort(int[] array, int start, int end) {
         if (start < 0 || end >= array.length || start > end) return null;
         int smallIndex = partition(array, start, end);
         if (smallIndex > start)
@@ -42,12 +42,12 @@ public class QuickSort {
      * @param end
      * @return
      */
-    public static <T> int partition(Comparable<T>[] array, int start, int end) {
+    public static int partition(int[] array, int start, int end) {
         int pivot = (int) (start + Math.random() * (end - start + 1));
         int smallIndex = start - 1;
         swap(array, pivot, end);
         for (int i = start; i <= end; i++)
-            if (array[i].compareTo((T) array[end]) <= 0) {
+            if (array[i] <= array[end]) {
                 smallIndex++;
                 if (i > smallIndex)
                     swap(array, i, smallIndex);
@@ -61,8 +61,8 @@ public class QuickSort {
      * @param i
      * @param j
      */
-    public static <T> void swap(Comparable<T>[] array, int i, int j) {
-        Comparable<T> temp = array[i];
+    public static void swap(int[] array, int i, int j) {
+        int temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }
