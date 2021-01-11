@@ -1,6 +1,5 @@
 package q00148m_12;
 
-import algorithm.sort.HeapSort;
 import tool.ListNode;
 
 import java.util.ArrayList;
@@ -111,6 +110,7 @@ public class LinkedList_SortList {
         return result;
     }
 
+    /*
     public ListNode sortList1(ListNode head) {
         if (head == null) return head;
         ArrayList<Integer> list = new ArrayList<>();
@@ -128,4 +128,5 @@ public class LinkedList_SortList {
         }
         return ans.next;
     }
+    */
 }
