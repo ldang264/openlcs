@@ -1,7 +1,5 @@
 package algorithm.sort;
 
-import java.util.Arrays;
-
 /**
  * 快速排序的基本思想：通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分的关键字小，则可分别对这两部分记录继续进行排序，以达到整个序列有序。
  *
@@ -20,39 +18,45 @@ import java.util.Arrays;
  */
 public class QuickSort {
 
-    public static void main(String[] args) {
-        int[] nums = new int[]{5, 4, 4, 3, 2, 2, 1};
-        System.out.println(Arrays.toString(nums));
-        System.out.println(Arrays.toString(sort(nums, 0, nums.length - 1)));
-    }
-
     public static int[] sort(int[] array, int start, int end) {
         if (start < 0 || end >= array.length || start > end) return null;
-        int smallIndex = partition(array, start, end);
-        if (smallIndex > start)
-            sort(array, start, smallIndex - 1);
-        if (smallIndex < end)
-            sort(array, smallIndex + 1, end);
+        // 对数组array[start...end]进行分割，返回中轴元素下标
+        int j = partition(array, start, end);
+        // 对左子数组array[start...j-1]进行快速排序
+        sort(array, start, j - 1);
+        // 对右子数组array[j+1...high]进行快速排序
+        sort(array, j + 1, end);
         return array;
     }
+
     /**
      * 快速排序算法——partition
+     * 选出中轴元素，将数组array[start...end]分割为3部分
+     * array[start...j-1] <= array[j] <= array[j+1...end]
      * @param array
      * @param start
      * @param end
-     * @return
+     * @return 中轴元素的下标
      */
-    public static int partition(int[] array, int start, int end) {
-        int pivot = (int) (start + Math.random() * (end - start + 1));
-        int smallIndex = start - 1;
-        swap(array, pivot, end);
-        for (int i = start; i <= end; i++)
-            if (array[i] <= array[end]) {
-                smallIndex++;
-                if (i > smallIndex)
-                    swap(array, i, smallIndex);
+    private static int partition(int[] array, int start, int end) {
+        int i = start, j = end + 1; // 左右扫描指针
+        // i、j扫描数组
+        while (true) {
+            // 遇到大于等于中轴元素时跳出
+            while (array[++i] < array[start]) {
+                if (i == end) break;
             }
-        return smallIndex;
+            // 遇到小于等于中轴元素时跳出
+            while (array[--j] > array[start]) {
+                if (j == start) break;
+            }
+            // 如果i>=j跳出
+            if (i >= j) break;
+            // 如果i<j则交换i与j，继续扫描
+            swap(array, i, j);
+        }
+        swap(array, start, j); // 将中轴元素交换到排好序的位置，分割结束
+        return j;
     }
 
     /**
@@ -61,7 +65,7 @@ public class QuickSort {
      * @param i
      * @param j
      */
-    public static void swap(int[] array, int i, int j) {
+    private static void swap(int[] array, int i, int j) {
         int temp = array[i];
         array[i] = array[j];
         array[j] = temp;
