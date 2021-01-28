@@ -34,6 +34,7 @@ public class Q00064m {
         for (int i = 1; i < grid.length ; i++) {
             for (int j = 1; j < grid[0].length; j++) {
                 dp[i][j] = grid[i][j] + Math.min(dp[i - 1][j], dp[i][j - 1]); // 取上边和左边的最小值
+                
             }
         }
         return dp[grid.length - 1][grid[0].length - 1];
