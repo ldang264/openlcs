@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 给定一个字符串，你的任务是计算这个字符串中有多少个回文子串。
  * 具有不同开始位置或结束位置的子串，即使是由相同的字符组成，也会被视作不同的子串。
@@ -22,22 +25,34 @@
  */
 public class Q00647m {
     public int countSubstrings(String s) {
-        if (s == null || s.length() == 0) return 0;
+        if (s == null) return 0;
+        if (s.length() < 2) return s.length();
         int ans = s.length();
-        for (int j = 1; j < s.length(); j++) {
-            for (int i = 0; i < s.length() - j; i++) {
-                if (is(s, i, i + j)) ans++;
+        List<Integer>[] dp = new List[s.length()]; // dp[i]是每个i+1长度回文子串的起点下标值
+        List<Integer> list0 = new ArrayList<>();
+        for (int i = 0; i < s.length(); i++) {
+            list0.add(i); // 1个字符都是回文
+        }
+        dp[0] = list0;
+        List<Integer> list1 = new ArrayList<>();
+        for (int i = 0; i < s.length() - 1; i++) {
+            if (s.charAt(i) == s.charAt(i + 1)) { // 2个字符是前后相等
+                list1.add(i);
+                ans++;
+            }
+        }
+        dp[1] = list1;
+        for (int i = 2; i < s.length(); i++) {
+            dp[i] = new ArrayList<>();
+            // dp[i]是dp[i - 2]且其左边字符等于右边字符的情况
+            for (Integer j : dp[i - 2]) {
+                int k = j - 1;
+                if (k >= 0 && k + i < s.length() && s.charAt(k) == s.charAt(k + i)) {
+                    dp[i].add(k);
+                    ans++;
+                }
             }
         }
         return ans;
-    }
-
-    private boolean is(String s, int start, int end) {
-        while (end > start) {
-            if (s.charAt(start++) != s.charAt(end--)) {
-                return false;
-            }
-        }
-        return true;
     }
 }
