@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 /**
  * 给定一个整数数组和一个整数k，你需要找到该数组中和为k的连续的子数组的个数。
  *
@@ -15,9 +13,28 @@ import java.util.Arrays;
  * 链接：https://leetcode-cn.com/problems/subarray-sum-equals-k
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class Q00560m_Todo {
+public class Q00560m {
+
+    /**
+     * 效率比较低
+     * O(n^2)
+     * @param nums
+     * @param k
+     * @return
+     */
     public int subarraySum(int[] nums, int k) {
-        Arrays.sort(nums);
-        return -1;
+        int ans = 0;
+        int i = -1;
+        while (++i < nums.length) {
+            int j = i - 1;
+            int sum = 0;
+            while (++j < nums.length) {
+                sum += nums[j];
+                if (sum == k) {
+                    ans++;
+                }
+            }
+        }
+        return ans;
     }
 }
