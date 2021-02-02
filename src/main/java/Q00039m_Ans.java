@@ -41,7 +41,7 @@ import java.util.List;
 /**
  * 官方解答 回溯算法
  */
-public class Q00039m {
+public class Q00039m_Ans {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> ans = new ArrayList<>();
         List<Integer> combine = new ArrayList<>();
