@@ -1,3 +1,4 @@
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -12,9 +13,7 @@ public class Q00140hTest {
         String s = "catsanddog";
         List<String> wordDict = Arrays.asList("cat", "cats", "and", "sand", "dog");
         List<String> ans = wb.wordBreak(s, wordDict);
-        System.out.println(ans);
-        // "cats and dog"
-        // "cat sand dog"
+        Assert.assertEquals("[cat sand dog, cats and dog]", ans.toString());
     }
 
     @Test
@@ -22,10 +21,7 @@ public class Q00140hTest {
         String s = "pineapplepenapple";
         List<String> wordDict = Arrays.asList("apple", "pen", "applepen", "pine", "pineapple");
         List<String> ans = wb.wordBreak(s, wordDict);
-        System.out.println(ans);
-        // "pine apple pen apple",
-        // "pineapple pen apple",
-        // "pine applepen apple"
+        Assert.assertEquals("[pine apple pen apple, pine applepen apple, pineapple pen apple]", ans.toString());
     }
 
     @Test
@@ -33,7 +29,7 @@ public class Q00140hTest {
         String s = "catsandog";
         List<String> wordDict = Arrays.asList("cats", "dog", "sand", "and", "cat");
         List<String> ans = wb.wordBreak(s, wordDict);
-        System.out.println(ans);
+        Assert.assertEquals("[]", ans.toString());
     }
 
     @Test
