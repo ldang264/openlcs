@@ -17,12 +17,12 @@ public class TreeNode {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(" " + val);
+        StringBuilder sb = new StringBuilder(val + " ");
         if (left != null) {
-            sb.append(" " + left.toString());
+            sb.append(left.toString());
         }
         if (right != null) {
-            sb.append(" " + right.toString());
+            sb.append(right.toString());
         }
         return sb.toString();
     }
