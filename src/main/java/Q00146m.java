@@ -28,8 +28,6 @@
  */
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -40,66 +38,83 @@ import java.util.Map;
  */
 public class Q00146m {
 
-    private LinkedList<Integer> list;
+    private Map<Integer, Node> map; // 存放所有Node的
 
-    private Map<Integer, Integer> map;
+    private Node head; // 最新的元素
+
+    private Node tail; // 最老的元素
 
     private int capacity;
 
     public Q00146m(int capacity) {
-        list = new LinkedList<>();
         map = new HashMap<>(capacity);
         this.capacity = capacity;
+        head = new Node(0, 0);
+        tail = new Node(-1, -1);
+        head.prev = tail;
+        tail.next = head;
     }
 
     public int get(int key) {
-        if (map.containsKey(key)) {
-            Iterator<Integer> it = list.iterator();
-            while (it.hasNext()) {
-                int key0 = it.next();
-                if (key0 == key) {
-                    it.remove();
-                    list.add(key);
-                    return map.get(key);
-                }
-            }
-        }
-        return -1;
+        Node n = map.get(key);
+        if (n == null) return -1;
+        n.prev.next = n.next;
+        n.next.prev = n.prev;
+        // 放到head的前面
+        head.prev.next = n;
+        n.prev = head.prev;
+        n.next = head;
+        head.prev = n;
+        return n.value;
     }
 
     public void put(int key, int value) {
-        if (map.containsKey(key)) {
-            Iterator<Integer> it = list.iterator();
-            while (it.hasNext()) {
-                int key0 = it.next();
-                if (key0 == key) {
-                    it.remove();
-                    list.add(key);
-                    break;
-                }
-            }
+        if (map.size() == 0) {
+            Node n = new Node(key, value);
+            tail.next = n;
+            n.next = head;
+            head.prev = n;
+            n.prev = tail;
+            map.put(key, n);
         } else {
-            if (list.size() == capacity) {
-                int oldKey = list.removeFirst();
-                map.remove(oldKey);
+            // 如果存在则放到最前面，否则新建一个放到最前面
+            Node n = map.get(key);
+            if (n == null) { // 新建
+                n = new Node(key, value);
+                if (map.size() == capacity) { // 踢掉最老的那个
+                    Node on = tail.next;
+                    tail.next = on.next;
+                    on.next.prev = tail;
+                    map.remove(on.key);
+                }
+                map.put(key, n);
+            } else { // 前后脱离
+                n.value = value;
+                n.prev.next = n.next;
+                n.next.prev = n.prev;
             }
-            list.add(key);
+            // 放到head的前面
+            head.prev.next = n;
+            n.prev = head.prev;
+            n.next = head;
+            head.prev = n;
         }
-        map.put(key, value);
     }
 
-    public static void main(String[] args) {
-        Q00146m cache = new Q00146m( 2 /* 缓存容量 */ );
+    private static class Node {
 
-        cache.put(1, 1);
-        cache.put(2, 2);
-        System.out.println(cache.get(1));       // 返回  1
-        cache.put(3, 3);    // 该操作会使得关键字 2 作废
-        System.out.println(cache.get(2));       // 返回 -1 (未找到)
-        cache.put(4, 4);    // 该操作会使得关键字 1 作废
-        System.out.println(cache.get(1));       // 返回 -1 (未找到)
-        System.out.println(cache.get(3));       // 返回  3
-        System.out.println(cache.get(4));       // 返回  4
+        private int key; // 键
+
+        private int value; // 值
+
+        Node prev; // 指向前一个
+
+        Node next; // 指向后一个
+
+        Node(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
     }
 
     /**
