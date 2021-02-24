@@ -48,7 +48,7 @@ public class Q01641m {
             }
         }
         int sum = 0;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) { // 最后对dp数组求和
             sum += dp[i];
         }
         return sum;
