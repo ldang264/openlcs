@@ -1,8 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class Q00005mTest {
 
     Q00005m q00005m = new Q00005m();
