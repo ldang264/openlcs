@@ -26,11 +26,7 @@ public class Q00049m {
         for (String s : strs) {
             char[] cs = s.toCharArray();
             Arrays.sort(cs); // 排序
-            StringBuilder sb = new StringBuilder();
-            for (char c : cs) {
-                sb.append(c); // 使用字典序的字符串作为key
-            }
-            List<String> list = map.computeIfAbsent(sb.toString(), k -> new ArrayList<>());
+            List<String> list = map.computeIfAbsent(new String(cs), k -> new ArrayList<>());
             list.add(s);
         }
         return new ArrayList<>(map.values());
