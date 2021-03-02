@@ -28,60 +28,25 @@
  */
 public class Q00033m {
     public int search(int[] nums, int target) {
-        if (nums[0] == target) return 0;
-        if (nums[nums.length - 1] == target) return nums.length - 1;
-        if (nums[0] < target) { // 4512 找 5/6
-            // 二分查找
-            int start = 0;
-            int end = nums.length - 1;
-            while (true) {
-                if (end - start <= 1) {
-                    if (nums[start] == target) return start;
-                    if (end - start == 1 && nums[end] == target) return end;
-                    return -1;
-                }
-                int mid = (start + end) / 2;
-                if (nums[mid] == target) {
-                    return mid;
-                }
-                if (nums[mid] < nums[start]) {
+        int start = 0, end = nums.length - 1;
+        int mid;
+        while (start <= end) {
+            mid = start + (end - start) / 2;
+            if (nums[mid] == target) return mid;
+            if (nums[mid] >= nums[start]) { // 左边有序
+                if (target >= nums[start] && target < nums[mid]) { // 值在左边
                     end = mid - 1;
                 } else {
-                    if (nums[mid] > target) {
-                        end = mid - 1;
-                    } else {
-                        start = mid + 1;
-                    }
+                    start = mid + 1;
                 }
-            }
-        } else { // 4512 找3/1/0
-            if (nums[nums.length - 1] < target) { // 4512 找 3
-                return -1;
-            }
-            // 4512 找1/0
-            // 二分查找
-            int start = 0;
-            int end = nums.length - 1;
-            while (true) {
-                if (end - start <= 1) {
-                    if (nums[start] == target) return start;
-                    if (end - start == 1 && nums[end] == target) return end;
-                    return -1;
-                }
-                int mid = (start + end) / 2;
-                if (nums[mid] == target) {
-                    return mid;
-                }
-                if (nums[mid] > nums[end]) {
+            } else {
+                if (target <= nums[end] && target > nums[mid]) { // 值在右边
                     start = mid + 1;
                 } else {
-                    if (nums[mid] > target) {
-                        end = mid - 1;
-                    } else {
-                        start = mid + 1;
-                    }
+                    end = mid - 1;
                 }
             }
         }
+        return -1;
     }
 }

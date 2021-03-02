@@ -6,6 +6,7 @@ public class Q00033mTest {
 
     @Test
     public void search() {
+        Assert.assertEquals(1, s.search(new int[]{3, 1}, 1));
         int[] nums = new int[]{4, 5, 6, 7, 0, 1, 2};
         Assert.assertEquals(0, s.search(nums, 4));
         Assert.assertEquals(1, s.search(nums, 5));
