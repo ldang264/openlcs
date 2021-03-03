@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class MyHashMap<K,V> extends HashMap<K,V> {
-    static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16
+    static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16  // 数组默认的初始化长度
 
     /**
      * The maximum capacity, used if a higher value is implicitly specified
@@ -20,7 +20,7 @@ public class MyHashMap<K,V> extends HashMap<K,V> {
     /**
      * The load factor used when none specified in constructor.
      */
-    static final float DEFAULT_LOAD_FACTOR = 0.75f;
+    static final float DEFAULT_LOAD_FACTOR = 0.75f; // 默认的扩容因子
 
     /**
      * The bin count threshold for using a tree rather than list for a
@@ -30,14 +30,14 @@ public class MyHashMap<K,V> extends HashMap<K,V> {
      * tree removal about conversion back to plain bins upon
      * shrinkage.
      */
-    static final int TREEIFY_THRESHOLD = 8;
+    static final int TREEIFY_THRESHOLD = 8; // 当数组长度大于64且链表节点大于8时，转化为红黑树
 
     /**
      * The bin count threshold for untreeifying a (split) bin during a
      * resize operation. Should be less than TREEIFY_THRESHOLD, and at
      * most 6 to mesh with shrinkage detection under removal.
      */
-    static final int UNTREEIFY_THRESHOLD = 6;
+    static final int UNTREEIFY_THRESHOLD = 6; // 当红黑树节点数小于6时，将退化为链表
 
     /**
      * The smallest table capacity for which bins may be treeified.
