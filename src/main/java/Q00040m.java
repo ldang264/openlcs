@@ -57,9 +57,9 @@ public class Q00040m {
             return;
         }
         if (target < 0 || i == candidates.length || candidates[i] > target) return;
-        find(candidates, target, i + 1);
-        elements.add(candidates[i]);
-        find(candidates, target - candidates[i], i + 1);
-        elements.remove(elements.size() - 1);
+        find(candidates, target, i + 1); // 直接处理下一个
+        elements.add(candidates[i]); // 将当前加入
+        find(candidates, target - candidates[i], i + 1); // 去掉当前值，加下一个
+        elements.remove(elements.size() - 1); // 取出新增的元素
     }
 }
