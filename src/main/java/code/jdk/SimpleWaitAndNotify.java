@@ -50,6 +50,6 @@ public class SimpleWaitAndNotify {
         Thread t1 = new T1();
         Thread t2 = new T2();
         t1.start();
-        // t2.start();
+        t2.start();
     }
 }
