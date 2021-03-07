@@ -46,8 +46,18 @@ public class SimpleWaitAndNotify {
         }
     }
 
+    /**
+     * 线程有6种状态
+     * New             线程被new出来，未start时的状态
+     * Runnable        start之后，执行中的状态
+     * Blocked         synchronize代码块、lock代码块中的阻塞状态
+     * Waiting         object.wait()、condition.await等的状态
+     * Timed-waiting   object.wait(时间)、Thread.sleep(时间)
+     * Terminated      线程执行结束后的状态
+     * @param args
+     */
     public static void main(String[] args) {
-        Thread t1 = new T1();
+        Thread t1 = new T1(); //
         Thread t2 = new T2();
         t1.start();
         t2.start();

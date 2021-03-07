@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * 给定一个完美二叉树，其所有叶子节点都在同一层，每个父节点都有两个子节点。二叉树定义如下：
@@ -83,41 +82,12 @@ public class Q00116m {
     }
 
     public Node connect(Node root) {
-        if (root == null) {
-            return null;
-        }
-        List<Node> list = new ArrayList<>();
-        dfs(root, list);
-        int size = list.size();
-        if (size == 1) {
-            return root;
-        } else if (size == 3) {
-            list.get(0).next = list.get(2);
-            return root;
-        }
-        int height = (int) (Math.log(size + 1) / Math.log(2));
-        int i = 0;
-        int j = 0;
-        while(i <= (2<<height-3)/2) {
-            int k = (2<<j)/2 - 1;
-            while (k + (2<<j) < size) {
-                list.get(k).next = list.get(k + (2<<j));
-                k += (2<<j);
-            }
-            i = (2<<j)/2;
-            j++;
-        }
-        return root;
-    }
-
-    private void dfs(Node root, List<Node> list) {
-        if (root.left != null) {
-            dfs(root.left, list);
-        }
-        list.add(root);
-        if (root.right != null) {
-            dfs(root.right, list);
-        }
+        if (root == null) return root;
+        Node left = connect(root.left);
+        Node right = connect(root.right);
+        left.next = right;
+        right.next = root.left;
+        return null;
     }
 
     static class Node {

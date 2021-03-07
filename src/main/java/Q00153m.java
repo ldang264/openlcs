@@ -28,9 +28,8 @@
 public class Q00153m {
 
     public int findMin(int[] nums) {
-        if (nums.length == 1) return nums[0];
+        if (nums.length == 1 || nums[0] < nums[nums.length - 1]) return nums[0]; // 处理唯一元素和升序的情况
         int start = 0, end = nums.length - 1; // 左右指针
-        if (nums[start] < nums[end]) return nums[start]; // 处理升序的情况
         int mid;
         while (start < end) {
             mid = (start + end) / 2;
