@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * 给定一个二叉树
  *
@@ -33,7 +36,28 @@ public class Q00117m {
 
     public Node connect(Node root) {
         if (root == null) return null;
-        dfs(root.left, root.right, null, null);
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        while (queue.size() > 0) {
+            Node prev = queue.poll();
+            int size = queue.size();
+            if (prev.left != null) {
+                queue.offer(prev.left);
+            }
+            if (prev.right != null) {
+                queue.offer(prev.right);
+            }
+            while (size-- > 0) {
+                Node curr = queue.poll();
+                prev = prev.next = curr;
+                if (curr.left != null) {
+                    queue.offer(curr.left);
+                }
+                if (curr.right != null) {
+                    queue.offer(curr.right);
+                }
+            }
+        }
         return root;
     }
 
@@ -43,7 +67,7 @@ public class Q00117m {
         // dfs(cl.left, cl.right);
     }
 
-    private static class Node {
+    static class Node {
         public int val;
         public Node left;
         public Node right;
@@ -53,6 +77,12 @@ public class Q00117m {
 
         public Node(int _val) {
             val = _val;
+        }
+
+        public Node(int _val, Node _left, Node _right) {
+            val = _val;
+            left = _left;
+            right = _right;
         }
 
         public Node(int _val, Node _left, Node _right, Node _next) {

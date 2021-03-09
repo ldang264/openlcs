@@ -1,4 +1,5 @@
-
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * 给定一个完美二叉树，其所有叶子节点都在同一层，每个父节点都有两个子节点。二叉树定义如下：
@@ -39,13 +40,27 @@ public class Q00116m {
 
     public Node connect(Node root) {
         if (root == null) return null;
-        Node right = connect(root.right);
-        Node left = connect(root.left);
-        if (left != null) {
-            left.next = right;
-        }
-        if (root.right != null && root.next != null) {
-            root.right.next = root.next.left;
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        while (queue.size() > 0) {
+            Node prev = queue.poll();
+            int size = queue.size();
+            if (prev.left != null) {
+                queue.offer(prev.left);
+            }
+            if (prev.right != null) {
+                queue.offer(prev.right);
+            }
+            while (size-- > 0) {
+                Node curr = queue.poll();
+                prev = prev.next = curr;
+                if (curr.left != null) {
+                    queue.offer(curr.left);
+                }
+                if (curr.right != null) {
+                    queue.offer(curr.right);
+                }
+            }
         }
         return root;
     }
