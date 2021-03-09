@@ -1,4 +1,4 @@
-package code.juc;
+package code.juc.sources;
 
 /**
  * A synchronizer that may be exclusively owned by a thread.  This

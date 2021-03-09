@@ -33,7 +33,7 @@
  * http://creativecommons.org/publicdomain/zero/1.0/
  */
 
-package code.juc;
+package code.juc.sources;
 
 import sun.misc.Unsafe;
 
@@ -58,7 +58,7 @@ import java.util.concurrent.locks.*;
  * 不同状态的等待线程共享同一个FIFO队列
  *
  * 定义了条件对象
- * <p>This class defines a nested {@link ConditionObject} class that
+ * <p>This class defines a nested {@link MyConditionObject} class that
  * can be used as a {@link Condition} implementation by subclasses
  * supporting exclusive mode for which method {@link
  * #isHeldExclusively} reports whether synchronization is exclusively
@@ -68,7 +68,7 @@ import java.util.concurrent.locks.*;
  * eventually restores this object to its previous acquired state.  No
  * {@code AbstractQueuedSynchronizer} method otherwise creates such a
  * condition, so if this constraint cannot be met, do not use it.  The
- * behavior of {@link ConditionObject} depends of course on the
+ * behavior of {@link MyConditionObject} depends of course on the
  * semantics of its synchronizer implementation.
  *
  * <p>This class provides inspection, instrumentation, and monitoring
@@ -1145,12 +1145,12 @@ public abstract class MyAbstractQueuedSynchronizer
     /**
      * Returns {@code true} if synchronization is held exclusively with
      * respect to the current (calling) thread.  This method is invoked
-     * upon each call to a non-waiting {@link ConditionObject} method.
+     * upon each call to a non-waiting {@link MyConditionObject} method.
      * (Waiting methods instead invoke {@link #release}.)
      *
      * <p>The default implementation throws {@link
      * UnsupportedOperationException}. This method is invoked
-     * internally only within {@link ConditionObject} methods, so need
+     * internally only within {@link MyConditionObject} methods, so need
      * not be defined if conditions are not used.
      *
      * @return {@code true} if synchronization is held exclusively;
@@ -1721,7 +1721,7 @@ public abstract class MyAbstractQueuedSynchronizer
      * @return {@code true} if owned
      * @throws NullPointerException if the condition is null
      */
-    public final boolean owns(ConditionObject condition) {
+    public final boolean owns(MyConditionObject condition) {
         return condition.isOwnedBy(this);
     }
 
@@ -1741,7 +1741,7 @@ public abstract class MyAbstractQueuedSynchronizer
      *         not associated with this synchronizer
      * @throws NullPointerException if the condition is null
      */
-    public final boolean hasWaiters(ConditionObject condition) {
+    public final boolean hasWaiters(MyConditionObject condition) {
         if (!owns(condition))
             throw new IllegalArgumentException("Not owner");
         return condition.hasWaiters();
@@ -1763,7 +1763,7 @@ public abstract class MyAbstractQueuedSynchronizer
      *         not associated with this synchronizer
      * @throws NullPointerException if the condition is null
      */
-    public final int getWaitQueueLength(ConditionObject condition) {
+    public final int getWaitQueueLength(MyConditionObject condition) {
         if (!owns(condition))
             throw new IllegalArgumentException("Not owner");
         return condition.getWaitQueueLength();
@@ -1785,7 +1785,7 @@ public abstract class MyAbstractQueuedSynchronizer
      *         not associated with this synchronizer
      * @throws NullPointerException if the condition is null
      */
-    public final Collection<Thread> getWaitingThreads(ConditionObject condition) {
+    public final Collection<Thread> getWaitingThreads(MyConditionObject condition) {
         if (!owns(condition))
             throw new IllegalArgumentException("Not owner");
         return condition.getWaitingThreads();
@@ -1806,7 +1806,7 @@ public abstract class MyAbstractQueuedSynchronizer
      * <p>This class is Serializable, but all fields are transient,
      * so deserialized conditions have no waiters.
      */
-    public class ConditionObject implements Condition, java.io.Serializable {
+    public class MyConditionObject implements MyCondition, java.io.Serializable {
         private static final long serialVersionUID = 1173984872572414699L;
         /** First node of condition queue. */
         private transient Node firstWaiter;
@@ -1816,7 +1816,7 @@ public abstract class MyAbstractQueuedSynchronizer
         /**
          * Creates a new {@code ConditionObject} instance.
          */
-        public ConditionObject() { }
+        public MyConditionObject() { }
 
         // Internal methods
 
@@ -2167,7 +2167,7 @@ public abstract class MyAbstractQueuedSynchronizer
 
         /**
          * Queries whether any threads are waiting on this condition.
-         * Implements {@link MyAbstractQueuedSynchronizer#hasWaiters(ConditionObject)}.
+         * Implements {@link MyAbstractQueuedSynchronizer#hasWaiters(MyConditionObject)}.
          *
          * @return {@code true} if there are any waiting threads
          * @throws IllegalMonitorStateException if {@link #isHeldExclusively}
@@ -2186,7 +2186,7 @@ public abstract class MyAbstractQueuedSynchronizer
         /**
          * Returns an estimate of the number of threads waiting on
          * this condition.
-         * Implements {@link MyAbstractQueuedSynchronizer#getWaitQueueLength(ConditionObject)}.
+         * Implements {@link MyAbstractQueuedSynchronizer#getWaitQueueLength(MyConditionObject)}.
          *
          * @return the estimated number of waiting threads
          * @throws IllegalMonitorStateException if {@link #isHeldExclusively}
@@ -2206,7 +2206,7 @@ public abstract class MyAbstractQueuedSynchronizer
         /**
          * Returns a collection containing those threads that may be
          * waiting on this Condition.
-         * Implements {@link MyAbstractQueuedSynchronizer#getWaitingThreads(ConditionObject)}.
+         * Implements {@link MyAbstractQueuedSynchronizer#getWaitingThreads(MyConditionObject)}.
          *
          * @return the collection of threads
          * @throws IllegalMonitorStateException if {@link #isHeldExclusively}

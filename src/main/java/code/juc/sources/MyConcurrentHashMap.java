@@ -1,4 +1,4 @@
-package code.juc;
+package code.juc.sources;
 
 import java.io.ObjectStreamField;
 import java.io.Serializable;
