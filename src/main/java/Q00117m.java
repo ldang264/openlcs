@@ -33,12 +33,14 @@ public class Q00117m {
 
     public Node connect(Node root) {
         if (root == null) return null;
-        Node left = connect(root.left);
-        Node right = connect(root.right);
-        if (left != null) {
-            left.next = right;
-        }
+        dfs(root.left, root.right, null, null);
         return root;
+    }
+
+    private void dfs(Node cl, Node cr, Node nl, Node nr) {
+        if (cl == null) return;
+        cl.next = cr != null ? cr : nl != null ? nl : nr;
+        // dfs(cl.left, cl.right);
     }
 
     private static class Node {

@@ -37,57 +37,17 @@
  */
 public class Q00116m {
 
-    public static void main(String[] args) {
-        test3();
-    }
-
-    public static void test2() {
-        Q00116m main = new Q00116m();
-        Node n21 = new Node(2);
-        Node n22 = new Node(3);
-        Node n11 = new Node(1, n21, n22);
-        main.connect(n11);
-    }
-
-    public static void test3() {
-        Q00116m main = new Q00116m();
-        Node n31 = new Node(4);
-        Node n32 = new Node(5);
-        Node n33 = new Node(6);
-        Node n34 = new Node(7);
-        Node n21 = new Node(2, n31, n32);
-        Node n22 = new Node(3, n33, n34);
-        Node n11 = new Node(1, n21, n22);
-        main.connect(n11);
-    }
-
-    public static void test4() {
-        Q00116m main = new Q00116m();
-        Node n41 = new Node(8);
-        Node n42 = new Node(9);
-        Node n43 = new Node(10);
-        Node n44 = new Node(11);
-        Node n45 = new Node(12);
-        Node n46 = new Node(13);
-        Node n47 = new Node(14);
-        Node n48 = new Node(15);
-        Node n31 = new Node(4, n41, n42);
-        Node n32 = new Node(5, n43, n44);
-        Node n33 = new Node(6, n45, n46);
-        Node n34 = new Node(7, n47, n48);
-        Node n21 = new Node(2, n31, n32);
-        Node n22 = new Node(3, n33, n34);
-        Node n11 = new Node(1, n21, n22);
-        main.connect(n11);
-    }
-
     public Node connect(Node root) {
-        if (root == null) return root;
-        Node left = connect(root.left);
+        if (root == null) return null;
         Node right = connect(root.right);
-        left.next = right;
-        right.next = root.left;
-        return null;
+        Node left = connect(root.left);
+        if (left != null) {
+            left.next = right;
+        }
+        if (root.right != null && root.next != null) {
+            root.right.next = root.next.left;
+        }
+        return root;
     }
 
     static class Node {
