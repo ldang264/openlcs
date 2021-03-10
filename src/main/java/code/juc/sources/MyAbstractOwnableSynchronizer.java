@@ -23,6 +23,7 @@ public class MyAbstractOwnableSynchronizer {
     protected MyAbstractOwnableSynchronizer() { }
 
     /**
+     * 独占模式下，当前持有的线程
      * The current owner of exclusive mode synchronization.
      */
     private transient Thread exclusiveOwnerThread;

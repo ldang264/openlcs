@@ -266,7 +266,7 @@ import java.util.concurrent.locks.*;
  * @author Doug Lea
  */
 public abstract class MyAbstractQueuedSynchronizer
-    extends AbstractOwnableSynchronizer
+    extends MyAbstractOwnableSynchronizer
     implements java.io.Serializable {
 
     private static final long serialVersionUID = 7373984972572414691L;
@@ -554,16 +554,17 @@ public abstract class MyAbstractQueuedSynchronizer
     static final long spinForTimeoutThreshold = 1000L;
 
     /**
+     * 插入节点到队列中，如果必要的话将初始化
      * Inserts node into queue, initializing if necessary. See picture above.
-     * @param node the node to insert
-     * @return node's predecessor
+     * @param node the node to insert 待插入节点
+     * @return node's predecessor 前序节点
      */
     private Node enq(final Node node) {
         for (;;) {
             Node t = tail;
             if (t == null) { // Must initialize
-                if (compareAndSetHead(new Node()))
-                    tail = head;
+                if (compareAndSetHead(new Node())) // 新增Node对象head
+                    tail = head; // 尾指向头
             } else {
                 node.prev = t;
                 if (compareAndSetTail(t, node)) {
@@ -575,6 +576,7 @@ public abstract class MyAbstractQueuedSynchronizer
     }
 
     /**
+     * 为当前线程创建指定模式的队列节点
      * Creates and enqueues node for current thread and given mode.
      *
      * @param mode Node.EXCLUSIVE for exclusive, Node.SHARED for shared
@@ -584,7 +586,7 @@ public abstract class MyAbstractQueuedSynchronizer
         Node node = new Node(Thread.currentThread(), mode);
         // Try the fast path of enq; backup to full enq on failure
         Node pred = tail;
-        if (pred != null) {
+        if (pred != null) { // 尾结点在第一次进来时时空的，该方法不执行
             node.prev = pred;
             if (compareAndSetTail(pred, node)) {
                 pred.next = node;

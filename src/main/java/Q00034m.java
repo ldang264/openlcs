@@ -48,27 +48,22 @@ public class Q00034m {
         return ans;
     }
 
+    /**
+     * 二分查找
+     * @param nums
+     * @param target
+     * @param start
+     * @param end
+     * @return
+     */
     private int find(int[] nums, int target, int start, int end) {
-        if (nums[start] > target || nums[end] < target) {
-            return -1;
-        }
-        if (nums[start] == target) {
-            return start;
-        }
-        if (nums[end] == target) {
-            return end;
-        }
+        if (start > end) return -1;
         int mid = (start + end) / 2;
         if (nums[mid] == target) {
             return mid;
         }
-        if (start == mid) {
-            return -1;
-        }
-        if (nums[mid] < target) { // 在高区
-            return find(nums, target, mid, end);
-        } else {
-            return find(nums, target, start, mid);
-        }
+        if (nums[mid] > target) {
+            return find(nums, target, start, mid - 1);
+        } else return find(nums, target, mid + 1, end);
     }
 }

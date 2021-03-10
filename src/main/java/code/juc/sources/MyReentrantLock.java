@@ -127,20 +127,21 @@ public class MyReentrantLock implements MyLock, java.io.Serializable {
         abstract void lock();
 
         /**
+         * 非公平的tryLock。tryAcquire是在子类实现的，但是都需要非公平的获取锁
          * Performs non-fair tryLock.  tryAcquire is implemented in
          * subclasses, but both need nonfair try for trylock method.
          */
         final boolean nonfairTryAcquire(int acquires) {
             final Thread current = Thread.currentThread();
             int c = getState();
-            if (c == 0) {
-                if (compareAndSetState(0, acquires)) {
+            if (c == 0) { // 无锁
+                if (compareAndSetState(0, acquires)) { // 和非公平锁lock的那段代码一样，CAS成功就设置独占线程并返回
                     setExclusiveOwnerThread(current);
                     return true;
                 }
             }
-            else if (current == getExclusiveOwnerThread()) {
-                int nextc = c + acquires;
+            else if (current == getExclusiveOwnerThread()) { // 有锁且刚好是当前线程
+                int nextc = c + acquires; // 重入
                 if (nextc < 0) // overflow
                     throw new Error("Maximum lock count exceeded");
                 setState(nextc);
