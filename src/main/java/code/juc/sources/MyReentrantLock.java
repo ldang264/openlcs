@@ -106,10 +106,13 @@ import java.util.concurrent.TimeUnit;
  */
 public class MyReentrantLock implements MyLock, java.io.Serializable {
     private static final long serialVersionUID = 7373984872572414699L;
-    /** Synchronizer providing all implementation mechanics */
+    /** 实现重入锁的同步器 */
     private final Sync sync;
 
     /**
+     * 对锁的基本的同步控制
+     * 下面会有公平锁和非公平锁的子类
+     * 使用AQS的state属性来表示持有锁的个数
      * Base of synchronization control for this lock. Subclassed
      * into fair and nonfair versions below. Uses AQS state to
      * represent the number of holds on the lock.
@@ -204,10 +207,10 @@ public class MyReentrantLock implements MyLock, java.io.Serializable {
          * acquire on failure.
          */
         final void lock() {
-            if (compareAndSetState(0, 1))
-                setExclusiveOwnerThread(Thread.currentThread());
+            if (compareAndSetState(0, 1)) // 上来就用CAS抢，state=0，能更新为1，就表示抢成功
+                setExclusiveOwnerThread(Thread.currentThread()); // 设置当前线程为执行线程
             else
-                acquire(1);
+                acquire(1); // 与公平锁一样，没抢成功就老老实实排队
         }
 
         protected final boolean tryAcquire(int acquires) {

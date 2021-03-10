@@ -469,7 +469,7 @@ public abstract class MyAbstractQueuedSynchronizer
          *
          * @return the predecessor of this node
          */
-        final Node predecessor() throws NullPointerException {
+        final Node predecessor() throws NullPointerException { // 获取当前节点的上一个节点
             Node p = prev;
             if (p == null)
                 throw new NullPointerException();
@@ -480,12 +480,12 @@ public abstract class MyAbstractQueuedSynchronizer
         Node() {    // Used to establish initial head or SHARED marker
         }
 
-        Node(Thread thread, Node mode) {     // Used by addWaiter
+        Node(Thread thread, Node mode) { // 构造一个节点：addWaiter方法中会使用，此时waitStatus默认等于0
             this.nextWaiter = mode;
             this.thread = thread;
         }
 
-        Node(Thread thread, int waitStatus) { // Used by Condition
+        Node(Thread thread, int waitStatus) { // 构造一个节点：Condition中会使用
             this.waitStatus = waitStatus;
             this.thread = thread;
         }
