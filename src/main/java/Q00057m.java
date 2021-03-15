@@ -39,20 +39,24 @@
 public class Q00057m {
     public int[][] insert(int[][] intervals, int[] newInterval) {
         if (intervals.length == 0) return new int[][]{newInterval};
-        int left = -1;
-        int right = -1;
-        for (int i = 0; i < intervals.length; i++) {
-            if (newInterval[0] < intervals[i][0]) break;
-            if (newInterval[0] <= intervals[i][1]) {
+        float left = -1;
+        for (int i = 0; i < intervals.length - 1; i++) {
+            if (newInterval[0] >= intervals[i][0] && newInterval[0] <= intervals[i][1]) {
                 left = i;
                 break;
+            } else if (newInterval[0] > intervals[i][1] && newInterval[0] < intervals[i + 1][0]) { // 在空隙中
+                 left = (i + i + 1) / 2.0f;
+                 break;
             }
         }
-        for (int i = left == -1 ? 0 : left; i < intervals.length; i++) {
-            if (newInterval[1] < intervals[i][0]) break;
-            if (newInterval[1] <= intervals[i][1]) {
+        float right = left;
+        for (int i = (left == -1 ? 0 : Math.round(left)); i < intervals.length - 1; i++) {
+            if (newInterval[1] >= intervals[i][0] && newInterval[1] <= intervals[i][1]) {
                 right = i;
                 break;
+            } else if (newInterval[1] > intervals[i][1] && newInterval[1] < intervals[i + 1][0]) { // 在空隙中
+                 right = (i + i + 1) / 2.0f;
+                 break;
             }
         }
         return null;

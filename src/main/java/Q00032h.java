@@ -1,7 +1,9 @@
+import java.util.LinkedList;
+
 /**
- * 给定一个只包含 '(' 和 ')' 的字符串，找出最长的包含有效括号的子串的长度。
+ * 给定一个只包含 '('和 ')'的字符串，找出最长的包含有效括号的子串的长度。
  *
- * 示例 1:
+ * 示例1:
  *
  * 输入: "(()"
  * 输出: 2
@@ -28,33 +30,23 @@ public class Q00032h {
     }
 
     public int longestValidParentheses(String s) {
-        if (s == null || s.length() < 2) return 0;
-        char[] sa = new char[s.length()];
-        int ans = 0, sum = 0, index = 0;
+        int ans = 0;
+        int temp = 0;
+        LinkedList<Boolean> stack = new LinkedList<>(); // true表示(，false表示)
         for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '(') { // 是(则一直向数组中放
-                sa[index++] = s.charAt(i);
-            } else { // 否则向前找
-                for (int j = index - 1; j>=0; j--) {
-                    if (sa[j] == '(') { // 找到(则成对，将其设置为Y
-                        sa[j] = 'Y';
-                        break;
-                    } else if (j == 0) { // 没找到则将)放进数组
-                        sa[index++] = ')';
-                    }
+            char c = s.charAt(i);
+            if (c == '(') { // 入栈
+                stack.addLast(true);
+            } else { // 消除
+                if (stack.size() == 0 || !stack.peekLast()) { // 栈空或栈顶是右字符
+                    stack.addLast(false);
+                    temp = 0;
+                } else { // 栈顶是左字符
+                    stack.pollLast();
+                    ans = Math.max(ans, ++temp);
                 }
-
             }
         }
-        // 计算连续个Y的最大长度
-        for (int i = 0; i < index; i++) {
-            if (sa[i] == 'Y') {
-                sum++;
-            } else {
-                ans = Math.max(ans, sum);
-                sum = 0;
-            }
-        }
-        return Math.max(ans, sum) * 2;
+        return ans;
     }
 }

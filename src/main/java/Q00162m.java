@@ -27,9 +27,33 @@
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00162m {
+
+    /**
+     * 二分法+迭代
+     * @param nums
+     * @return
+     */
+    public int findPeakElement(int[] nums) {
+        int start = 0, end = nums.length - 1, mid;
+        while (true) {
+            if (start == end) return start; //
+            mid = (start + end) / 2;
+            if (nums[mid] < nums[mid + 1]) { // 递增
+                start = mid + 1; // 向右找
+            } else {
+                end = mid; // 向左找
+            }
+        }
+    }
+
     private int ans;
 
-    public int findPeakElement(int[] nums) {
+    /**
+     * 比较傻的方法
+     * @param nums
+     * @return
+     */
+    public int findPeakElement1(int[] nums) {
         if (nums.length == 1) return 0; // 一个数直接返回
         if (nums[0] > nums[1]) return 0; // 第一个是峰值
         if (nums[nums.length - 1] > nums[nums.length - 2]) return nums.length - 1; // 最后一个是峰值
