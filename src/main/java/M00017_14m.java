@@ -16,7 +16,7 @@ import java.util.Arrays;
  * 链接：https://leetcode-cn.com/problems/smallest-k-lcci
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class M17_14m {
+public class M00017_14m {
     public int[] smallestK(int[] arr, int k) {
         sort(arr, k, 0, arr.length - 1);
         return Arrays.copyOf(arr, k);

@@ -27,7 +27,7 @@ import java.util.Map;
         *链接：https://leetcode-cn.com/problems/lru-cache-lcci
         *著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class M16_25m {
+public class M00016_25m {
 
     private Map<Integer, Node> map; // 存放所有Node的
 
@@ -37,7 +37,7 @@ public class M16_25m {
 
     private int capacity;
 
-    public M16_25m(int capacity) {
+    public M00016_25m(int capacity) {
         map = new HashMap<>(capacity);
         this.capacity = capacity;
         head = new Node(0, 0);

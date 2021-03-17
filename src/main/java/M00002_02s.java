@@ -15,7 +15,7 @@ import tool.ListNode;
  * 链接：https://leetcode-cn.com/problems/kth-node-from-end-of-list-lcci
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class M02_02s {
+public class M00002_02s {
     public int kthToLast(ListNode head, int k) {
         ListNode hair = new ListNode(0);
         hair.next = head;
