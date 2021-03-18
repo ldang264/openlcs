@@ -48,15 +48,15 @@ public class HeapSort {
             if (k + 1 < length && array[k] < array[k + 1]) {
                 k++;//k指向右子结点
             }
-            if (array[k] > temp) {//如果子结点大于父结点
-                array[i] = array[k];//把较大的值赋值给当前结点
-                i = k;//i指向k，继续循环比较
-            } else {
+            if (array[k] <= temp) {//如果子结点大于父结点
                 break;
             }
+            array[i] = array[k];//把较大的值赋值给当前结点
+            i = k;//i指向k，继续循环比较
         }
         //当for循环结束后，已经将以i为父结点的树的最大值放在了最顶(局部)
         array[i] = temp;//将temp值放到调整后的位置
     }
 
 }
+// https://juejin.cn/post/6925434315790614536

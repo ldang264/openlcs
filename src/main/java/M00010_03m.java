@@ -16,7 +16,7 @@
  * 链接：https://leetcode-cn.com/problems/search-rotate-array-lcci
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class M10_03m {
+public class M00010_03m {
     /**
      * 参考了别人的题解
      * @param arr
