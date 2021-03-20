@@ -1,54 +1,27 @@
 import tool.ListNode;
 
 /**
- * 给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
+ * 给定两个用链表表示的整数，每个节点包含一个数位。
  *
- * 如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。
+ * 这些数位是反向存放的，也就是个位排在链表首部。
  *
- * 您可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+ * 编写函数对这两个整数求和，并用链表形式返回结果。
  *
  * 示例：
+ * 输入：(7 -> 1 -> 6) + (5 -> 9 -> 2)，即617 + 295
+ * 输出：2 -> 1 -> 9，即912
  *
- * 输入：(2 -> 4 -> 3) + (5 -> 6 -> 4)
- * 输出：7 -> 0 -> 8
- * 原因：342 + 465 = 807
+ * 进阶：思考一下，假设这些数位是正向存放的，又该如何解决呢?
  *
- * 输入：(4 -> 3) + (5 -> 6 -> 4)
- * 输出：9 -> 9 -> 4
- * 原因：34 + 465 = 499
- *
- * 输入：(3) + (5 -> 6 -> 4)
- * 输出：8 -> 6 -> 4
- * 原因：3 + 465 = 468
- *
- * 输入：(6) + (5 -> 6 -> 4)
- * 输出：1 -> 7 -> 4
- * 原因：6 + 465 = 471
+ * 示例：
+ * 输入：(6 -> 1 -> 7) + (2 -> 9 -> 5)，即617 + 295
+ * 输出：9 -> 1 -> 2，即912
  *
  * 来源：力扣（LeetCode）
- * 链接：https://leetcode-cn.com/problems/add-two-numbers
+ * 链接：https://leetcode-cn.com/problems/sum-lists-lcci
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class Q00002m {
-
-    public static void main(String[] args) {
-        Q00002m atn = new Q00002m();
-        ListNode l1 = new ListNode(9);
-        l1.next = new ListNode(9);
-        /*l1.next.next = new ListNode(3);
-        l1.next.next.next = new ListNode(1);*/
-        System.out.println("l1:" + l1);
-
-        ListNode l2 = new ListNode(1);
-        /*l2.next = new ListNode(6);
-        l2.next.next = new ListNode(4);
-        l2.next.next.next = new ListNode(5);*/
-        System.out.println("l2:" + l2);
-
-        ListNode listNode = atn.addTwoNumbers(l1, l2);
-        System.out.println("result:" + listNode);
-    }
-
+public class M00002_05m {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         if (l1 == null) return l2;
         if (l2 == null) return l1;
@@ -90,5 +63,4 @@ public class Q00002m {
         }
         return hair.next;
     }
-
 }
