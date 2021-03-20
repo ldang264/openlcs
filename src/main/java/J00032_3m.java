@@ -31,39 +31,32 @@ import java.util.List;
  */
 public class J00032_3m {
     public List<List<Integer>> levelOrder(TreeNode root) {
-        LinkedList<List<Integer>> ans = new LinkedList<>();
-        if (root == null) return ans;
+        List<List<Integer>> ans = new LinkedList<>();
+        if (root == null) {
+            return ans;
+        }
         LinkedList<TreeNode> list = new LinkedList<>();
         list.add(root);
-        boolean r = true; // 向右是true，向左是false
+        boolean reverse = false;
         int size = 1;
         while (size > 0) {
-            LinkedList<Integer> rowList = new LinkedList<>();
-            if (r) { // 向右是从头取，在尾部加；先加左子树，再加右子树
-                while (size-- > 0) {
-                    TreeNode node = list.removeFirst();
-                    rowList.add(node.val);
-                    if (node.left != null) {
-                        list.addLast(node.left);
-                    }
-                    if (node.right != null) {
-                        list.addLast(node.right);
-                    }
+            LinkedList<Integer> row = new LinkedList<>();
+            while (size-- > 0) {
+                TreeNode node = list.pop();
+                if (reverse) {
+                    row.addFirst(node.val);
+                } else {
+                    row.addLast(node.val);
                 }
-            } else { // 向右是从尾取，在头部加；先加右子树，再加左子树
-                while (size-- > 0) {
-                    TreeNode node = list.removeLast();
-                    rowList.add(node.val);
-                    if (node.right != null) {
-                        list.addFirst(node.right);
-                    }
-                    if (node.left != null) {
-                        list.addFirst(node.left);
-                    }
+                if(node.left != null) {
+                    list.add(node.left);
+                }
+                if(node.right != null) {
+                    list.add(node.right);
                 }
             }
-            r = !r;
-            ans.add(rowList);
+            reverse = !reverse;
+            ans.add(row);
             size = list.size();
         }
         return ans;

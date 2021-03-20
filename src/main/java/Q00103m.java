@@ -1,6 +1,5 @@
 import tool.TreeNode;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,22 +42,22 @@ public class Q00103m {
     }
 
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> ans = new LinkedList<>();
         if (root == null) {
-            return new ArrayList<>();
+            return ans;
         }
-        List<List<Integer>> ans = new ArrayList<>();
         LinkedList<TreeNode> list = new LinkedList<>();
         list.add(root);
         boolean reverse = false;
-        while (list.size() > 0) {
-            int size = list.size();
-            ArrayList<Integer> row = new ArrayList<>(size);
+        int size = 1;
+        while (size > 0) {
+            LinkedList<Integer> row = new LinkedList<>();
             while (size-- > 0) {
                 TreeNode node = list.pop();
                 if (reverse) {
-                    row.add(0, node.val);
+                    row.addFirst(node.val);
                 } else {
-                    row.add(node.val);
+                    row.addLast(node.val);
                 }
                 if(node.left != null) {
                     list.add(node.left);
@@ -69,6 +68,7 @@ public class Q00103m {
             }
             reverse = !reverse;
             ans.add(row);
+            size = list.size();
         }
         return ans;
     }
