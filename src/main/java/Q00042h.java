@@ -21,22 +21,8 @@
  */
 public class Q00042h {
     public int trap(int[] height) {
-        if (height.length <= 2) return 0; // 不构成水坑
-        // 左边一直递增的不要
-        int left = 0;
-        while (left < height.length - 1) {
-            if (height[left] > height[left + 1]) break;
-            left++;
-        }
-        // 右边一直递减的不要
-        int right = height.length - 1;
-        while (right >= 1) {
-            if (height[right] > height[right - 1]) break;
-            right--;
-        }
-        if (left >= right) return 0;
-        int ans = 0, pos = left, i = left, temp = 0; // 双指针
-        while (i <= right) {
+        int ans = 0, pos = 0, i = 0, temp = 0; // 双指针
+        while (i <= height.length - 1) {
             int val = height[pos] - height[i];
             if (val > 0) { // 出现水坑
                 temp += val;
@@ -47,9 +33,9 @@ public class Q00042h {
             }
             i++;
         }
-        pos = i = right; // 还原指针
+        pos = i = height.length - 1; // 还原指针
         temp = 0;
-        while (i >= left) {
+        while (i >= 0) {
             int val = height[pos] - height[i];
             if (val >= 0) { // 出现水坑
                 temp += val;
