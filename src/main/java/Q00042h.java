@@ -21,7 +21,7 @@
  */
 public class Q00042h {
     public int trap(int[] height) {
-        if (height.length <= 2) return 0;
+        if (height.length <= 2) return 0; // 不构成水坑
         // 左边一直递增的不要
         int left = 0;
         while (left < height.length - 1) {
@@ -35,35 +35,73 @@ public class Q00042h {
             right--;
         }
         if (left >= right) return 0;
-        int ans = 0;
-        if (height[left] < height[right]) {
-            for (int i = left + 1; i < right; i++) {
-                if (height[i] >= height[left]) {
-                    // 计算一次
-                    for (int j = left + 1; j < i; j++) {
-                        ans += height[left] - height[j];
-                    }
-                    left = i;
-                }
+        int ans = 0, pos = left, i = left, temp = 0; // 双指针
+        while (i <= right) {
+            int val = height[pos] - height[i];
+            if (val > 0) { // 出现水坑
+                temp += val;
+            } else {
+                pos = i; // 出现左低右高或者左右等高
+                ans += temp;
+                temp = 0;
             }
-        } else {
-            for (int i = right - 1; i > left; i--) {
-                if (height[i] >= height[right]) {
-                    // 计算一次
-                    for (int j = right - 1; j > i; j--) {
-                        ans += height[right] - height[j];
-                    }
-                    right = i;
-                }
-            }
+            i++;
         }
-        if (left != right - 1) {
-            int min = Math.min(height[left], height[right]);
-            for (int j = left + 1; j < right; j++) {
-                if (height[j] < min) {
-                    ans += min - height[j];
-                }
+        pos = i = right; // 还原指针
+        temp = 0;
+        while (i >= left) {
+            int val = height[pos] - height[i];
+            if (val >= 0) { // 出现水坑
+                temp += val;
+            } else {
+                pos = i; // 左右等高已经处理过，找左高右低的
+                ans += temp;
+                temp = 0;
             }
+            i--;
+        }
+        return ans;
+    }
+
+    /**
+     * 双指针
+     * @param height
+     * @return
+     */
+    public int trap1(int[] height) {
+        if (height.length <= 2) return 0; // 不构成水坑
+        // 左边一直递增的不要
+        int left = 0;
+        while (left < height.length - 1) {
+            if (height[left] > height[left + 1]) break;
+            left++;
+        }
+        // 右边一直递减的不要
+        int right = height.length - 1;
+        while (right >= 1) {
+            if (height[right] > height[right - 1]) break;
+            right--;
+        }
+        if (left >= right) return 0;
+        int ans = 0, pos = left, i = left; // 双指针
+        while (i <= right) {
+            if (height[i] >= height[pos]) { // 出现左低右高或者左右等高
+                for (int j = pos + 1; j < i; j++) {
+                    ans += height[pos] - height[j];
+                }
+                pos = i;
+            }
+            i++;
+        }
+        pos = i = right; // 还原指针
+        while (i >= left) {
+            if (height[i] > height[pos]) { // 左右等高已经处理过，找左高右低的
+                for (int j = pos - 1; j > i; j--) {
+                    ans += height[pos] - height[j];
+                }
+                pos = i;
+            }
+            i--;
         }
         return ans;
     }
