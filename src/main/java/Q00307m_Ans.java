@@ -1,5 +1,3 @@
-
-
 /**
  * 给你一个数组 nums ，请你完成两类查询，其中一类查询要求更新数组下标对应的值，另一类查询要求返回数组中某个范围内元素的总和。
  *
@@ -48,47 +46,41 @@ public class Q00307m_Ans {
 
     public Q00307m_Ans(int[] nums) {
         n = nums.length;
-        tree = new int[n * 2];
-        buildTree(nums);
-    }
-
-    private void buildTree(int[] nums) {
-        for (int i = n, j = 0;  i < 2 * n; i++,  j++){
-            tree[i] = nums[j];
-        }
-        for (int i = n - 1; i > 0; --i) {
+        tree = new int[n * 2]; // 两倍原始数组的长度
+        System.arraycopy(nums, 0, tree, n, n);
+        for (int i = n - 1; i > 0; i--) {
             tree[i] = tree[i * 2] + tree[i * 2 + 1];
         }
     }
 
     public void update(int index, int val) {
         index += n;
-        tree[index] = val;
+        tree[index] = val; // 先更新当前下标的值
         while (index > 0) {
             int left = index;
             int right = index;
-            if (index % 2 == 0) {
+            if (index % 2 == 0) { // 如果index是偶数，则right要为奇数
                 right = index + 1;
-            } else {
+            } else { // 如果index是奇数，则left要为偶数
                 left = index - 1;
             }
             // parent is updated after child is updated
-            tree[index / 2] = tree[left] + tree[right];
-            index /= 2;
+            tree[index /= 2] = tree[left] + tree[right];
         }
     }
+
     public int sumRange(int left, int right) {
         // get leaf with value 'left'
         left += n;
         // get leaf with value 'right'
         right += n;
         int sum = 0;
-        while (left <= right) {
-            if ((left % 2) == 1) {
+        while (left <= right) { // 只有左为偶数，右为奇数，才能直接在父节点查到
+            if ((left % 2) == 1) { // 左界是奇数，需要额外加入
                 sum += tree[left];
                 left++;
             }
-            if ((right % 2) == 0) {
+            if ((right % 2) == 0) { // 右界是偶数，需要额外加入
                 sum += tree[right];
                 right--;
             }
