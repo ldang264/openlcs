@@ -40,7 +40,9 @@ public class TreeNode {
                 ans.append(curNode.val);
                 queue.add(curNode.left); // 加入左子树
                 queue.add(curNode.right); // 加入右子树
-            } // 当前节点为空则只有分隔符
+            } else { // 当前节点为空则加入null
+                ans.append("null");
+            }
         }
         return ans.substring(1);
     }
@@ -59,12 +61,12 @@ public class TreeNode {
         while (!queue.isEmpty()) {
             parent = queue.poll(); // 弹出父节点
             child = values.poll(); // 弹出左节点
-            if (child.length() > 0) {
+            if (!"null".equals(child)) {
                 parent.left = new TreeNode(Integer.parseInt(child)); // 作为父节点的左节点
                 queue.add(parent.left); // 当前左节点入队
             }
             child = values.poll(); // 弹出右节点
-            if (child.length() > 0) {
+            if (!"null".equals(child)) {
                 parent.right = new TreeNode(Integer.parseInt(child)); // 作为父节点的右节点
                 queue.add(parent.right); // 当前右节点入队
             }
