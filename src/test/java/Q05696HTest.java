@@ -1,4 +1,5 @@
 import org.junit.Test;
+import todo.Q05696h_Todo;
 
 public class Q05696HTest {
 
