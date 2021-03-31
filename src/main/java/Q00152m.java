@@ -16,9 +16,28 @@
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00152m {
+
+    /**
+     * 逻辑上还是要多加复习
+     * @param nums
+     * @return
+     */
+    public int maxProduct(int[] nums) {
+        int[] p_dp = new int[nums.length]; // 最大乘积
+        int[] n_dp = new int[nums.length]; // 最小乘积
+        int ans = nums[0];
+        p_dp[0] = n_dp[0] = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            p_dp[i] = Math.max(nums[i], Math.max(p_dp[i - 1] * nums[i], n_dp[i - 1] * nums[i])); // 求出最大值
+            n_dp[i] = Math.min(nums[i], Math.min(p_dp[i - 1] * nums[i], n_dp[i - 1] * nums[i])); // 求出最小值
+            ans = Math.max(ans,  p_dp[i]);
+        }
+        return ans;
+    }
+
     private int ans;
 
-    public int maxProduct(int[] nums) {
+    public int maxProduct1(int[] nums) {
         ans = 0;
         if (nums.length == 1) return nums[0];
         int allTemp = 1, temp = 1;
