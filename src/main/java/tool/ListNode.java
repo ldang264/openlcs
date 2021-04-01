@@ -18,7 +18,7 @@ public class ListNode {
 
     @Override
     public String toString() {
-    if (next == null) {
+        if (next == null) {
             return val + "";
         }
         return val + " " + next.toString();

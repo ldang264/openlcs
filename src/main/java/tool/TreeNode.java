@@ -47,7 +47,7 @@ public class TreeNode {
         return ans.substring(1);
     }
 
-    private static TreeNode deserialize(String data) {
+    public static TreeNode deserialize(String data) {
         if (data == null || "".equals(data)) return null; // null或者空串
         Queue<String> values = new LinkedList<>();
         for (String s : data.split(",", -1)) {

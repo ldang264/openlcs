@@ -7,36 +7,24 @@ import tool.ListNode;
  *
  * 如果链表中存在环，则返回 true 。 否则，返回 false 。
  *
- *  
- *
  * 进阶：
  *
  * 你能用 O(1)（即，常量）内存解决此问题吗？
  *
- *  
- *
  * 示例 1：
- *
- *
- *
  * 输入：head = [3,2,0,-4], pos = 1
  * 输出：true
  * 解释：链表中有一个环，其尾部连接到第二个节点。
- * 示例 2：
  *
- *
- *
+ * 示例2：
  * 输入：head = [1,2], pos = 0
  * 输出：true
  * 解释：链表中有一个环，其尾部连接到第一个节点。
+ *
  * 示例 3：
- *
- *
- *
  * 输入：head = [1], pos = -1
  * 输出：false
  * 解释：链表中没有环。
- *  
  *
  * 提示：
  *
@@ -49,28 +37,21 @@ import tool.ListNode;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00141s {
-    public static void main(String[] args) {
-        Q00141s hc = new Q00141s();
-        ListNode l1 = new ListNode(3);
-        ListNode l10 = new ListNode(2);
-        l1.next = l10;
-        l10.next = new ListNode(0);
-        ListNode l11 = new ListNode(-4);
-        l10.next.next = l11;
-        l11.next = l10;
-        System.out.println(hc.hasCycle(l1));
-
-        ListNode l2 = new ListNode(3);
-        ListNode l20 = new ListNode(2);
-        l2.next = l20;
-        l20.next = l2;
-        System.out.println(hc.hasCycle(l2));
-
-        ListNode l3 = new ListNode(1);
-        System.out.println(hc.hasCycle(l3));
-    }
 
     public boolean hasCycle(ListNode head) {
+        // 使用两个指针，slow每次走一步，fast每次走两步；如果链表无环，则fast先走到空；而如果有环，则slow一定会被fast追上
+        ListNode slow = head, fast = head;
+        while (fast != null) {
+            fast = fast.next;
+            if (fast == null) return false;
+            fast = fast.next;
+            slow = slow.next;
+            if (fast == slow) return true; // 再次相遇则有环
+        }
+        return false;
+    }
+
+    public boolean hasCycle1(ListNode head) {
         while (head != null) {
             if (head.val == 100001) return true; // 已被遍历过，则成环
             head.val = 100001; // 未被遍历过，设置为最大值+1

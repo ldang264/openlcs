@@ -2,9 +2,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import tool.ListNode;
 
-public class Q00142m8Test {
+public class Q00142mTest {
 
-    Q00142m_8 dc = new Q00142m_8();
+    Q00142m dc = new Q00142m();
 
     @Test
     public void detectCycle() {

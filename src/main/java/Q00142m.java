@@ -1,8 +1,5 @@
 import tool.ListNode;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * 给定一个链表，返回链表开始入环的第一个节点。如果链表无环，则返回null。
  * 为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。注意，pos 仅仅是用于标识环的情况，并不会作为参数传递到函数中。
@@ -35,17 +32,29 @@ import java.util.Set;
  * 链接：https://leetcode-cn.com/problems/linked-list-cycle-ii
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class Q00142m_8 {
+public class Q00142m {
     public ListNode detectCycle(ListNode head) {
-        if (head == null) return null;
-        Set<ListNode> set = new HashSet<>();
-        ListNode curr = head;
-        while (curr != null) {
-            if (set.contains(curr)) {
-                return curr;
+        // 采用快慢指针，快指针fast每次走两步，慢指针slow每次走一步，如果有环，它们必相遇
+        // 设出发点到环口长度为a，环口到交点长度为b,交点到环口长度为c，假设fast走了m圈环,slow走了n圈环，则有如下等式
+        // a + m(b + c) + b = 2 (a + n(b + c) + b)
+        // a + b = (m - 2n)(b + c)
+        // a = (m - 2n - 1)(b + c) + c
+        // 则如果另一个指针再走a的距离，一定把c给填上，它们在环口相遇
+        ListNode fast = head, slow = head;
+        while (fast != null) {
+            fast = fast.next;
+            if (fast == null) return null;
+            fast = fast.next;
+            slow = slow.next;
+            if (fast == slow) { // 有环，且相遇
+                if (slow == head) return slow;
+                fast = head;
+                while (fast != slow) {
+                    fast = fast.next;
+                    slow = slow.next;
+                }
+                return slow;
             }
-            set.add(curr);
-            curr = curr.next;
         }
         return null;
     }
