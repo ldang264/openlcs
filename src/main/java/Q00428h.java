@@ -37,7 +37,6 @@ public class Q00428h {
                 for (Node child : root.children) {
                     sb.append(serialize(child));
                 }
-                //sb.deleteCharAt(sb.length() - 1);
                 sb.append("]");
             } else {
                 sb.append(" ");
@@ -55,7 +54,7 @@ public class Q00428h {
             if (data.charAt(i) == '[') { // 列表开始
                 stack.push(new Node(num, new LinkedList<>()));
                 num = 0;
-                stack.push(null);
+                stack.push(null); // 空Node作为父子分隔符
             } else if (data.charAt(i) == ']') { // 列表结束
                 Node top;
                 LinkedList<Node> children = new LinkedList<>();
