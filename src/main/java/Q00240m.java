@@ -1,5 +1,3 @@
-package ans;
-
 /**
  * 编写一个高效的算法来搜索mxn矩阵 matrix 中的一个目标值 target 。该矩阵具有以下特性：
  *
@@ -28,7 +26,7 @@ package ans;
  * 链接：https://leetcode-cn.com/problems/search-a-2d-matrix-ii
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class Q00240m_Ans {
+public class Q00240m {
 
     /**
      * 参考答案，从左下角开始搜索

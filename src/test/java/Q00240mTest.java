@@ -1,10 +1,9 @@
-import ans.Q00240m_Ans;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class Q00240mTest {
 
-    Q00240m_Ans q00240m = new Q00240m_Ans();
+    Q00240m q00240m = new Q00240m();
 
     @Test
     public void searchMatrix() {
