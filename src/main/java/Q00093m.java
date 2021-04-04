@@ -1,4 +1,3 @@
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -63,7 +62,7 @@ public class Q00093m {
             // 保证自身取1-3个数字，且剩余数字在(1-3)pos个
             for (int i = Math.max(0, s.length() - 3 * (pos - 1) - 1); i <= Math.min(s.length() - pos, 2); i++) {
                 String sub = s.substring(0, i + 1);
-                if (!validate(sub)) continue;
+                if (!validate(sub)) break;
                 temp.addLast(sub);
                 dfs(s.substring(i + 1), pos - 1, temp);
                 temp.removeLast();
@@ -72,39 +71,7 @@ public class Q00093m {
     }
 
     private boolean validate(String sub) {
-        if ((sub.length() > 1 && sub.charAt(0) == '0') // 0后还有
-                || (sub.length() == 3 && sub.compareTo("255") > 0)) return false; // 超过255
-        return true;
-    }
-
-    private void dfs1(String s, int len, int index, Deque<String> temp) {
-        if (len == -1) {
-            ans.add(String.join(".", temp));
-            return;
-        }
-        if (len == 0 && index < s.length() - 3) {
-            return;
-        }
-        if (s.charAt(index) == '0') {
-            temp.offer("0");
-            dfs1(s, len - 1, index + 1, temp);
-            temp.poll();
-        } else {
-            int i = index;
-            while (i < Math.min(s.length() - len, index + 2)) {
-                temp.offer(s.substring(index, i + 1));
-                dfs1(s, len - 1, i + 1, temp);
-                temp.poll();
-                i++;
-            }
-            if (i < Math.min(s.length() - len, index + 3)) {
-                String n = s.substring(index, index + 3);
-                if (n.compareTo("255") <= 0) {
-                    temp.offer(n);
-                    dfs1(s, len - 1, index + 3, temp);
-                    temp.poll();
-                }
-            }
-        }
+        return !((sub.length() > 1 && sub.charAt(0) == '0') // 0后还有
+                || (sub.length() == 3 && sub.compareTo("255") > 0)); // 超过255
     }
 }
