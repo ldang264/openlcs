@@ -70,7 +70,7 @@ public class Q00297h_Ans {
         queue.add(root); // 根节点入栈
         TreeNode parent;
         String child; // 左右子节点的值
-        while (!queue.isEmpty()) {
+        while (!queue.isEmpty() && !values.isEmpty()) {
             parent = queue.poll(); // 弹出父节点
             child = values.poll(); // 弹出左节点
             if (child.length() > 0) {
