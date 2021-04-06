@@ -17,13 +17,13 @@ public class DFS {
         Deque<TreeNode> stack = new LinkedList<>();
         stack.push(root);
         while (!stack.isEmpty()) {
-            root = stack.pop();
+            root = stack.pop(); // 直接先弹出根
             System.out.print(root.val + " ");
             if (root.right != null) {
-                stack.push(root.right);
+                stack.push(root.right); // 右节点后被弹出
             }
             if (root.left != null) {
-                stack.push(root.left);
+                stack.push(root.left); // 左节点先被弹出
             }
         }
     }
@@ -36,12 +36,12 @@ public class DFS {
         Deque<TreeNode> stack = new LinkedList<>();
         while (root != null || !stack.isEmpty()) {
             while (root != null) {
-                stack.push(root);
+                stack.push(root); // 一直会将左节点入栈
                 root = root.left;
             }
-            root = stack.pop();
+            root = stack.pop(); // 依次弹出左节点、根、右节点
             System.out.print(root.val + " ");
-            root = root.right;
+            root = root.right; // 处理右子树
         }
     }
 
@@ -52,20 +52,20 @@ public class DFS {
     public void dfs_iteration_postorder(TreeNode root) {
         Deque<TreeNode> stack = new LinkedList<>();
         TreeNode curr = root;
-        TreeNode last = null;
+        TreeNode last = null; // 需要增加前一个节点的引用
         while (curr != null || !stack.isEmpty()) {
             while (curr != null) {
                 stack.push(curr);
                 curr = curr.left;
             }
-            curr = stack.peek();
-            if (curr.right == null || curr.right == last) {
-                System.out.print(curr.val + " ");
-                stack.pop();
-                last = curr;
-                curr = null;
+            curr = stack.peek(); // 取栈顶元素
+            if (curr.right == null || curr.right == last) { // 如果没有右节点或者右节点刚被处理过
+                System.out.print(curr.val + " "); // 处理根
+                stack.pop(); // 弹出根
+                last = curr; // 比较根已被处理过
+                curr = null; // 当前对象清空
             } else {
-                curr = curr.right;
+                curr = curr.right; //
             }
         }
     }
