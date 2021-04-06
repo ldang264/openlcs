@@ -1,3 +1,4 @@
+import org.junit.Assert;
 import org.junit.Test;
 import tool.TreeNode;
 
@@ -6,16 +7,8 @@ public class Q00114mTest {
 
     @Test
     public void flatten() {
-        TreeNode root = new TreeNode(1);
-        TreeNode t1 = new TreeNode(2);
-        TreeNode t2 = new TreeNode(5);
-        root.left = t1;
-        root.right = t2;
-        t1.left = new TreeNode(3);
-        t1.right = new TreeNode(4);
-        t2.left = new TreeNode(6);
-        t2.right = new TreeNode(7);
+        TreeNode root = TreeNode.deserialize("1,2,5,3,4,null,6");
         f.flatten(root);
-        System.out.println(root);
+        Assert.assertEquals(root.toString(), "1,null,2,null,3,null,4,null,5,null,6,null,null");
     }
 }
