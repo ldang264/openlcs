@@ -1,8 +1,6 @@
 import tool.TreeNode;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 给定一个二叉树，返回它的 后序遍历。
@@ -24,21 +22,23 @@ import java.util.Stack;
  */
 public class Q00145m {
     public List<Integer> postorderTraversal(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        Stack<TreeNode> stack = new Stack<>();
+        // 后序遍历需要维护一个刚处理过的引用
+        List<Integer> list = new LinkedList<>();
+        if (root == null) return list;
+        Deque<TreeNode> stack = new LinkedList<>();
         TreeNode prev = null;
         while (root != null || stack.size() > 0) {
-            while (root != null) { // 把左都加进去
-                stack.add(root);
+            while (root != null) {
+                stack.push(root);
                 root = root.left;
             }
-            root = stack.pop();
-            if (root.right == null || root.right == prev) { // 如果右为空，或者右已经加入，则把当前加入
+            root = stack.peek();
+            if (root.right == null || root.right == prev) {
+                stack.pop();
                 list.add(root.val);
                 prev = root;
                 root = null;
-            } else { // 中不能加入，让它取右子
-                stack.push(root);
+            } else {
                 root = root.right;
             }
         }

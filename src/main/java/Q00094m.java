@@ -1,8 +1,6 @@
 import tool.TreeNode;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 给定一个二叉树的根节点 root ，返回它的 中序遍历。
@@ -41,17 +39,17 @@ import java.util.Stack;
 public class Q00094m {
     
     public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        Stack<TreeNode> stack = new Stack<>();
+        List<Integer> list = new LinkedList<>();
+        if (root == null) return list;
+        Deque<TreeNode> stack = new LinkedList<>();
         while (root != null || stack.size() > 0) {
-            // 一直找到最左子树
-            while(root != null) {
-                stack.add(root);
+            while (root != null) {
+                stack.push(root); // 加入根和左节点
                 root = root.left;
             }
-            TreeNode node = stack.pop(); // 弹出左
-            list.add(node.val); // 加入左
-            root = node.right; // 取右，最左的右是空的，下次循环会取中，加入中后再遍历右
+            root = stack.pop(); // 弹出左节点和根
+            list.add(root.val);
+            root = root.right; // 处理右节点
         }
         return list;
     }
