@@ -19,25 +19,12 @@
  */
 public class Q00718m {
     public int findLength(int[] A, int[] B) {
-        int[][] dp = new int[A.length][B.length]; // 表示A[i] == B[j]的公共子串的长度
+        int[][] dp = new int[A.length + 1][B.length + 1]; // 表示A[i] == B[j]的公共子串的长度
         int ans = 0;
         for (int i = 0; i < A.length; i++) {
-            if (A[i] == B[0]) { // 先取A中所有字符与B第一个字符相等的长度
-                dp[i][0] = 1;
-                ans = 1;
-            }
-        }
-        for (int j = 1; j < B.length; j++) {
-            if (A[0] == B[j]) { // 先取B中所有字符与A第一个字符相等的长度
-                dp[0][j] = 1;
-                ans = 1;
-            }
-        }
-        for (int i = 1; i < A.length; i++) {
-            for (int j = 1; j < B.length; j++) {
+            for (int j = 0; j < B.length; j++) {
                 if (A[i] == B[j]) { // 如果相等，取前一个dp的长度+1
-                    dp[i][j] = dp[i - 1][j - 1] + 1;
-                    ans = Math.max(ans, dp[i][j]);
+                    ans = Math.max(ans, dp[i + 1][j + 1] = dp[i][j] + 1);
                 }
             }
         }

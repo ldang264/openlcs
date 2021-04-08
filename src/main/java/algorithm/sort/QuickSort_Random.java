@@ -40,26 +40,25 @@ public class QuickSort_Random {
         return nums;
     }
 
-    private static void quickSort(int[] nums, int l, int r) {
-        if (l < r) {
-            int pos = partition(nums, l, r);
-            quickSort(nums, l, pos - 1);
-            quickSort(nums, pos + 1, r);
-        }
+    private static void quickSort(int[] nums, int left, int right) {
+        if (left >= right) return;
+        int pos = partition(nums, left, right);
+        quickSort(nums, left, pos - 1);
+        quickSort(nums, pos + 1, right);
     }
 
-    private static int partition(int[] nums, int l, int r) {
-        int i = new Random().nextInt(r - l + 1) + l; // 随机选一个作为我们的主元
-        swap(nums, r, i);
-        int pivot = nums[r];
-        int k = l - 1;
-        for (int j = l; j <= r - 1; ++j) {
+    private static int partition(int[] nums, int left, int right) {
+        int i = new Random().nextInt(right - left + 1) + left; // 随机选一个作为我们的主元
+        swap(nums, right, i);
+        int pivot = nums[right];
+        int k = left - 1;
+        for (int j = left; j <= right - 1; ++j) {
             if (nums[j] <= pivot) {
                 k = k + 1;
                 swap(nums, k, j);
             }
         }
-        swap(nums, k + 1, r);
+        swap(nums, k + 1, right);
         return k + 1;
     }
 
