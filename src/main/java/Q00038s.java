@@ -65,4 +65,37 @@ public class Q00038s {
         }
         return ans.substring(i, ans.length() - 1);
     }
+
+    /**
+     * 评论里的递归解法
+     *
+     作者：zyxwmj
+     链接：https://leetcode-cn.com/problems/count-and-say/solution/xun-huan-he-di-gui-liang-chong-jie-fa-di-oof8/
+     来源：力扣（LeetCode）
+     著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     * @param n
+     * @return
+     */
+    public String countAndSay1(int n) {
+        // 递归终止条件
+        if (n == 1) {
+            return "1";
+        }
+        // 获取到上一层的字符串
+        String s = countAndSay1(n - 1);
+        StringBuilder result = new StringBuilder();
+        // 记录每个数字的开始索引
+        int start = 0;
+        for (int i = 1; i < s.length(); i++) {
+            // 当数字发生改变时执行
+            if (s.charAt(i) != s.charAt(start)) {
+                result.append(i - start).append(s.charAt(start));
+                start = i;
+            }
+        }
+        // 字符串最后一个数字
+        result.append(s.length() - start).append(s.charAt(start));
+        return result.toString();
+    }
+
 }
