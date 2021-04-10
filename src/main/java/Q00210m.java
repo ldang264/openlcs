@@ -38,11 +38,11 @@ public class Q00210m {
         int[] ans = new int[numCourses]; // 存储结果
         int[] inDegrees = new int[numCourses]; // 入度数组
         List<Integer>[] outgoings = new LinkedList[numCourses]; // 指向的元素列表，也就是边的关系
+        for (int i = 0; i < outgoings.length; i++) {
+            outgoings[i] = new LinkedList<>();
+        }
         for (int[] req : prerequisites) {
             inDegrees[req[0]]++; // 入度+1
-            if (outgoings[req[1]] == null) {
-                outgoings[req[1]] = new LinkedList<>();
-            }
             outgoings[req[1]].add(req[0]); // 1指向0
         }
         Queue<Integer> fifo = new LinkedList<>();
@@ -54,11 +54,9 @@ public class Q00210m {
         while (fifo.size() > 0) {
             int i = fifo.poll();
             ans[ans.length - numCourses--] = i; // 拓扑排序
-            if (outgoings[i] != null) {
-                for (Integer out : outgoings[i]) {
-                    if (--inDegrees[out] == 0) { // 如果指向的元素的度减为0，加入队列
-                        fifo.offer(out);
-                    }
+            for (Integer out : outgoings[i]) {
+                if (--inDegrees[out] == 0) { // 如果指向的元素的度减为0，加入队列
+                    fifo.offer(out);
                 }
             }
         }

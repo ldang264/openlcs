@@ -46,11 +46,11 @@ public class Q00207m {
         // 因为已知顶点的值为0到numCourses-1，所以可以用数组来表示
         int[] inDegrees = new int[numCourses];
         List<Integer>[] outgoings = new LinkedList[numCourses];
+        for (int i = 0; i < outgoings.length; i++) {
+            outgoings[i] = new LinkedList<>();
+        }
         for (int[] req : prerequisites) {
             inDegrees[req[0]]++; // 计算入度
-            if (outgoings[req[1]] == null) {
-                outgoings[req[1]] = new LinkedList<>();
-            }
             outgoings[req[1]].add(req[0]); // 1指向0
         }
         Queue<Integer> queue = new LinkedList<>();
@@ -62,11 +62,9 @@ public class Q00207m {
         while (queue.size() > 0) {
             int i = queue.poll();
             numCourses--;
-            if (outgoings[i] != null) {
-                for (Integer out : outgoings[i]) {
-                    if (--inDegrees[out] == 0) { // 如果指向的元素的度减为0，加入队列
-                        queue.offer(out);
-                    }
+            for (Integer out : outgoings[i]) {
+                if (--inDegrees[out] == 0) { // 如果指向的元素的度减为0，加入队列
+                    queue.offer(out);
                 }
             }
         }
