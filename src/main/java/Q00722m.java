@@ -2,6 +2,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Q00722m {
+
+    /**
+     * 采用的是合并字符串数组，处理完再分解的方式
+     * @param source
+     * @return
+     */
     public List<String> removeComments(String[] source) {
         List<String> ans = new ArrayList<>();
         StringBuilder sb = new StringBuilder();

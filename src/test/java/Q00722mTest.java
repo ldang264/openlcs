@@ -9,6 +9,6 @@ public class Q00722mTest {
 
     @Test
     public void removeComments() {
-        Assert.assertEquals(q00722m.removeComments(new String[]{"/*Test program */", "int main()", "{ ", "  // variable declaration ", "int a, b, c;", "/* This is a test", "   multiline  ", "   comment for ", "   testing */", "a = b + c;", "}"}).toString(), "");
+        Assert.assertEquals(q00722m.removeComments(new String[]{"/*Test program */", "int main()", "{ ", "  // variable declaration ", "int a, b, c;", "/* This is a test", "   multiline  ", "   comment for ", "   testing */", "a = b + c;", "}"}).toString(), "[int main(), { ,   , int a, b, c;, a = b + c;, }]");
     }
 }
