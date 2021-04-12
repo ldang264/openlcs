@@ -38,6 +38,7 @@ public class Q00089m {
 
     /**
      * 背答案吧，记住格雷编码生成公式
+     *
      * @param n
      * @return
      */
@@ -56,8 +57,9 @@ public class Q00089m {
          G(7) = 7 ^ 3 = 111 ^ 011 = 100
          **/
         List<Integer> ans = new ArrayList<>();
-        for (int i = 0; i < (1 << n); i++)
+        for (int i = 0; i < (1 << n); i++) {
             ans.add(i ^ (i >> 1));
+        }
         return ans;
     }
 }
