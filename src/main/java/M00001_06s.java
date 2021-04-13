@@ -22,6 +22,30 @@ public class M00001_06s {
         if (S.length() <= 2) return S;
         StringBuilder ans = new StringBuilder();
         int num = 1; // 字符计数器
+        char prev = S.charAt(0);
+        for (int i = 1; i < S.length(); i++) {
+            char curr = S.charAt(i); // 当前字符
+            if (prev != curr) { // 结算prev
+                ans.append(prev).append(num);
+                num = 1; // 重置计数
+                prev = curr;
+            } else {
+                num++; // 相等则计数+1
+            }
+        }
+        ans.append(prev).append(num);
+        return ans.length() < S.length() ? ans.toString() : S;
+    }
+
+    /**
+     * 更新字符部分可以优化
+     * @param S
+     * @return
+     */
+    public String compressString1(String S) {
+        if (S.length() <= 2) return S;
+        StringBuilder ans = new StringBuilder();
+        int num = 1; // 字符计数器
         char prev = S.charAt(0), next;
         for (int i = 1; i < S.length(); i++) {
             next = S.charAt(i); // 当前字符
