@@ -18,9 +18,25 @@ public class ListNode {
 
     @Override
     public String toString() {
-        if (next == null) {
-            return val + "";
+        StringBuilder sb = new StringBuilder();
+        ListNode curr = this;
+        while (curr != null) {
+            sb.append(',').append(curr.val);
+            curr = curr.next;
         }
-        return val + " " + next.toString();
+        return sb.length() > 0 ? sb.substring(1) : "";
+    }
+
+    public static ListNode deserialize(String data) {
+        if (data == null) return null;
+        String[] arr = data.split(",");
+        ListNode hair = new ListNode(-1);
+        ListNode ch = hair;
+        for (String s : arr) {
+            ListNode curr = new ListNode(Integer.parseInt(s.trim()));
+            ch.next = curr;
+            ch = curr;
+        }
+        return hair.next;
     }
 }

@@ -18,20 +18,15 @@ public class TreeNode {
         this.right = right;
     }
 
-    @Override
-    public String toString() {
-        return serialize(this);
-    }
-
     /**
      * 广度优先的层序遍历
-     * @param root
      * @return
      */
-    private static String serialize(TreeNode root) {
+    @Override
+    public String toString() {
         StringBuilder ans = new StringBuilder();
         Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root); // 加入根
+        queue.add(this); // 加入根
         TreeNode curNode;
         while (queue.size() > 0) {
             curNode = queue.poll();
