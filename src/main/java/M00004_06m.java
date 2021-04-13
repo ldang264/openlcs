@@ -47,8 +47,8 @@ public class M00004_06m {
                 root = root.left;
             }
             root = stack.pop();
-            if (find) return root;
-            if (root == p) find = true;
+            if (find) return root; // 是找到后的下一个
+            if (root == p) find = true; // 已经找到p
             root = root.right;
         }
         return null;
