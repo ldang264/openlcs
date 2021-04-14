@@ -68,7 +68,6 @@ public class Q00134m {
                 for (int j = i; j < gas.length; j++) {
                     curr += gas[j] - cost[j];
                     if (curr < 0) { // 走不下去了
-                        curr = 0;
                         can = false;
                         break;
                     }
