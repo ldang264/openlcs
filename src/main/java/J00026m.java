@@ -38,13 +38,7 @@ import tool.TreeNode;
 public class J00026m {
     public boolean isSubStructure(TreeNode A, TreeNode B) {
         if (A == null || B == null) return false; // 空树必不是子结构
-        return dfs(A, B);
-    }
-
-    private boolean dfs(TreeNode A, TreeNode B) {
-        if (A == null) return false; // 递归出口
-        if (match(A, B)) return true; // 比较当前节点
-        return dfs(A.left, B) || dfs(A.right, B); // 递归比较A的左右子树
+        return match(A, B) || isSubStructure(A.left, B) || isSubStructure(A.right, B);
     }
 
     private boolean match(TreeNode A, TreeNode B) {

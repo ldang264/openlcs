@@ -55,12 +55,12 @@ public class TreeNode {
         String child; // 左右子节点的值
         while (!queue.isEmpty() && !values.isEmpty()) {
             parent = queue.poll(); // 弹出父节点
-            child = values.poll(); // 弹出左节点
+            child = values.poll().trim(); // 弹出左节点
             if (!"null".equals(child)) {
                 parent.left = new TreeNode(Integer.parseInt(child)); // 作为父节点的左节点
                 queue.add(parent.left); // 当前左节点入队
             }
-            child = values.poll(); // 弹出右节点
+            child = values.poll().trim(); // 弹出右节点
             if (!"null".equals(child)) {
                 parent.right = new TreeNode(Integer.parseInt(child)); // 作为父节点的右节点
                 queue.add(parent.right); // 当前右节点入队

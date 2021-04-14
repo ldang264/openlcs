@@ -39,7 +39,30 @@
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00091m {
+
     public int numDecodings(String s) {
-        return 0;
+        if (s.charAt(0) == '0') return 0;
+        if (s.length() == 1) return 1;
+        // 设dp[i+1]是到第i个字符的总数
+        int[] dp = new int[s.length() + 1];
+        dp[0] = dp[1] = 1;
+        int prev = s.charAt(0) - '0';
+        for (int i = 1; i < s.length(); i++) {
+            int next = s.charAt(i) - '0';
+            if (prev == 0) {
+                if (next == 0) return 0; // 00
+                dp[i + 1] = dp[i]; // 01,02...09
+            } else if (next == 0) {
+                if (prev > 2) return 0; // 30,40,...,90
+                dp[i + 1] = dp[i - 1]; // 10,20
+            } else {
+                dp[i + 1] = dp[i]; // 至少可以加上i - 1;
+                if (prev * 10 + next <= 26) { // 11,12..26
+                    dp[i + 1] += dp[i - 1];
+                }
+            }
+            prev = next;
+        }
+        return dp[s.length()];
     }
 }
