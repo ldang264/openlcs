@@ -59,7 +59,7 @@ public class Q00131m {
     }
 
     private void dfs(boolean[][] dp, int i, int j) {
-        if (i >= 0 && i < len && dp[i][j]) { // 如果i-j是回文，则下一次从j+1开始，一直判断到字符串结束
+        if (dp[i][j]) { // 如果i-j是回文，则下一次从j+1开始，一直判断到字符串结束
             j++;
             help.add(str.substring(i, j));
             if (j == len) { // 到达字符串结束都是回文
