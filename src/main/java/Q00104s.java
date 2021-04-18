@@ -27,46 +27,6 @@ import java.util.LinkedList;
  */
 public class Q00104s {
 
-    public static void main(String[] args) {
-        //test();
-        //test1();
-        test2();
-    }
-
-    public static void test() {
-        Q00104s btMaxDepth = new Q00104s();
-        TreeNode left1 = new TreeNode(9);
-        TreeNode root = new TreeNode(3);
-        root.left = left1;
-        System.out.println(btMaxDepth.maxDepth(root));
-    }
-
-    public static void test1() {
-        Q00104s btMaxDepth = new Q00104s();
-        TreeNode left2 = new TreeNode(15);
-        TreeNode right2 = new TreeNode(7);
-        TreeNode right1 = new TreeNode(20);
-        right1.left = left2;
-        right1.right = right2;
-        TreeNode left1 = new TreeNode(9);
-        TreeNode root = new TreeNode(3);
-        root.left = left1;
-        root.right = right1;
-        System.out.println(btMaxDepth.maxDepth(root));
-    }
-
-    public static void test2() {
-        Q00104s btMaxDepth = new Q00104s();
-        TreeNode left2 = new TreeNode(15);
-        TreeNode right1 = new TreeNode(20);
-        right1.left = left2;
-        TreeNode left1 = new TreeNode(9);
-        TreeNode root = new TreeNode(3);
-        root.left = left1;
-        root.right = right1;
-        System.out.println(btMaxDepth.maxDepth(root));
-    }
-
     private int degree; // 最大深度
 
     /**
@@ -128,4 +88,20 @@ public class Q00104s {
         }
         return degree;
     }
+
+    /**
+     * 递归
+     * @param root
+     * @return
+     */
+    public int maxDepthAns(TreeNode root) {
+        if (root == null) {
+            return 0;
+        } else {
+            int leftHeight = maxDepth(root.left);
+            int rightHeight = maxDepth(root.right);
+            return Math.max(leftHeight, rightHeight) + 1;
+        }
+    }
+
 }
