@@ -1,5 +1,3 @@
-package ans;
-
 import tool.TreeNode;
 
 import java.util.HashMap;
@@ -31,9 +29,26 @@ import java.util.Map;
  * 链接：https://leetcode-cn.com/problems/path-sum-iii
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class Q00437m_Ans {
+public class Q00437m {
 
     public int pathSum(TreeNode root, int sum) {
+        if (root == null) return 0;
+        return dfs(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);
+    }
+
+    private int dfs(TreeNode root, int sum) {
+        if (root == null) return 0;
+        sum -= root.val;
+        return (sum == 0 ? 1 : 0) + dfs(root.left, sum) + dfs(root.right, sum);
+    }
+
+    /**
+     * 答案：前缀和
+     * @param root
+     * @param sum
+     * @return
+     */
+    public int pathSumAns(TreeNode root, int sum) {
         // key是前缀和, value是大小为key的前缀和出现的次数
         Map<Integer, Integer> prefixSumCount = new HashMap<>();
         // 前缀和为0的一条路径
