@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的循环双向链表。要求不能创建任何新的节点，只能调整树中节点指针的指向。
  * 为了让您更好地理解问题，以下面的二叉搜索树为例：
@@ -19,29 +16,29 @@ import java.util.List;
  */
 public class J00036m {
 
-    private List<Node> nodeList;
+    private Node head;
+
+    private Node prev;
 
     public Node treeToDoublyList(Node root) {
-        if (root == null) return null;
-        nodeList = new ArrayList<>();
         dfs(root);
-        Node head = nodeList.get(0);
-        nodeList.add(head);
-        for (int i = 0; i < nodeList.size() - 1; i++) {
-            Node prev = nodeList.get(i);
-            Node next = nodeList.get(i + 1);
-            prev.right = next;
-            next.left = prev;
+        if (head != null) { // 关联首尾节点
+            head.left = prev;
+            prev.right = head;
         }
         return head;
     }
 
     private void dfs(Node root) {
-        if (root.left != null)
-            dfs(root.left);
-        nodeList.add(root);
-        if (root.right != null)
-            dfs(root.right);
+        if (root == null) return;
+        dfs(root.left);
+        if (head == null) head = root; // 最小值的节点
+        if (prev != null) { // 前后两个节点关联
+            prev.right = root;
+            root.left = prev;
+        }
+        prev = root; // 更新前一个节点
+        dfs(root.right);
     }
 
     static class Node {
