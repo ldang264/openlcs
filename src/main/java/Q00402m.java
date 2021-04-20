@@ -81,15 +81,12 @@ public class Q00402m {
             }
             stack.push(num.charAt(index++)); // 加入单调栈
         }
-        while (stack.size() > 0 && k-- > 0) { // 如果k依然大于0，则出栈k个数
-            stack.pop();
-        }
         while (stack.size() > 0 && stack.peekLast() == '0') { // 删除前导0
             stack.removeLast();
         }
         if (stack.size() == 0) return "0"; // 直接返回0
         StringBuilder sb = new StringBuilder();
-        while (stack.size() > 0) {
+        while (stack.size() > k) {
             sb.append(stack.removeLast()); // 生成返回值
         }
         return sb.toString();
