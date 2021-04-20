@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * 给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
@@ -26,21 +24,45 @@ import java.util.List;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00047m {
-    public List<List<Integer>> permuteUnique(int[] nums) {
-        Arrays.sort(nums); // 从小到大排序
-        List<List<Integer>> prev = new ArrayList<>();
-        prev.add(new ArrayList<>(nums[0]));
-        if (nums.length == 1) return prev;
-        /*for (int i = 1; i < nums.length; i++) {
-            if (nums[i] != nums[i - 1])
-                prev.add(new ArrayList<>(nums[i]));
-        }*/
-        List<List<Integer>> next = new ArrayList<>();
-        for (int i = 1; i < nums.length; i++) {
-            for (int j = 0; j < prev.size(); j++) {
 
+    private List<List<Integer>> ans;
+
+    private boolean[] visited;
+
+    private List<Integer> temp;
+
+    private Set<String> set;
+
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        ans = new ArrayList<>();
+        set = new HashSet<>();
+        visited = new boolean[nums.length];
+        temp = new ArrayList<>(nums.length);
+        Arrays.sort(nums);
+        int prev = nums[0];
+        backtrace(nums, 0);
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] != prev) {
+                prev = nums[i];
+                backtrace(nums, i);
             }
         }
-        return next;
+        return ans;
+    }
+
+    private void backtrace(int[] nums, int i) {
+        visited[i] = true;
+        temp.add(nums[i]);
+        if (temp.size() < nums.length) {
+            for (int j = 0; j < nums.length; j++) {
+                if (!visited[j]) {
+                    backtrace(nums, j);
+                }
+            }
+        } else if (set.add(temp.toString())) {
+            ans.add(new ArrayList<>(temp));
+        }
+        temp.remove(temp.size() - 1);
+        visited[i] = false;
     }
 }
