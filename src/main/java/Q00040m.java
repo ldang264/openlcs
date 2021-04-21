@@ -35,31 +35,32 @@ public class Q00040m {
 
     private List<Integer> elements;
 
-    private Set<String> set;
-
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         ans = new ArrayList<>();
         if (candidates == null || candidates.length == 0) return ans;
         Arrays.sort(candidates);
         elements = new ArrayList<>();
-        set = new HashSet<>();
-        find(candidates, target, 0);
+        find(candidates, target, 0, false);
         return ans;
     }
 
-    private void find(int[] candidates, int target, int i) {
+    /**
+     * @param candidates
+     * @param target
+     * @param i
+     * @param prev 当没选前面且相等时，跳过处理，相当于去重了
+     */
+    private void find(int[] candidates, int target, int i, boolean prev) {
         if (target == 0) {
-            String s = elements.toString();
-            if (!set.contains(s)) {
-                set.add(s);
-                ans.add(new ArrayList<>(elements));
-            }
+            ans.add(new ArrayList<>(elements));
             return;
         }
         if (target < 0 || i == candidates.length || candidates[i] > target) return;
-        find(candidates, target, i + 1); // 直接处理下一个
-        elements.add(candidates[i]); // 将当前加入
-        find(candidates, target - candidates[i], i + 1); // 去掉当前值，加下一个
-        elements.remove(elements.size() - 1); // 取出新增的元素
+        find(candidates, target, i + 1, false); // 直接处理下一个
+        if (prev || i == 0 || candidates[i - 1] < candidates[i]) {
+            elements.add(candidates[i]); // 将当前加入
+            find(candidates, target - candidates[i], i + 1, true); // 去掉当前值，加下一个
+            elements.remove(elements.size() - 1); // 取出新增的元素
+        }
     }
 }

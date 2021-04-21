@@ -31,11 +31,8 @@ public class Q00047m {
 
     private List<Integer> temp;
 
-    private Set<String> set;
-
     public List<List<Integer>> permuteUnique(int[] nums) {
         ans = new ArrayList<>();
-        set = new HashSet<>();
         visited = new boolean[nums.length];
         temp = new ArrayList<>(nums.length);
         Arrays.sort(nums);
@@ -53,14 +50,15 @@ public class Q00047m {
     private void backtrace(int[] nums, int i) {
         visited[i] = true;
         temp.add(nums[i]);
-        if (temp.size() < nums.length) {
-            for (int j = 0; j < nums.length; j++) {
-                if (!visited[j]) {
+        if (temp.size() == nums.length) {
+            ans.add(new ArrayList<>(temp));
+        } else {
+            if (!visited[0]) backtrace(nums, 0);
+            for (int j = 1; j < nums.length; j++) {
+                if (!visited[j] && (visited[j - 1] || nums[j - 1] < nums[j])) { // 没有加入过j并且(j-1加入过且前后不相等)
                     backtrace(nums, j);
                 }
             }
-        } else if (set.add(temp.toString())) {
-            ans.add(new ArrayList<>(temp));
         }
         temp.remove(temp.size() - 1);
         visited[i] = false;

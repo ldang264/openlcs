@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,34 +24,28 @@ import java.util.List;
  * 链接：https://leetcode-cn.com/problems/subsets
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-// 回溯法 TODO
 public class Q00078m {
+
+    private List<List<Integer>> ans;
+
+    private List<Integer> temp;
+
     public List<List<Integer>> subsets(int[] nums) {
+        ans = new ArrayList<>();
+        temp = new ArrayList<>();
         Arrays.sort(nums);
-        List<List<Integer>> ans = new ArrayList<>();
-        ans.add(new ArrayList<>(0)); // 无任何元素[]
-        int preSize = 1;
-        // 1到nums.length是仅有1个元素的
-        for (int num : nums) {
-            ans.add(Collections.singletonList(num));
-        }
-        for (int i = 2; i <= nums.length; i++) { // 将2个及以上的元素放入结果集
-            int currentSize = ans.size();
-            int j = i - 1;
-            for (int k = preSize; k < currentSize; k++) {
-                List<Integer> kl = ans.get(k);
-                int m = j;
-                while (m < nums.length) { // 1个的最小值比i个的最大值大
-                    if (nums[m] > kl.get(kl.size() - 1)) {
-                        List<Integer> list = new ArrayList<>(kl);
-                        list.add(nums[m]);
-                        ans.add(list);
-                    }
-                    m++;
-                }
-            }
-            preSize = currentSize;
-        }
+        backtrace(nums, 0);
         return ans;
+    }
+
+    private void backtrace(int[] nums, int i) {
+        if (i == nums.length) {
+            ans.add(new ArrayList<>(temp));
+        } else {
+            backtrace(nums, i + 1);
+            temp.add(nums[i]);
+            backtrace(nums, i + 1);
+            temp.remove(temp.size() - 1);
+        }
     }
 }
