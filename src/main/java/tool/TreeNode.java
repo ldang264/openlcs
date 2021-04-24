@@ -60,10 +60,12 @@ public class TreeNode {
                 parent.left = new TreeNode(Integer.parseInt(child)); // 作为父节点的左节点
                 queue.add(parent.left); // 当前左节点入队
             }
-            child = values.poll().trim(); // 弹出右节点
-            if (!"null".equals(child)) {
-                parent.right = new TreeNode(Integer.parseInt(child)); // 作为父节点的右节点
-                queue.add(parent.right); // 当前右节点入队
+            if (values.size() > 0) {
+                child = values.poll().trim(); // 弹出右节点
+                if (!"null".equals(child)) {
+                    parent.right = new TreeNode(Integer.parseInt(child)); // 作为父节点的右节点
+                    queue.add(parent.right); // 当前右节点入队
+                }
             }
         }
         return root;
