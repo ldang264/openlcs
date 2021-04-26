@@ -46,12 +46,12 @@ public class J00046m {
      */
     public int translateNumDp(int num) {
         String s = Integer.toString(num);
-        int d0 = 1, d1 = 1, d2; // dp[i]表示取到第i个数时的翻译的格式，i从1开始
+        int d0 = 1, d1 = 1, d2; // dp[i]表示取到第i个数时的翻译的格式，i从0开始
         char prev = s.charAt(0), next;
         for (int i = 1; i < s.length(); i++) {
             d2 = d1;
             next = s.charAt(i);
-            if (prev == '1' || (prev == '2' && next <= '5')) {
+            if (prev == '1' || (prev == '2' && next <= '5')) { // 可以选两个字符的情形
                 d2 += d0;
             }
             prev = next;
