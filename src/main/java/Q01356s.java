@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * 给你一个整数数组arr。请你将数组中的元素按照其二进制表示中数字 1 的数目升序排序。
@@ -43,8 +41,7 @@ import java.util.List;
  */
 public class Q01356s {
     public int[] sortByBits(int[] arr) {
-        int[] ans = new int[arr.length];
-        List<Integer>[] temp = new ArrayList[14];
+        List<Integer>[] temp = new List[14];
         for (int num : arr) {
             int c = Integer.bitCount(num);
             if (temp[c] == null) {
@@ -55,14 +52,12 @@ public class Q01356s {
         int index = 0;
         for (List<Integer> list : temp) {
             if (list != null) {
-                if (list.size() > 1) {
-                    Collections.sort(list);
-                }
+                Collections.sort(list);
                 for (Integer num : list) {
-                    ans[index++] = num;
+                    arr[index++] = num;
                 }
             }
         }
-        return ans;
+        return arr;
     }
 }
