@@ -21,14 +21,12 @@
  */
 public class Q00287m {
     public int findDuplicate(int[] nums) {
+        int temp;
         for (int i = 0; i < nums.length; i++) {
-            while (nums[i] != i + 1) {
-                int num = nums[i];
-                if (nums[i] == nums[num - 1]) {
-                    return nums[i];
-                }
-                nums[i] = nums[num - 1];
-                nums[num - 1] = num;
+            while (i != (temp = nums[i]) - 1) {
+                if (nums[i] == nums[temp - 1]) return nums[i];
+                nums[i] = nums[temp - 1];
+                nums[temp - 1] = temp;
             }
         }
         return 0;

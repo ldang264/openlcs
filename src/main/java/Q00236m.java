@@ -30,9 +30,18 @@ import java.util.Set;
  */
 public class Q00236m {
 
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) return root;
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        return left == null ? right  // 1.left为空说明公共祖先不在左子树，必在右子树
+                : right == null ? left // 2.right为空说明公共祖先不在右子树，必在左子树
+                : root; // 3.如果都不为空，说明p、q分居左右两边
+    }
+
     private Map<Integer, TreeNode> map;
 
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    public TreeNode lowestCommonAncestorAns(TreeNode root, TreeNode p, TreeNode q) {
         map = new HashMap<>(); // key是节点的值，value是父节点
         dfs(root);
         Set<TreeNode> visitedNodes = new HashSet<>();
