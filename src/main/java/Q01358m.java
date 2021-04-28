@@ -30,8 +30,7 @@ import java.util.Map;
 public class Q01358m {
     public int numberOfSubstrings(String s) {
         Map<Character, Integer> map = new HashMap<>();
-        int ans = 0;
-        int left = 0, right = 0;
+        int ans = 0, left = 0, right = 0;
         while (right < s.length()) {
             map.put(s.charAt(right), right);
             if (map.size() == 3) {
@@ -53,11 +52,12 @@ public class Q01358m {
     public int numberOfSubstringsAns(String s) {
         int res = 0;
         // 记录 'a', 'b', 'c' 上次出现的位置
-        int[] record = {-1, -1, -1};
+        int[] record = new int[128];
+        record['a'] = record['b'] = record['c'] = -1;
         for (int i = 0; i < s.length(); i++) {
             // 更新 'a', 'b', 'c' 最近出现的位置
-            record[s.charAt(i) - 'a'] = i;
-            res += Math.min(record[0], Math.min(record[1], record[2])) + 1;
+            record[s.charAt(i)] = i;
+            res += Math.min(record['a'], Math.min(record['b'], record['c'])) + 1;
         }
         return res;
     }
