@@ -1,10 +1,9 @@
 import org.junit.Assert;
 import org.junit.Test;
-import todo.Q00214h_Todo;
 
 public class Q00214hTest {
 
-    Q00214h_Todo q00214h = new Q00214h_Todo();
+    Q00214h_Ans q00214h = new Q00214h_Ans();
 
     @Test
     public void shortestPalindrome() {
