@@ -1,8 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class M00005_02sTest {
 
     M00005_02s m00005_02s = new M00005_02s();
