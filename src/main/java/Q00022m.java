@@ -22,12 +22,53 @@ import java.util.*;
  */
 public class Q00022m {
 
+    private List<String> ans;
+
+    private char[] temp;
+
+    private int l, r, idx;
+
+    /**
+     * 回溯
+     * @param n
+     * @return
+     */
+    public List<String> generateParenthesis(int n) {
+        ans = new ArrayList<>();
+        temp = new char[n << 1];
+        idx = 0; // 当前摆放的位置
+        l = r = n; // 左右括号的个数
+        backtrace();
+        return ans;
+    }
+
+    private void backtrace() {
+        if (idx == temp.length) { // 摆满
+            ans.add(new String(temp));
+        } else {
+            if (l > 0){ // 左括号可摆
+                temp[idx++] = '(';
+                l--;
+                backtrace();
+                l++;
+                idx--;
+            }
+            if (l < r) { // 右括号可摆
+                temp[idx++] = ')';
+                r--;
+                backtrace();
+                r++;
+                idx--;
+            }
+        }
+    }
+
     /**
      * 自己的动态规划太垃圾，参考题解的同学的实现 注：似乎性能也不高
      * @param n
      * @return
      */
-    public List<String> generateParenthesis(int n) {
+    public List<String> generateParenthesis1(int n) {
         if (n == 0) {
             return new ArrayList<>();
         }
