@@ -43,9 +43,15 @@ public class TreeNode {
     }
 
     public static TreeNode deserialize(String data) {
-        if (data == null || data.length() < 3) return null; // null或者空串
+        if (data == null || data.length() == 0) return null; // null或者空串
         Queue<String> values = new LinkedList<>();
-        for (String s : data.substring(1, data.length() - 1).split(",", -1)) {
+        String[] arr;
+        if (data.startsWith("[") && data.endsWith("]")) {
+            arr = data.substring(1, data.length() - 1).split(",", -1);
+        } else {
+            arr = data.split(",", -1);
+        }
+        for (String s : arr) {
             values.offer(s); // 将整数值和空串放入值的队列
         }
         Queue<TreeNode> queue = new LinkedList<>(); // 节点的队列
