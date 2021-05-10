@@ -7,7 +7,7 @@ import java.util.LinkedList;
  *
  * 二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
  *
- * 说明: 叶子节点是指没有子节点的节点。
+ * 说明:叶子节点是指没有子节点的节点。
  *
  * 示例：
  * 给定二叉树 [3,9,20,null,null,15,7]，
@@ -17,7 +17,7 @@ import java.util.LinkedList;
  *   9  20
  *     /  \
  *    15   7
- * 返回它的最大深度 3 。
+ * 返回它的最大深度3 。
  *
  *
  *
@@ -27,37 +27,14 @@ import java.util.LinkedList;
  */
 public class Q00104s {
 
-    private int degree; // 最大深度
-
     /**
      * 深度优先
      * @param root
      * @return
      */
     public int maxDepth(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        dfs(root, 0);
-        return degree;
-    }
-
-    /**
-     * 中序遍历
-     * @param node
-     * @param curr
-     */
-    private void dfs(TreeNode node, int curr) {
-        curr++; // 深度+1
-        if (node.left != null) {
-            dfs(node.left, curr);
-        }
-        if (curr > degree) { // 若当前深度大于最大深度
-            degree = curr; // 最大深度赋值为当前深度
-        }
-        if (node.right != null) {
-            dfs(node.right, curr);
-        }
+        if (root == null) return 0;
+        return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
     }
 
     /**
