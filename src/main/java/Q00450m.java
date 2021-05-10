@@ -79,7 +79,6 @@ public class Q00450m {
                         prev.right = target.left;
                     }
                 }
-                return;
             } else {
                 prev = root;
                 handle(root.val > key ? root.left : root.right, key);
