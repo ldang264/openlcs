@@ -4,44 +4,13 @@ import tool.ListNode;
 
 public class Q00082mTest {
 
-    Q00082m dd = new Q00082m();
+    Q00082m q00082m = new Q00082m();
 
     @Test
-    public void deleteDuplicates1() {
-        ListNode head = new ListNode(1);
-        head.next = new ListNode(2);
-        head.next.next = new ListNode(3);
-        head.next.next.next = new ListNode(3);
-        head.next.next.next.next = new ListNode(4);
-        head.next.next.next.next.next = new ListNode(4);
-        head.next.next.next.next.next.next = new ListNode(5);
-        Assert.assertEquals("1 2 5", dd.deleteDuplicates(head).toString());
-    }
-
-    @Test
-    public void deleteDuplicates2() {
-        ListNode head = new ListNode(1);
-        head.next = new ListNode(1);
-        head.next.next = new ListNode(1);
-        head.next.next.next = new ListNode(2);
-        head.next.next.next.next = new ListNode(3);
-        Assert.assertEquals("2 3", dd.deleteDuplicates(head).toString());
-    }
-
-    @Test
-    public void deleteDuplicates3() {
-        ListNode head = new ListNode(1);
-        head.next = new ListNode(2);
-        head.next.next = new ListNode(2);
-        Assert.assertEquals("1", dd.deleteDuplicates(head).toString());
-    }
-
-    @Test
-    public void deleteDuplicates4() {
-        ListNode head = new ListNode(1);
-        head.next = new ListNode(1);
-        head.next.next = new ListNode(2);
-        head.next.next.next = new ListNode(2);
-        Assert.assertNull(dd.deleteDuplicates(head));
+    public void deleteDuplicates() {
+        Assert.assertEquals("[1,2,5]", q00082m.deleteDuplicates(ListNode.deserialize("[1,2,3,3,4,4,5]")).toString());
+        Assert.assertEquals("[2,3]", q00082m.deleteDuplicates(ListNode.deserialize("[1,1,1,2,3]")).toString());
+        Assert.assertEquals("[1]", q00082m.deleteDuplicates(ListNode.deserialize("[1,2,2]")).toString());
+        Assert.assertNull(q00082m.deleteDuplicates(ListNode.deserialize("[1,1,2,2]")));
     }
 }
