@@ -67,10 +67,11 @@ public class Q00973m {
         }
         points[left] = pivot; // 将基准值放到正确的位置,左边比它小，右边比它大
         // l到left总共是left - l + 1个数
-        if (K < left - l + 1) { // K比这个个数小，还要在左边找
+        int dist = K - (left - l + 1);
+        if (dist < 0) { // K比这个个数小，还要在左边找
             sort(points, K, l, left - 1);
-        } else if (K > left - l + 1) { // K比这个数大，还要在右边找，但是只需要找剩下的数了
-            sort(points, K - (left - l + 1), left + 1, r);
+        } else if (dist > 0) { // K比这个数大，还要在右边找，但是只需要找剩下的数了
+            sort(points, dist, left + 1, r);
         }
     }
 

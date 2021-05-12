@@ -34,10 +34,11 @@ public class Q00673m {
             na[i] = 1;
             for (int j = 0; j < i; j++) {
                 if (nums[i] > nums[j]) {
-                    if (dp[i] < dp[j] + 1) { // 更新长度
-                        dp[i] = dp[j] + 1;
+                    int curr = dp[j] + 1;
+                    if (dp[i] < curr) { // 更新长度
+                        dp[i] = curr;
                         na[i] = na[j]; // 只能贡献na[j]自身的个数
-                    } else if (dp[i] == dp[j] + 1) { // 恰好相等
+                    } else if (dp[i] == curr) { // 恰好相等
                         na[i] += na[j]; // na[j]自身所有的个数都可以贡献
                     }
                 }
