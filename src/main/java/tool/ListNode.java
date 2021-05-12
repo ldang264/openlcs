@@ -24,12 +24,12 @@ public class ListNode {
             sb.append(',').append(curr.val);
             curr = curr.next;
         }
-        return sb.length() > 0 ? sb.substring(1) : "";
+        return sb.length() > 0 ? "[" + sb.substring(1) + "]" : "";
     }
 
     public static ListNode deserialize(String data) {
         if (data == null) return null;
-        String[] arr = data.split(",");
+        String[] arr = (data.startsWith("[") && data.endsWith("]") ? data.substring(1, data.length() - 1) : data).split(",");
         ListNode hair = new ListNode(-1);
         ListNode ch = hair;
         for (String s : arr) {

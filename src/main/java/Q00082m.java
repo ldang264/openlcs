@@ -18,45 +18,22 @@ import tool.ListNode;
  */
 public class Q00082m {
     public ListNode deleteDuplicates(ListNode head) {
-        if (head == null) return head;
-        ListNode curr;
-        boolean res = false;
-        while (head.next != null) {
-            if (head.val != head.next.val) {
-                if (!res) {
-                    break;
-                }
-                head = head.next;
-                res = false;
-            } else {
-                res = true;
-                head = head.next;
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode hair = new ListNode(0), prev = hair, curr = head;
+        hair.next = head;
+        while (curr != null && curr.next != null) {
+            while (curr.next != null && curr.val == curr.next.val) {
+                curr = curr.next; // 一直向后遍历
             }
-        }
-        if (res) {
-            curr = head = head.next;
-        } else {
-            curr = head;
-        }
-        if (curr == null) return null;
-        ListNode link = curr;
-        boolean dup = false;
-        while (curr.next != null) {
-            if (curr.val != curr.next.val) {
-                if (dup) {
-                    link.next = curr.next;
-                    dup = false;
-                } else {
-                    link = curr;
-                }
+            if (prev.next == curr) { // 没有相等情况，正常遍历
+                prev = curr;
             } else {
-                dup = true;
+                prev.next = curr.next; // 中间删除
             }
             curr = curr.next;
         }
-        if (dup) {
-            link.next = curr.next;
-        }
-        return head;
+        return hair.next;
     }
 }
