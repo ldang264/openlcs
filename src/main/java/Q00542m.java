@@ -36,34 +36,69 @@
  */
 public class Q00542m {
 
-    private int[][] ans; // 存储结果
-
-    private boolean[][] visited; // 访问到的标识
-
     public int[][] updateMatrix(int[][] mat) {
-        ans = new int[mat.length][mat[0].length];
-        visited = new boolean[mat.length][mat[0].length];
-        for (int i = 1; i < mat.length; i++) {
-            for (int j = 1; j < mat[0].length; j++) {
+        int m = mat.length, n = mat[0].length;
+        int[][] ans = new int[m][n]; // 动态规划
+        int MAX = m + n;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 if (mat[i][j] == 1) {
-                    if (mat[i - 1][j] == 0){
-
-                    } else if (mat[i + 1][j] == 0) {
-
-                    } else if (mat[i][j - 1] == 0) {
-
-                    } else if (mat[i][j + 1] == 0) {
-
-                    } else {
-
+                    ans[i][j] = MAX; // 用最大值占位，这是通用做法
+                }
+            }
+        }
+        // 左上到右下
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (mat[i][j] == 1) {
+                    if (i != 0) {
+                        ans[i][j] = Math.min(ans[i][j], ans[i - 1][j] + 1);
+                    }
+                    if (j != 0) {
+                        ans[i][j] = Math.min(ans[i][j], ans[i][j - 1] + 1);
+                    }
+                }
+            }
+        }
+        // 右上到左下
+        for (int i = 0; i < m; i++) {
+            for (int j = n - 1; j >= 0; j--) {
+                if (mat[i][j] == 1) {
+                    if (i != 0) {
+                        ans[i][j] = Math.min(ans[i][j], ans[i - 1][j] + 1);
+                    }
+                    if (j != n - 1) {
+                        ans[i][j] = Math.min(ans[i][j], ans[i][j + 1] + 1);
+                    }
+                }
+            }
+        }
+        // 左下到右上
+        for (int i = m - 1; i >= 0; i--) {
+            for (int j = 0; j < n; j++) {
+                if (mat[i][j] == 1) {
+                    if (i != m - 1) {
+                        ans[i][j] = Math.min(ans[i][j], ans[i + 1][j] + 1);
+                    }
+                    if (j != 0) {
+                        ans[i][j] = Math.min(ans[i][j], ans[i][j - 1] + 1);
+                    }
+                }
+            }
+        }
+        // 右下到左上
+        for (int i = m - 1; i >= 0; i--) {
+            for (int j = n - 1; j >= 0; j--) {
+                if (mat[i][j] == 1) {
+                    if (i != m - 1) {
+                        ans[i][j] = Math.min(ans[i][j], ans[i + 1][j] + 1);
+                    }
+                    if (j != n - 1) {
+                        ans[i][j] = Math.min(ans[i][j], ans[i][j + 1] + 1);
                     }
                 }
             }
         }
         return ans;
-    }
-
-    private void drawColor(int[][] mat, int i, int j) {
-
     }
 }
