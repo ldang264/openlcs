@@ -10,7 +10,7 @@ public class Q00005mTest {
         Assert.assertEquals("aaaa", q00005m.longestPalindrome("aaaa"));
         Assert.assertEquals("bb", q00005m.longestPalindrome("bb"));
         Assert.assertEquals("bbb", q00005m.longestPalindrome("bbb"));
-        Assert.assertEquals("bab", q00005m.longestPalindrome("babad"));
+        Assert.assertEquals("aba", q00005m.longestPalindrome("babad"));
         Assert.assertEquals("bb", q00005m.longestPalindrome("cbbd"));
         Assert.assertEquals("a", q00005m.longestPalindrome("a"));
         Assert.assertEquals("a", q00005m.longestPalindrome("ac"));

@@ -54,63 +54,13 @@
  */
 public class Q00013s {
     public int romanToInt(String s) {
-        int ans = 0;
-        char c, cn;
-        for (int i = 0; i < s.length(); i++) {
-            c = s.charAt(i);
-            if (c == 'I') { //
-                if (i != s.length() - 1) {
-                    cn = s.charAt(i + 1);
-                    if (cn == 'V') {
-                        ans += 4;
-                        i++;
-                    } else if (cn == 'X') {
-                        ans += 9;
-                        i++;
-                    } else {
-                        ans += 1;
-                    }
-                } else {
-                    ans += 1;
-                }
-            } else if (c == 'V') {
-                ans += 5;
-            } else if (c == 'X') { //
-                if (i != s.length() - 1) {
-                    cn = s.charAt(i + 1);
-                    if (cn == 'L') {
-                        ans += 40;
-                        i++;
-                    } else if (cn == 'C') {
-                        ans += 90;
-                        i++;
-                    } else {
-                        ans += 10;
-                    }
-                } else {
-                    ans += 10;
-                }
-            } else if (c == 'L') {
-                ans += 50;
-            } else if (c == 'C') { //
-                if (i != s.length() - 1) {
-                    cn = s.charAt(i + 1);
-                    if (cn == 'D') {
-                        ans += 400;
-                        i++;
-                    } else if (cn == 'M') {
-                        ans += 900;
-                        i++;
-                    } else {
-                        ans += 100;
-                    }
-                } else {
-                    ans += 100;
-                }
-            } else if (c == 'D') {
-                ans+= 500;
-            } else if (c == 'M') {
-                ans += 1000;
+        int[] nums = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String [] romans = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        int ans = 0, i = 0;
+        for (int j = 0; j < romans.length; j++) {
+            while (s.indexOf(romans[j], i) == i) { // 如果当前下标开始，以该罗马数字开头，则加上对应的阿拉伯数字
+                i += romans[j].length();
+                ans += nums[j];
             }
         }
         return ans;

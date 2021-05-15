@@ -1,3 +1,5 @@
+
+
 /**
  * 罗马数字包含以下七种字符：I，V，X，L，C，D和M。
  *
@@ -46,89 +48,22 @@
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00012m {
+
+    /**
+     * 维护阿拉伯数字和罗马数字的映射
+     * @param num
+     * @return
+     */
     public String intToRoman(int num) {
-        if (num >= 1000) { // 1000-3999
-            int a = num / 1000;
-            int b = num % 1000;
-            return join("", "M", a) + intToRoman(b);
-        } else if (num >= 100) { // 100 - 999
-            int a = num / 100;
-            int b = num % 100;
-            return handle(a, "C", "D", "M") + intToRoman(b);
-        } else if (num >= 10) { // 10-99
-            int a = num / 10;
-            int b = num % 10;
-            return handle(a, "X", "L", "C") + intToRoman(b);
-        } else {
-            return handle(num, "I", "V", "X");
-        }
-    }
-
-    private String handle(int num, String i, String v, String x) {
-        if (num == 9){
-            return join(i, x);
-        } else if (num >= 5) {
-            return join(v, i, num - 5);
-        } else if (num == 4) {
-            return join(i, v);
-        } else {
-            return join("", i, num);
-        }
-    }
-
-    private String join(String prefix, String suffix) {
-        return prefix + suffix;
-    }
-
-    private String join(String prefix, String suffix, int sn) {
-        StringBuilder sb = new StringBuilder(prefix);
-        for (int i = 0; i < sn; i++) {
-            sb.append(suffix);
-        }
-        prefix = sb.toString();
-        return prefix;
-    }
-
-     /* if (num == 9){ // 1-9
-                return join("I", "X");
-            } else if (num >= 5) {
-                return join("V", "I", num - 5);
-            } else if (num == 4) {
-                return join("I", "V");
-            } else {
-                return join("", "I", num);
-            }*/
-
-    /*
-    private String intToRoman(String s) {
-        if (s.length() == 4) {
-
-        } else if (s.length() == 3) {
-
-        } else if (s.length() == 2) {
-            if (s.charAt(0) == '1') {
-                return 'V' + intToRoman(s.substring(1));
-            }
-        } else if (s.length() == 1) {
-            if (s.equals("1")) {
-                return "I";
-            } else if (s.equals("2")) {
-                return "II";
-            } else if (s.equals("3")) {
-                return "III";
-            } else if (s.equals("4")) {
-                return "IV";
-            } else if (s.equals("5")) {
-                return "V";
-            } else if (s.equals("6")) {
-                return "VI";
-            } else if (s.equals("7")) {
-                return "VII";
-            } else if (s.equals("8")) {
-                return "VIII";
-            } else if (s.equals("9")) {
-                return "IX";
+        int[] nums = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String [] romans = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        StringBuilder sb = new StringBuilder();
+        for (int j = 0; j < nums.length; j++) {
+            while (num >= nums[j]) {
+                sb.append(romans[j]);
+                num -= nums[j];
             }
         }
-    }*/
+        return sb.toString();
+    }
 }
