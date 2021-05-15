@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,14 @@ import java.util.Map;
  * 解释: 因为无重复字符的最长子串是"wke"，所以其长度为 3。
  *     请注意，你的答案必须是 子串 的长度，"pwke"是一个子序列，不是子串。
  *
+ * 示例 4:
+ * 输入: s = ""
+ * 输出: 0
+ *
+ * 提示：
+ * 0 <= s.length <= 5 * 104
+ * s 由英文字母、数字、符号和空格组成
+ *
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/longest-substring-without-repeating-characters
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
@@ -34,16 +43,16 @@ public class Q00003m {
     public int lengthOfLongestSubstring(String s) {
         if (s == null) return 0;
         if (s.length() < 2) return s.length();
-        int ans = 0;
-        Map<Character, Integer> indexMap = new HashMap<>();
-        int last = 0;
+        int[] cs = new int[128];
+        Arrays.fill(cs, -1); // 初始化为不存在的下标
+        int ans = 0, last = 0;
         for (int i = 0; i < s.length(); i++) {
-            Integer index = indexMap.get(s.charAt(i));
-            if (index != null && index >= last) {// 存在，计算一次，并清除
+            char c = s.charAt(i);
+            if (cs[c] >= last) { // 存在，计算一次，并清除
                 ans = Math.max(ans, i - last);
-                last = index + 1;
+                last = cs[c] + 1;
             }
-            indexMap.put(s.charAt(i), i);
+            cs[c] = i;
         }
         return Math.max(ans, s.length() - last);
     }

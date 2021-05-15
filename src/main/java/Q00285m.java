@@ -54,17 +54,13 @@ public class Q00285m {
      */
     public TreeNode inorderSuccessorRecursive(TreeNode root, TreeNode p) {
         Deque<TreeNode> stack = new LinkedList<>();
-        boolean find = false;
         while (stack.size() > 0 || root != null) {
             while (root != null) {
                 stack.push(root);
                 root = root.left;
             }
             root = stack.pop();
-            if (find) return root;
-            if (root == p) {
-                find = true;
-            }
+            if (root.val > p.val) return root;
             root = root.right;
         }
         return null;
