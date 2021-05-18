@@ -49,44 +49,31 @@
  */
 public class Q00008m {
     public int myAtoi(String s) {
-        if (s == null || s.length() == 0) return 0;
-        int validIndex = -1;
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) != ' ') {
-                validIndex = i;
-                break;
-            }
+        int i = 0;
+        while (i < s.length()) {
+            if (s.charAt(i) != ' ') break;
+            i++;
         }
-        if (validIndex == -1) return 0; // 空串
-        s = s.substring(validIndex);
-        if (s.charAt(0) == '-' || s.charAt(0) == '+' ) {
-            if (s.length() == 1) return 0;
-            StringBuilder ns = new StringBuilder("" + s.charAt(0));
-            for (int i = 1; i < s.length(); i++) {
-                if (s.charAt(i) < '0' || s.charAt(i) > '9') {
-                    break;
-                }
-                ns.append(s.charAt(i));
+        if (i == s.length()) return 0;
+        boolean positive = true;
+        if (s.charAt(i) == '+') {
+            i++;
+        } else if (s.charAt(i) == '-') {
+            positive = false; // 负数
+            i++;
+        }
+        int ans = 0;
+        char c;
+        while (i < s.length()) {
+            if(!Character.isDigit(c = s.charAt(i))) return ans;
+            int temp = ans * 10
+                    + (positive ? (c - '0') : ('0' - c));
+            if (temp / 10 != ans) {
+                return positive ? 2147483647 : -2147483648;
             }
-            if (ns.length() == 1) return 0;
-            try {
-                return Integer.parseInt(ns.toString());
-            } catch (NumberFormatException e) {
-                return s.charAt(0) == '-' ? Integer.MIN_VALUE : Integer.MAX_VALUE;
-            }
-        } else if (s.charAt(0) >= '0' && s.charAt(0) <= '9') {
-            StringBuilder ns = new StringBuilder();
-            for (int i = 0; i < s.length(); i++) {
-                if (s.charAt(i) < '0' || s.charAt(i) > '9') {
-                    break;
-                }
-                ns.append(s.charAt(i));
-            }
-            try {
-                return Integer.parseInt(ns.toString());
-            } catch (NumberFormatException e) {
-                return Integer.MAX_VALUE;
-            }
-        } else return 0;
+            ans = temp;
+            i++;
+        }
+        return ans;
     }
 }
