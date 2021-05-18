@@ -33,9 +33,9 @@ public class Q00124h {
 
     private int dfs(TreeNode root) {
         if (root == null) return 0;
-        int lv = Math.max(dfs(root.left), 0); // 左子树的值
-        int rv = Math.max(dfs(root.right), 0); // 右子树的值
-        ans = Math.max(ans, root.val + lv + rv); // 结果
-        return root.val + Math.max(lv, rv); // 因为只能是一侧路径，所以返回较大的
+        int left = Math.max(dfs(root.left), 0); // 左子树的最大和，非正数则取0
+        int right = Math.max(dfs(root.right), 0); // 右子树的最大和，非正数则取0
+        ans = Math.max(ans, root.val + left + right); // 加上当前值，更新结果
+        return root.val + Math.max(left, right); // 返回当前值与左右子树较大和的和
     }
 }
