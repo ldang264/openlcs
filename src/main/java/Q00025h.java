@@ -20,37 +20,81 @@ import tool.ListNode;
  */
 public class Q00025h {
 
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if (head.next == null || k == 1) return head;
+        int len = 0;
+        ListNode curr = head;
+        while (curr != null) {
+            len++;
+            curr = curr.next;
+        }
+        ListNode hair = new ListNode(0), prev = hair;
+        hair.next = head;
+        curr = head;
+        int n = len / k; // 共n组，n>=1
+        while (n-- > 0) {
+            int i = k;
+            while (--i > 0) {
+                ListNode cn = curr.next;
+                curr.next = curr.next.next;
+                cn.next = prev.next;
+                prev.next = cn;
+            }
+            prev = curr;
+            curr = curr.next;
+        }
+        return hair.next;
+    }
+
     /**
-     * 1ms 40%
+     * 答案
+     *
+     作者：LeetCode-Solution
+     链接：https://leetcode-cn.com/problems/reverse-nodes-in-k-group/solution/k-ge-yi-zu-fan-zhuan-lian-biao-by-leetcode-solutio/
+     来源：力扣（LeetCode）
+     著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
      * @param head
      * @param k
      * @return
      */
-    public ListNode reverseKGroup(ListNode head, int k) {
-        if (k == 1) return head;
-        ListNode newHead = new ListNode(0); // 操作节点
-        newHead.next = head;
-        ListNode op = newHead, handler = head, post = head;
-        int i = 1;
-        do {
-            post = post.next;
-            if (i == k) {
-                // 开始反转
-                while (i > 1) {
-                    ListNode tail = op.next;
-                    ListNode hn = handler.next;
-                    ListNode hnn = hn.next;
-                    op.next = hn;
-                    hn.next = tail;
-                    handler.next = hnn;
-                    i--;
+    public ListNode reverseKGroupAns(ListNode head, int k) {
+        ListNode hair = new ListNode(0);
+        hair.next = head;
+        ListNode pre = hair;
+
+        while (head != null) {
+            ListNode tail = pre;
+            // 查看剩余部分长度是否大于等于 k
+            for (int i = 0; i < k; ++i) {
+                tail = tail.next;
+                if (tail == null) {
+                    return hair.next;
                 }
-                op = handler;
-                handler = op.next;
-            } else {
-                i++;
             }
-        } while (post != null);
-        return newHead.next;
+            ListNode nex = tail.next;
+            ListNode[] reverse = myReverse(head, tail);
+            head = reverse[0];
+            tail = reverse[1];
+            // 把子链表重新接回原链表
+            pre.next = head;
+            tail.next = nex;
+            pre = tail;
+            head = tail.next;
+        }
+
+        return hair.next;
     }
+
+    public ListNode[] myReverse(ListNode head, ListNode tail) {
+        ListNode prev = tail.next;
+        ListNode p = head;
+        while (prev != tail) {
+            ListNode nex = p.next;
+            p.next = prev;
+            prev = p;
+            p = nex;
+        }
+        return new ListNode[]{tail, head};
+    }
+
 }

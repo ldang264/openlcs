@@ -32,13 +32,35 @@ public class Q00061m {
         test4();
     }
 
+    public ListNode rotateRight(ListNode head, int k) {
+        if (k == 0 || head == null || head.next == null) return head; // 直接无须翻转
+        int n = 1;
+        ListNode curr = head;
+        while (curr.next != null) {
+            n++;
+            curr = curr.next;
+        }
+        if ((k %= n) == 0) return head; // k是n的整数倍，无须翻转
+        ListNode tail = curr; // 尾节点
+        curr = head;
+        k = n - k;
+        while (--k > 0) {
+            curr = curr.next;
+        }
+        // 此时curr是断开点
+        ListNode nh = curr.next;
+        curr.next = null; // 断开
+        tail.next = head;
+        return nh;
+    }
+
     /**
      * 快慢指针
      * @param head
      * @param k
      * @return
      */
-    public ListNode rotateRight(ListNode head, int k) {
+    public ListNode rotateRight1(ListNode head, int k) {
         if(head == null || k == 0) return head;
         int i = 0;
         ListNode slow = head, fast = head;

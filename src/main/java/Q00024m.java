@@ -37,29 +37,17 @@ public class Q00024m {
     }
 
     public ListNode swapPairs(ListNode head) {
-        if (head == null || head.next == null) {
-            return head;
+        if (head == null || head.next == null) return head; // 0或1个节点无须处理
+        ListNode hair = new ListNode(0), prev = hair;
+        hair.next = head;
+        while (prev.next != null && prev.next.next != null) { // 确保剩余还有两个节点可翻转
+            ListNode pn = prev.next;
+            ListNode pnn = pn.next;
+            prev.next = pnn;
+            pn.next = pnn.next;
+            pnn.next = pn;
+            prev = pn;
         }
-        ListNode odd = head;
-        ListNode even = head.next;
-        ListNode root = even;
-        ListNode oldOdd = odd;
-        while (odd != null) {
-            oldOdd.next = even;
-            ListNode nextOdd = even.next;
-            ListNode nextEven = null;
-            if (nextOdd != null && nextOdd.next != null) {
-                nextEven = nextOdd.next;
-            }
-            even.next = odd;
-            odd.next = nextOdd;
-            if (nextEven == null) {
-                break;
-            }
-            oldOdd = odd;
-            odd = nextOdd;
-            even = nextEven;
-        }
-        return root;
+        return hair.next;
     }
 }

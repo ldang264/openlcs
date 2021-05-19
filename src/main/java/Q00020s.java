@@ -1,4 +1,5 @@
-import java.util.Stack;
+import java.util.Deque;
+import java.util.LinkedList;
 
 /**
  * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
@@ -45,20 +46,24 @@ public class Q00020s {
     }
 
     public boolean isValid1(String s) {
-        Stack<Character> stack = new Stack<>();
-        stack.push(' ');
-        for (int i=0; i<s.length(); i++) {
+        if ((s.length() & 1) == 1) return false;
+        Deque<Character> stack = new LinkedList<>();
+        char t;
+        for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if (c == '(' || c == '[' || c == '{') {
-                stack.push(c);
+            if (c == ')') {
+                t = '(';
+            } else if (c == ']') {
+                t = '[';
+            } else if (c == '}') {
+                t = '{';
             } else {
-                char l = stack.pop();
-                if (c - l != 1 && c - l != 2) {
-                    return false;
-                }
+                stack.push(c);
+                continue;
             }
+            if (stack.size() == 0 || stack.pop() != t) return false;
         }
-        return stack.size() == 1;
+        return stack.size() == 0;
     }
 
     public boolean isValid(String s) {

@@ -52,6 +52,43 @@ public class Q00023h {
     }
 
     public ListNode mergeKLists(ListNode[] lists) {
+        if (lists.length == 0) return null;
+        return mergerRange(lists, 0, lists.length - 1);
+    }
+
+    /**
+     * 归并排序
+     * @param lists
+     * @param left
+     * @param right
+     * @return
+     */
+    private ListNode mergerRange(ListNode[] lists, int left, int right) {
+        if (left >= right) return lists[left];
+        int mid = (left + right) >> 1;
+        ListNode ls = mergerRange(lists, left, mid);
+        ListNode rs = mergerRange(lists, mid + 1, right);
+        return mergeTwo(ls, rs);
+    }
+
+    /**
+     * 递归合并
+     * @param l1
+     * @param l2
+     * @return
+     */
+    private ListNode mergeTwo(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        if (l1.val < l2.val) {
+            l1.next = mergeTwo(l1.next, l2);
+            return l1;
+        }
+        l2.next = mergeTwo(l1, l2.next);
+        return l2;
+    }
+
+    public ListNode mergeKLists1(ListNode[] lists) {
         if (lists.length == 0) {
             return null;
         }
@@ -75,14 +112,10 @@ public class Q00023h {
     }
 
     private ListNode merge(ListNode node1, ListNode node2) {
-        if (node1 == null) {
-            return node2;
-        }
-        if (node2 == null) {
-            return node1;
-        }
-        ListNode head = new ListNode(-1);
-        ListNode curr = head;
+        if (node1 == null) return node2;
+        if (node2 == null) return node1;
+        ListNode hair = new ListNode(-1);
+        ListNode curr = hair;
         while (node1 != null && node2 != null) {
             if (node1.val < node2.val) {
                 curr.next = node1;
@@ -93,12 +126,11 @@ public class Q00023h {
             }
             curr = curr.next;
         }
-
         if (node1 != null) {
             curr.next = node1;
         } else {
             curr.next = node2;
         }
-        return head.next;
+        return hair.next;
     }
 }

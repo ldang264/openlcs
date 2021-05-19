@@ -33,12 +33,6 @@
  */
 public class Q00060h {
 
-    /**
-     * 数学方法
-     * @param n
-     * @param k
-     * @return
-     */
     public String getPermutation(int n, int k) {
         int[] dp = new int[n + 1]; // 从1到n下标存放的是n!的值
         dp[0] = 1;
@@ -55,7 +49,7 @@ public class Q00060h {
                 int d = k / dp[i - 1];
                 if (res == 0) { // 余数为0表示取d这个数字的最大排列
                     if (d > 1) {
-                        // 将j处的字符移到index处
+                        // 将j初的字符移到index处
                         int j = index + d - 1;
                         char c = ans.charAt(j);
                         ans.deleteCharAt(j);
@@ -63,7 +57,7 @@ public class Q00060h {
                     }
                     k = dp[i - 1]; // 在接下来都是取最后一个字符了
                 } else {
-                    // 将j处的字符移到index处
+                    // 将j初的字符移到index处
                     int j = index + d;
                     char c = ans.charAt(j);
                     ans.deleteCharAt(j);
@@ -76,4 +70,48 @@ public class Q00060h {
         }
         return ans.toString();
     }
+
+    /**
+     * 数学方法
+     * @param n
+     * @param k
+     * @return
+     */
+    public String getPermutation1(int n, int k) {
+        int[] dp = new int[n + 1]; // 从1到n下标存放的是n!的值
+        dp[0] = 1;
+        char[] ans = new char[n]; // 初始化时是1-n的字符
+        for (int i = 1; i <= n; i++) {
+            ans[i - 1] = (char) (i + '0'); // 追加1-n
+            dp[i] = i * dp[i - 1]; // 计算阶乘
+        }
+        int index = 0, i = n;
+        while (i > 1) { // 最多处理到i-1=1，最后一位无需处理
+            if (k > dp[i - 1]) { // 小于等于阶乘，则取当前最小的整数
+                int res = k % dp[i - 1];
+                int d = k / dp[i - 1];
+                if (res == 0) { // 余数为0表示取d这个数字的最大排列
+                    if (d > 1) {
+                        // 将j处的字符移到index处
+                        int j = index + d - 1;
+                        char c = ans[j];
+                        ans[j] = ans[index];
+                        ans[index] = c;
+                    }
+                    k = dp[i - 1]; // 在接下来都是取最后一个字符了
+                } else {
+                    // 将j处的字符移到index处
+                    int j = index + d;
+                    char c = ans[j];
+                    ans[j] = ans[index];
+                    ans[index] = c;
+                    k = res;
+                }
+            }
+            index++; // 处理下一位
+            i--;
+        }
+        return new String(ans);
+    }
+
 }
