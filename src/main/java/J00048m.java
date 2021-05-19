@@ -1,5 +1,4 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 /**
  * 请从字符串中找出一个最长的不包含重复字符的子字符串，计算该最长子字符串的长度。
@@ -30,18 +29,17 @@ import java.util.Map;
  */
 public class J00048m {
     public int lengthOfLongestSubstring(String s) {
-        if (s.length() <= 1) return s.length();
-        Map<Character, Integer> indexMap = new HashMap<>();
-        int ans = 0, start = -1;
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            Integer index = indexMap.put(c, i); // 返回旧的下标
-            if (index != null && index > start) { // 如果已经存在该字符，且该字符大于查找位置，则跳到当前位置
-                start = index;
-            } else {
-                ans = Math.max(ans, i - start); // 不存在或者过了当前位置，计算一次
+        int[] cs = new int[128];
+        Arrays.fill(cs, -1); // 不可达的下标
+        int ans = 0, right = 0, left = 0;
+        while (right < s.length()) {
+            char c = s.charAt(right);
+            if (cs[c] >= left) {
+                ans = Math.max(ans, right - left);
+                left = cs[c] + 1;
             }
+            cs[c] = right++;
         }
-        return ans;
+        return Math.max(ans, right - left);
     }
 }

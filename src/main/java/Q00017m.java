@@ -22,14 +22,16 @@ public class Q00017m {
 
     private List<String> ans;
 
-    private StringBuilder temp;
+    private char[] temp;
+
+    private int idx;
 
     private Map<Character, char[]> map;
 
-    public List<String> letterCombinationsBT(String digits) {
+    public List<String> letterCombinations(String digits) {
         ans = new ArrayList<>();
-        if (digits == null || digits.length() == 0) return ans;
-        map = new HashMap<>(8);
+        if (digits.length() == 0) return ans;
+        map = new HashMap<>();
         map.put('2', new char[]{'a', 'b', 'c'});
         map.put('3', new char[]{'d', 'e', 'f'});
         map.put('4', new char[]{'g', 'h', 'i'});
@@ -38,24 +40,25 @@ public class Q00017m {
         map.put('7', new char[]{'p', 'q', 'r', 's'});
         map.put('8', new char[]{'t', 'u', 'v'});
         map.put('9', new char[]{'w', 'x', 'y', 'z'});
-        temp = new StringBuilder();
-        backtrace(digits.toCharArray(), 0);
+        temp = new char[digits.length()];
+        idx = 0;
+        backtrace(digits, 0);
         return ans;
     }
 
     /**
      * 回溯
-     * @param ds
+     * @param digits
      * @param i
      */
-    private void backtrace(char[] ds, int i) {
-        if (i == ds.length) {
-            ans.add(temp.toString());
+    private void backtrace(String digits, int i) {
+        if (i == digits.length()) {
+            ans.add(new String(temp));
         } else {
-            for (char c : map.get(ds[i])) {
-                temp.append(c);
-                backtrace(ds, i + 1);
-                temp.deleteCharAt(temp.length() - 1);
+            for (char c : map.get(digits.charAt(i))) { // 遍历当前字符
+                temp[idx++] = c;
+                backtrace(digits, i + 1);
+                idx--;
             }
         }
     }
@@ -65,7 +68,7 @@ public class Q00017m {
      * @param digits
      * @return
      */
-    public List<String> letterCombinations(String digits) {
+    public List<String> letterCombinationsDp(String digits) {
         if (digits == null || digits.length() == 0) return new ArrayList<>();
         Map<Character, List<String>> characterMap = new HashMap<>(8);
         characterMap.put('2', Arrays.asList("a", "b", "c"));

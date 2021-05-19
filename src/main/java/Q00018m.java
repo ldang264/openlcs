@@ -25,27 +25,28 @@ import java.util.*;
 public class Q00018m {
     public List<List<Integer>> fourSum(int[] nums, int target) {
         List<List<Integer>> ans = new ArrayList<>();
-        Set<String> set = new HashSet<>();
-        if (nums == null || nums.length < 4) return ans;
+        if (nums.length <= 3) return ans;
         Arrays.sort(nums);
+        int sum, left, right;
         for (int i = 0; i < nums.length - 3; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue; // 外层去重
+            if (nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3] > target) break;
             for (int j = i + 1; j < nums.length - 2; j++) {
-                int left = j + 1;
-                int right = nums.length - 1;
+                if (j > i + 1 && nums[j] == nums[j - 1]) continue; // 内层去重
+                if (nums[i] + nums[j] + nums[j + 1] + nums[j + 2] > target) break;
+                left = j + 1; right = nums.length - 1;
                 while (left < right) {
-                    int s = nums[i] + nums[j] + nums[left] + nums[right];
-                    if (s == target) {
-                        String ss = "" + nums[i] + nums[j] + nums[left] + nums[right];
-                        if (!set.contains(ss)) { // 用set去重
-                            set.add(ss);
-                            ans.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));
-                        }
+                    sum = nums[i] + nums[j] + nums[left] + nums[right];
+                    if (sum == target) {
+                        ans.add(Arrays.asList(nums[i], nums[j], nums[left], nums[right]));
                         left++;
                         right--;
-                    } else if (s < target) {
-                        left++;
+                        while (left < right && nums[left - 1] == nums[left]) left++;
+                        while (right > left && nums[right + 1] == nums[right]) right--;
+                    } else if (sum > target) {
+                        right--;
                     } else {
-                        right--;
+                        left++;
                     }
                 }
             }

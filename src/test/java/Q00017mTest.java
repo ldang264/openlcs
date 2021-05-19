@@ -17,7 +17,7 @@ public class Q00017mTest {
 
     @Test
     public void letterCombinationsBT() {
-        List<String> combinations = q00017m.letterCombinationsBT("23");
+        List<String> combinations = q00017m.letterCombinations("23");
         Collections.sort(combinations);
         Assert.assertEquals("[ad, ae, af, bd, be, bf, cd, ce, cf]", combinations.toString());
     }

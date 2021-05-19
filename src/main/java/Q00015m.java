@@ -15,45 +15,38 @@ import java.util.List;
  *   [-1, -1, 2]
  * ]
  *
+ * 提示：
+ * 0 <= nums.length <= 3000
+ * -105 <= nums[i] <= 105
+ *
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/3sum
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00015m {
     public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> lists = new ArrayList<>();
-        if (nums == null || nums.length < 3) return lists;
-        Arrays.sort(nums); // 排序[-4, -1, -1, 0, 1, 2]
-        int left, right;
-        for (int i = 0; i < nums.length - 2; i++) {
-            if (i > 0 && nums[i] == nums[i - 1]) continue; // 如果i和i-1相同，需要去重，则跳过
-            left = i + 1;
-            right = nums.length - 1;
+        List<List<Integer>> ans = new ArrayList<>();
+        if (nums.length <= 2) return ans;
+        Arrays.sort(nums);
+        int sum, left, right;
+        for (int i = 0; i < nums.length - 2 && nums[i] <= 0; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue; // 去重
+            left = i + 1; right = nums.length - 1;
             while (left < right) {
-                int sum = nums[i] + nums[left] + nums[right];
-                if (sum == 0) {
-                    lists.add(Arrays.asList(nums[i], nums[left], nums[right])); // 相等则加入
-                    for (int k = left + 1; k < right; k++) { // left右移到下一个不等的
-                        if (nums[k] != nums[left]) {
-                            break;
-                        }
-                        left++;
-                    }
+                sum = nums[left] + nums[right];
+                if (sum == -nums[i]) {
+                    ans.add(Arrays.asList(nums[i], nums[left], nums[right]));
                     left++;
-                    for (int k = right - 1; k > left; k--) { // right左移到下一个不等的
-                        if (nums[k] != nums[right]) {
-                            break;
-                        }
-                        right--;
-                    }
                     right--;
-                } else if (sum > 0){ // 仅right左移
+                    while (left < right && nums[left - 1] == nums[left]) left++; // 跳到left不重复的位置
+                    while (right > left && nums[right + 1] == nums[right]) right--; // 跳到right不重复的位置
+                } else if (sum > -nums[i]) {
                     right--;
-                } else { // 仅left右移
+                } else {
                     left++;
                 }
             }
         }
-        return lists;
+        return ans;
     }
 }

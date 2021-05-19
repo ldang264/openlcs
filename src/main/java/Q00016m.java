@@ -19,21 +19,16 @@ import java.util.Arrays;
  */
 public class Q00016m {
     public int threeSumClosest(int[] nums, int target) {
-        int ans = target < 0 ? Integer.MAX_VALUE + target : Integer.MAX_VALUE;
+        int ans = 3_000, left, right, sum;
         Arrays.sort(nums);
         for (int i = 0; i < nums.length - 2; i++) {
-            int start = i + 1, end = nums.length - 1;
-            while (start < end) {
-                int sum = nums[i] + nums[start] + nums[end];
-                if (sum == target) { // 相等则直接返回
-                    return target;
-                }
-                if (sum < target) { // 如果比目标值小，则右移
-                    start++;
-                } else { // 否则左移
-                    end--;
-                }
-                if (Math.abs(sum - target) < Math.abs(ans - target)) { // 如果差值更小，则取代
+            left = i + 1; right = nums.length - 1;
+            while (left < right) {
+                sum = nums[i] + nums[left] + nums[right];
+                if (sum == target) return target;
+                if (sum > target) right--;
+                else left++;
+                if (Math.abs(sum - target) < Math.abs(ans - target)) { // 比较距离
                     ans = sum;
                 }
             }

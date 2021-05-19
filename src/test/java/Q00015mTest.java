@@ -17,4 +17,10 @@ public class Q00015mTest {
         List<List<Integer>> lists = ts.threeSum(new int[]{0,0,0,0});
         Assert.assertEquals("[[0, 0, 0]]", lists.toString());
     }
+
+    @Test
+    public void threeSum2() {
+        List<List<Integer>> lists = ts.threeSum(new int[]{-1, 0, 1, -1, 1, 2, -1, -4});
+        Assert.assertEquals("[[-1, -1, 2], [-1, 0, 1]]", lists.toString());
+    }
 }
