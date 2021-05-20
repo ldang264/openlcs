@@ -23,6 +23,7 @@
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00029m {
+
     public int divide(int dividend, int divisor) {
         if (dividend == 0 || divisor == 1) return dividend;
         if (divisor == -1) {
@@ -33,16 +34,16 @@ public class Q00029m {
     }
 
     private int exec(long dividend, long divisor) {
-        boolean symbol = true;
+        boolean positive = true;
         if (dividend < 0) {
             dividend = -dividend;
             if (divisor < 0) {
                 divisor = -divisor;
             } else {
-                symbol = false;
+                positive = false;
             }
         } else if (divisor < 0) {
-            symbol = false;
+            positive = false;
             divisor = -divisor;
         }
         int ans = 0;
@@ -58,6 +59,6 @@ public class Q00029m {
                 i <<= 1; // 2的倍数翻倍
             }
         }
-        return symbol ? ans : -ans;
+        return positive ? ans : -ans;
     }
 }

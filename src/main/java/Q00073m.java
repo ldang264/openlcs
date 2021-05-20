@@ -1,5 +1,4 @@
-import java.util.HashSet;
-import java.util.Set;
+
 
 /**
  * 给定一个m x n 的矩阵，如果一个元素为 0，则将其所在行和列的所有元素都设为 0。请使用原地算法。
@@ -43,26 +42,19 @@ import java.util.Set;
  */
 public class Q00073m {
     public void setZeroes(int[][] matrix) {
-        if (matrix == null) return;
-        Set<Integer> rowSet = new HashSet<>();
-        Set<Integer> colSet = new HashSet<>();
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                if (matrix[i][j] == 0) {
-                    rowSet.add(i);
-                    colSet.add(j);
-                }
+        int m = matrix.length, n = matrix[0].length;
+        boolean first = false; // 标记第一列
+        for (int i = 0; i < m; i++) {
+            if (matrix[i][0] == 0) first = true; // 第一列本来就有0，那在后面全置为0
+            for (int j = 1; j < n; j++) {
+                if (matrix[i][j] == 0) matrix[i][0] = matrix[0][j] = 0;
             }
         }
-        for (Integer row : rowSet) {
-            for (int j = 0; j < matrix[0].length; j++) {
-                matrix[row][j] = 0;
+        for (int i = m - 1; i >= 0; i--) { // 行反过来处理的原因是不受前面更新第一列的影响
+            for (int j = 1; j < n; j++) {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) matrix[i][j] = 0;
             }
-        }
-        for (Integer col : colSet) {
-            for (int i = 0; i < matrix.length; i++) {
-                matrix[i][col] = 0;
-            }
+            if (first) matrix[i][0] = 0;
         }
     }
 }

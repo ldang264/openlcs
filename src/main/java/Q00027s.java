@@ -59,25 +59,14 @@ public class Q00027s {
     }
 
     public int removeElement(int[] nums, int val) {
-        if (nums == null) return 0;
-        if (nums.length == 0) return 0;
-        int lastIndex = -1;
-        for (int i=nums.length-1; i>=0; i--) {
+        int i = 0, j = 0;
+        while (i < nums.length) {
             if (nums[i] != val) {
-                lastIndex = i;
-                break;
+                nums[j] = nums[i]; // 向前移
+                j++;
             }
+            i++;
         }
-        int index = lastIndex-1;
-        while(index>=0) {
-            if (nums[index] == val) {
-                int rem = nums[index];
-                nums[index] = nums[lastIndex];
-                nums[lastIndex] = rem;
-                lastIndex--;
-            }
-            index--;
-        }
-        return lastIndex + 1;
+        return j;
     }
 }

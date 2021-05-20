@@ -30,6 +30,19 @@ import java.util.Arrays;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00179m {
+    public String largestNumber1(int[] nums) {
+        String[] arr = new String[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            arr[i] = Integer.toString(nums[i]);
+        }
+        Arrays.sort(arr, (s1, s2) -> (s2 + s1).compareTo(s1 + s2));
+        StringBuilder ans = new StringBuilder();
+        for (int i = 0; i < nums.length; i++) {
+            ans.append(arr[i]);
+        }
+        return ans.charAt(0) == '0' ? "0" : ans.toString();
+    }
+
     public String largestNumber(int[] nums) {
         int[] array = sort(nums);
         StringBuilder sb = new StringBuilder();

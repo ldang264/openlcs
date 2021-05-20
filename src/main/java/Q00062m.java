@@ -35,16 +35,16 @@
  */
 public class Q00062m {
     public int uniquePaths(int m, int n) {
-        int[][]dp = new int[m][n];
+        int[][] dp = new int[m][n];
         for (int i = 0; i < m; i++) {
-            dp[i][0] = 1;
+            dp[i][0] = 1; // 纵向第一列总是1条
         }
         for (int j = 1; j < n; j++) {
-            dp[0][j] = 1;
+            dp[0][j] = 1; // 横向第一行总是1条
         }
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
-                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1]; // 等于左+上
             }
         }
         return dp[m - 1][n - 1];
