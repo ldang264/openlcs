@@ -1,6 +1,3 @@
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * 找出数组中重复的数字。
  * 在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。请找出数组中任意一个重复的数字。
@@ -19,13 +16,20 @@ import java.util.Set;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class J00003s {
+
+    /**
+     * 将i值放到i位置
+     * @param nums
+     * @return
+     */
     public int findRepeatNumber(int[] nums) {
-        Set<Integer> set = new HashSet<>();
-        for (int num : nums) {
-            if (set.contains(num)) {
-                return num;
+        for (int i = 0; i < nums.length; i++) {
+            while (nums[i] != i) {
+                int temp = nums[i];
+                if (nums[temp] == temp) return temp; // 无法调换，则直接返回
+                nums[i] = nums[temp];
+                nums[temp] = temp;
             }
-            set.add(num);
         }
         return 0;
     }
