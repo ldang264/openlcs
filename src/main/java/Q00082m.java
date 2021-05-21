@@ -23,7 +23,7 @@ public class Q00082m {
         }
         ListNode hair = new ListNode(0), prev = hair, curr = head;
         hair.next = head;
-        while (curr != null && curr.next != null) {
+        while (curr != null) {
             while (curr.next != null && curr.val == curr.next.val) {
                 curr = curr.next; // 一直向后遍历
             }

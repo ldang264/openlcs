@@ -18,15 +18,15 @@ import tool.ListNode;
 public class Q00083s {
     public ListNode deleteDuplicates(ListNode head) {
         if (head == null || head.next == null) return head;
-        ListNode hair = new ListNode(0);
-        hair.next = head;
-        while (head.next != null) {
-            if (head.val == head.next.val) {
-                head.next = head.next.next;
-            } else {
-                head = head.next;
+        ListNode curr = head, temp;
+        while (curr != null) {
+            temp = curr;
+            while (temp.next != null && temp.val == temp.next.val) {
+                temp = temp.next;
             }
+            if (temp != curr) curr.next = temp.next;
+            curr = curr.next;
         }
-        return hair.next;
+        return head;
     }
 }

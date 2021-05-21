@@ -11,13 +11,13 @@ public class Q00083sTest {
         ListNode head1 = new ListNode(1);
         head1.next = new ListNode(1);
         head1.next.next = new ListNode(2);
-        Assert.assertEquals(String.valueOf(dd.deleteDuplicates(head1)), "1 2");
+        Assert.assertEquals(String.valueOf(dd.deleteDuplicates(head1)), "[1,2]");
 
         ListNode head2 = new ListNode(1);
         head2.next = new ListNode(1);
         head2.next.next = new ListNode(2);
         head2.next.next.next = new ListNode(3);
         head2.next.next.next.next = new ListNode(3);
-        Assert.assertEquals(String.valueOf(dd.deleteDuplicates(head2)), "1 2 3");
+        Assert.assertEquals(String.valueOf(dd.deleteDuplicates(head2)), "[1,2,3]");
     }
 }
