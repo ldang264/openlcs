@@ -29,25 +29,14 @@ import java.util.*;
 public class Q00139m {
     public boolean wordBreak(String s, List<String> wordDict) {
         if (wordDict.size() == 0) return false;
-        Map<Integer, List<Integer>> start2EndMap = new HashMap<>();
-        for (String word : wordDict) {
-            for (int i = 0; i <= s.length() - word.length(); i++) {
-                if (s.startsWith(word, i)) {
-                    List<Integer> endIndexes = start2EndMap.computeIfAbsent(i, k -> new ArrayList<>());
-                    endIndexes.add(i + word.length());
-                }
+        Set<String> set = new HashSet<>(wordDict);
+        boolean[] dp = new boolean[s.length() + 1]; // dp[i]表示s(i)是否被单词列表组成
+        dp[0] = true;
+        for (int i = 1; i < dp.length; i++) {
+            for (int j = 0; j < i; j++) {
+                dp[i] = dp[i] || (dp[j] && set.contains(s.substring(j, i)));
             }
         }
-        return findEnd(start2EndMap, s.length(), 0);
-    }
-
-    private boolean findEnd(Map<Integer, List<Integer>> start2EndMap, int len, int end) {
-        if (end == len) return true;
-        List<Integer> nextEndMap = start2EndMap.remove(end);
-        if (nextEndMap == null) return false;
-        for (Integer newEnd : nextEndMap) {
-            if (findEnd(start2EndMap, len, newEnd)) return true;
-        }
-        return false;
+        return dp[s.length()];
     }
 }

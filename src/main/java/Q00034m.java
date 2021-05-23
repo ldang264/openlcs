@@ -19,7 +19,6 @@
  * 
  *
  * 提示：
- *
  * 0 <= nums.length <= 105
  * -109<= nums[i]<= 109
  * nums是一个非递减数组
@@ -30,40 +29,28 @@
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00034m {
-    public int[] searchRange(int[] nums, int target) {
-        if (nums.length == 0) return new int[]{-1, -1};
-        int start = 0, end = nums.length - 1;
-        int mid = find(nums, target, start, end);
-        if (mid == -1) return new int[]{-1, -1};
-        int lm = mid, hm = mid;
-        int[] ans = new int[2];
-        while (nums[lm] == target && lm-- > 0) {
-            // lm--;
-        }
-        ans[0] = lm + 1;
-        while (nums[hm] == target && hm++ < nums.length - 1) {
-            // hm++;
-        }
-        ans[1] = hm - 1;
-        return ans;
-    }
-
     /**
      * 二分查找
      * @param nums
      * @param target
-     * @param start
-     * @param end
      * @return
      */
-    private int find(int[] nums, int target, int start, int end) {
-        if (start > end) return -1;
-        int mid = (start + end) / 2;
-        if (nums[mid] == target) {
-            return mid;
+    public int[] searchRange(int[] nums, int target) {
+        if (nums.length == 0) return new int[]{-1, -1};
+        int start = 0, end = nums.length - 1, mid = -1;
+        while (start <= end) {
+            mid = (start + end) >> 1;
+            if (nums[mid] == target) break;
+            if (nums[mid] < target) start = mid + 1;
+            else end = mid - 1;
         }
-        if (nums[mid] > target) {
-            return find(nums, target, start, mid - 1);
-        } else return find(nums, target, mid + 1, end);
+        if (start > end) return new int[]{-1, -1};
+        start = mid; end = mid;
+        int[] ans = new int[2];
+        while (nums[start] == target && start-- > 0); // 找左边界
+        ans[0] = start + 1;
+        while (nums[end] == target && end++ < nums.length - 1); // 找右边界
+        ans[1] = end - 1;
+        return ans;
     }
 }

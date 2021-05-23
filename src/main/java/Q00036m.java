@@ -1,5 +1,4 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
 
 /**
  * 判断一个9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。
@@ -53,118 +52,69 @@ import java.util.Set;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00036m {
-    public static void main(String[] args) {
-        Q00036m ivs = new Q00036m();
-        char[][] s1 = new char[][] {
-            {'5','3','.','.','7','.','.','.','.'},
-            {'6','.','.','1','9','5','.','.','.'},
-            {'.','9','8','.','.','.','.','6','.'},
-            {'8','.','.','.','6','.','.','.','3'},
-            {'4','.','.','8','.','3','.','.','1'},
-            {'7','.','.','.','2','.','.','.','6'},
-            {'.','6','.','.','.','.','2','8','.'},
-            {'.','.','.','4','1','9','.','.','5'},
-            {'.','.','.','.','8','.','.','7','9'}
-        };
-        System.out.println(ivs.isValidSudoku(s1));
-        char[][] s2 = new char[][] {
-                {'8','3','.','.','7','.','.','.','.'},
-                {'6','.','.','1','9','5','.','.','.'},
-                {'.','9','8','.','.','.','.','6','.'},
-                {'8','.','.','.','6','.','.','.','3'},
-                {'4','.','.','8','.','3','.','.','1'},
-                {'7','.','.','.','2','.','.','.','6'},
-                {'.','6','.','.','.','.','2','8','.'},
-                {'.','.','.','4','1','9','.','.','5'},
-                {'.','.','.','.','8','.','.','7','9'}
-        };
-        System.out.println(ivs.isValidSudoku(s2));
-    }
 
     public boolean isValidSudoku(char[][] board) {
-        Set<Character> es = new HashSet<>(8);
-        for (int i = 0; i < board.length; i++) {
-            if (!validRow(board[i], es)) {
-                return false;
-            }
-            for (int j = 0; j < board.length; j++) {
-                if (board[j][i] != '.') {
-                    if (es.contains(board[j][i])) {
-                        return false;
-                    }
-                    es.add(board[j][i]);
+        int[] rows = new int[9];
+        int[] cols = new int[9];
+        Arrays.fill(rows, -1);
+        Arrays.fill(cols, -1);
+        // 判断每一行
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] != '.') {
+                    int idx = board[i][j] - '1';
+                    if (rows[idx] == i) return false;
+                    rows[idx] = i;
                 }
             }
-            es.clear();
-            if (i % 3 == 0) {
-                for (int j = 0; j <= 6; j += 3) {
+        }
+        // 判断每一列
+        for (int j = 0; j < 9; j++) {
+            for (int i = 0; i < 9; i++) {
+                if (board[i][j] != '.') {
+                    int idx = board[i][j] - '1';
+                    if (cols[idx] == j) return false;
+                    cols[idx] = j;
+                }
+            }
+        }
+        Arrays.fill(rows, -1);
+        Arrays.fill(cols, -1);
+        for (int k = 0; k <= 2; k++) { // +1 = 1 2 3
+            for (int i = 3 * k; i < 3 * (k + 1); i++) { // 0 1 2   3 4 5  6 7 8
+                for (int j = 0; j < 3; j++) {
                     if (board[i][j] != '.') {
-                        es.add(board[i][j]);
-                    }
-                    if (board[i][j + 1] != '.') {
-                        if (es.contains(board[i][j + 1])) {
+                        int idx = board[i][j] - '1';
+                        if (rows[idx] == k && cols[idx] == 0)
                             return false;
-                        }
-                        es.add(board[i][j + 1]);
+                        rows[idx] = k;
+                        cols[idx] = 0;
                     }
-                    if (board[i][j + 2] != '.') {
-                        if (es.contains(board[i][j + 2])) {
+                }
+            }
+            for (int i = 3 * k; i < 3 * (k + 1); i++) {
+                for (int j = 3; j < 6; j++) {
+                    if (board[i][j] != '.') {
+                        int idx = board[i][j] - '1';
+                        if (rows[idx] == k && cols[idx] == 1)
                             return false;
-                        }
-                        es.add(board[i][j + 2]);
+                        rows[idx] = k;
+                        cols[idx] = 1;
                     }
-                    if (board[i + 1][j] != '.') {
-                        if (es.contains(board[i + 1][j])) {
+                }
+            }
+            for (int i = 3 * k; i < 3 * (k + 1); i++) {
+                for (int j = 6; j < 9; j++) {
+                    if (board[i][j] != '.') {
+                        int idx = board[i][j] - '1';
+                        if (rows[idx] == k && cols[idx] == 2)
                             return false;
-                        }
-                        es.add(board[i + 1][j]);
+                        rows[idx] = k;
+                        cols[idx] = 2;
                     }
-                    if (board[i + 1][j + 1] != '.') {
-                        if (es.contains(board[i + 1][j + 1])) {
-                            return false;
-                        }
-                        es.add(board[i + 1][j + 1]);
-                    }
-                    if (board[i + 1][j + 2] != '.') {
-                        if (es.contains(board[i + 1][j + 2])) {
-                            return false;
-                        }
-                        es.add(board[i + 1][j + 2]);
-                    }
-                    if (board[i + 2][j] != '.') {
-                        if (es.contains(board[i + 2][j])) {
-                            return false;
-                        }
-                        es.add(board[i + 2][j]);
-                    }
-                    if (board[i + 2][j + 1] != '.') {
-                        if (es.contains(board[i + 2][j + 1])) {
-                            return false;
-                        }
-                        es.add(board[i + 2][j + 1]);
-                    }
-                    if (board[i + 2][j + 2] != '.') {
-                        if (es.contains(board[i + 2][j + 2])) {
-                            return false;
-                        }
-                    }
-                    es.clear();
                 }
             }
         }
-        return true;
-    }
-
-    private boolean validRow(char[] row, Set<Character> es) {
-        for (int i = 0; i < row.length; i++) {
-            if (row[i] != '.') {
-                if (es.contains(row[i])) {
-                    return false;
-                }
-                es.add(row[i]);
-            }
-        }
-        es.clear();
         return true;
     }
 

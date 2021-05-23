@@ -31,36 +31,30 @@ import java.util.*;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00040m {
+
     private List<List<Integer>> ans;
 
-    private List<Integer> elements;
+    private List<Integer> temp;
 
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         ans = new ArrayList<>();
-        if (candidates == null || candidates.length == 0) return ans;
-        Arrays.sort(candidates);
-        elements = new ArrayList<>();
-        find(candidates, target, 0, false);
+        temp = new ArrayList<>();
+        Arrays.sort(candidates); // 排序，方便判断前后相等
+        backtrace(candidates, 0, target, true);
         return ans;
     }
 
-    /**
-     * @param candidates
-     * @param target
-     * @param i
-     * @param prev 当没选前面且相等时，跳过处理，相当于去重了
-     */
-    private void find(int[] candidates, int target, int i, boolean prev) {
+    private void backtrace(int[] candidates, int i, int target, boolean prev) {
         if (target == 0) {
-            ans.add(new ArrayList<>(elements));
+            ans.add(new ArrayList<>(temp));
             return;
         }
-        if (target < 0 || i == candidates.length || candidates[i] > target) return;
-        find(candidates, target, i + 1, false); // 直接处理下一个
-        if (prev || i == 0 || candidates[i - 1] < candidates[i]) {
-            elements.add(candidates[i]); // 将当前加入
-            find(candidates, target - candidates[i], i + 1, true); // 去掉当前值，加下一个
-            elements.remove(elements.size() - 1); // 取出新增的元素
+        if (i == candidates.length) return;
+        backtrace(candidates, i + 1, target, false); // 直接找下一个
+        if ((prev || candidates[i] > candidates[i - 1]) && (target -= candidates[i]) >= 0) {
+            temp.add(candidates[i]);
+            backtrace(candidates, i + 1, target, true); // 当前下标可一直选
+            temp.remove(temp.size() - 1);
         }
     }
 }

@@ -13,29 +13,31 @@
  * 说明:
  * 假设你总是可以到达数组的最后一个位置。
  *
+ * 提示:
+ * 1 <= nums.length <= 1000
+ * 0 <= nums[i] <= 105
+ *
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/jump-game-ii
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00045m {
     public int jump(int[] nums) {
-        if (nums == null || nums.length <= 1) return 0;
-        int ans = 0;
-        for (int i = 0; i < nums.length - 1; i++) {
-            ans++;
-            int czy = nums[i] + i; //当前最远
-            int start = i;
-            i = czy - 1;
-            int max = czy; // 记录当前可达范围内的最大值
-            if (max >= nums.length - 1) return ans; // 当前已经能到最后了
-            for (int j = start + 1; j <= czy; j++) {
-                int fwzy = nums[j] + j; // 遍历当前范围内的最远处
-                if (max < fwzy) {
-                    max = fwzy;
-                    i = j - 1; // 下一次用j
+        if (nums.length == 1) return 0;
+        int step = 1, idx = 0;
+        while (idx < nums.length) {
+            int val = nums[idx];
+            if (idx + val >= nums.length - 1) break; // 直接跳到终点了
+            int max = 0, next = 0;
+            for (int i = idx + 1; i <= idx + val; i++) {
+                if (i + nums[i] > max) { // 取跳到最远的，作为下次的起点
+                    max = i + nums[i];
+                    next = i;
                 }
             }
+            step++;
+            idx = next;
         }
-        return ans;
+        return step;
     }
 }

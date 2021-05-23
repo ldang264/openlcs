@@ -1,12 +1,11 @@
-import ans.Q00031m_Ans;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
 
-public class Q00031MAnsTest {
+public class Q00031mTest {
 
-    Q00031m_Ans q00031MAns = new Q00031m_Ans();
+    Q00031m q00031MAns = new Q00031m();
 
     @Test
     public void nextPermutation() {

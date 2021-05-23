@@ -29,16 +29,17 @@ public class Q00047m {
 
     private boolean[] visited;
 
-    private List<Integer> temp;
+    private int[] temp;
+
+    private int idx;
 
     public List<List<Integer>> permuteUnique(int[] nums) {
         ans = new ArrayList<>();
         visited = new boolean[nums.length];
-        temp = new ArrayList<>(nums.length);
+        temp = new int[nums.length];
         Arrays.sort(nums);
-        int prev = nums[0];
-        backtrace(nums, 0);
-        for (int i = 1; i < nums.length; i++) {
+        int prev = -11;
+        for (int i = 0; i < nums.length; i++) {
             if (nums[i] != prev) {
                 prev = nums[i];
                 backtrace(nums, i);
@@ -49,18 +50,21 @@ public class Q00047m {
 
     private void backtrace(int[] nums, int i) {
         visited[i] = true;
-        temp.add(nums[i]);
-        if (temp.size() == nums.length) {
-            ans.add(new ArrayList<>(temp));
+        temp[idx++] = nums[i];
+        if (idx == nums.length) {
+            List<Integer> vals = new ArrayList<>(idx);
+            for (int val : temp) {
+                vals.add(val);
+            }
+            ans.add(vals);
         } else {
-            if (!visited[0]) backtrace(nums, 0);
-            for (int j = 1; j < nums.length; j++) {
-                if (!visited[j] && (visited[j - 1] || nums[j - 1] < nums[j])) { // 没有加入过j并且(j-1加入过且前后不相等)
+            for (int j = 0; j < nums.length; j++) {
+                if (!visited[j] && (j == 0 || visited[j - 1] || nums[j - 1] < nums[j])) { // 没有加入过j并且(j-1加入过且前后不相等)
                     backtrace(nums, j);
                 }
             }
         }
-        temp.remove(temp.size() - 1);
+        idx--;
         visited[i] = false;
     }
 }

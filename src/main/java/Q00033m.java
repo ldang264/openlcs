@@ -28,23 +28,16 @@
  */
 public class Q00033m {
     public int search(int[] nums, int target) {
-        int start = 0, end = nums.length - 1;
-        int mid;
-        while (start <= end) {
-            mid = start + (end - start) / 2;
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int mid = (left + right) >> 1;
             if (nums[mid] == target) return mid;
-            if (nums[mid] >= nums[start]) { // 左边有序
-                if (target >= nums[start] && target < nums[mid]) { // 值在左边
-                    end = mid - 1;
-                } else {
-                    start = mid + 1;
-                }
+            if (nums[left] <= nums[mid]) { // 左边有序
+                if (nums[mid] > target && target >= nums[left]) right = mid - 1; // target在左边
+                else left = mid + 1;
             } else {
-                if (target <= nums[end] && target > nums[mid]) { // 值在右边
-                    start = mid + 1;
-                } else {
-                    end = mid - 1;
-                }
+                if (nums[mid] < target && target <= nums[right]) left = mid + 1; // target在右边
+                else right = mid - 1;
             }
         }
         return -1;

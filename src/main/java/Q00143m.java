@@ -1,70 +1,62 @@
 import tool.ListNode;
 
-import java.util.LinkedList;
-
 /**
- * 给定一个单链表 L：L0→L1→…→Ln-1→Ln ，
+ * 给定一个单链表 L：L0→L1→…→Ln-1→Ln ，
  * 将其重新排列后变为： L0→Ln→L1→Ln-1→L2→Ln-2→…
  *
  * 你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。
  *
- * 示例 1:
- *
+ * 示例 1:
  * 给定链表 1->2->3->4, 重新排列为 1->4->2->3.
- * 示例 2:
  *
+ * 示例 2:
  * 给定链表 1->2->3->4->5, 重新排列为 1->5->2->4->3.
  *
+ * Constraints:
+ * The number of nodes in the list is in the range [1, 5 * 104].
+ * 1 <= Node.val <= 1000
+ *
+ * 来源：力扣（LeetCode）
+ * 链接：https://leetcode-cn.com/problems/reorder-list
+ * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/reorder-list
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00143m {
 
-    public static void main(String[] args) {
-        Q00143m rl = new Q00143m();
-        ListNode l1 = new ListNode(1);
-        l1.next = new ListNode(2);
-        l1.next.next = new ListNode(3);
-        l1.next.next.next = new ListNode(4);
-        System.out.println("l1-  " + l1);
-        rl.reorderList(l1);
-        System.out.println("l1+  " + l1);
-
-        ListNode l2 = new ListNode(1);
-        l2.next = new ListNode(2);
-        l2.next.next = new ListNode(3);
-        l2.next.next.next = new ListNode(4);
-        l2.next.next.next.next = new ListNode(5);
-        System.out.println("l2-  " + l2);
-        rl.reorderList(l2);
-        System.out.println("l2+  " + l2);
-    }
-
+    // 1 2 3       f = 2
+    // 1 2 3 4     f = 2
+    // 1 2 3 4 5   f = 3
     public void reorderList(ListNode head) {
-        if (head == null) return;
-        LinkedList<ListNode> nodes = new LinkedList<>();
-        ListNode curr = head;
-        while (curr != null) {
-            nodes.offer(curr);
-            curr = curr.next;
+        // 1.使用快慢指针获取后半部分
+        if (head.next == null || head.next.next == null) return;
+        ListNode first = head, second = head.next;
+        while (second != null && second.next != null) {
+            second = second.next.next;
+            first = first.next;
         }
-        ListNode t = null;
-        while (true) {
-            ListNode h = nodes.removeFirst();
-            if (t != null){
-                t.next = h;
-            }
-            if (nodes.size() == 0) {
-                h.next = null;
-                return;
-            }
-            t = nodes.removeLast();
-            h.next = t;
-            if (nodes.size() == 0) {
-                t.next = null;
-                return;
-            }
+        // 2.翻转后半部分
+        second = first.next;
+        while (second.next != null) {
+            ListNode fn = first.next;
+            ListNode cn = second.next;
+            second.next = second.next.next;
+            first.next = cn;
+            cn.next = fn;
+        }
+        // 3.断开前后联系
+        second = first.next;
+        first.next = null;
+        first = head;
+        // 4.将后半部分插入到前半部分
+        while (second != null) {
+            ListNode fn = first.next;
+            ListNode sn = second.next;
+            first.next = second;
+            first = second.next = fn;
+            second = sn;
         }
     }
+
 }

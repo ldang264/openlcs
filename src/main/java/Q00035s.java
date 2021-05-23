@@ -26,23 +26,13 @@
 public class Q00035s {
 
     public int searchInsert(int[] nums, int target) {
-        if (nums == null || nums.length == 0 || nums[0] >= target) {
-            return 0;
+        int start = 0, end = nums.length - 1, mid;
+        while (start <= end) {
+            mid = (start + end) >> 1;
+            if (nums[mid] == target) return mid;
+            if (nums[mid] < target) start = mid + 1;
+            else end = mid - 1;
         }
-        return find(nums, target, 0, nums.length - 1);
-    }
-
-    private int find(int[] nums, int target, int start, int end) {
-        int mid = (start + end) / 2;
-        if (nums[mid] == target) return mid; // 匹配
-        if (nums[mid] > target) { // 左边找
-            if (mid == 0) return 0; // 越左界
-            if (nums[mid - 1] < target) return mid;
-            return find(nums, target, start, mid - 1);
-        } else { // 右边找
-            if (mid == nums.length - 1) return nums.length; // 越右界
-            if (nums[mid + 1] > target) return mid + 1;
-            return find(nums, target, mid + 1, end);
-        }
+        return start; // 不存在时，它是起始位置
     }
 }

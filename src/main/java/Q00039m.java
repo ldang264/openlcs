@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,37 +39,27 @@ public class Q00039m {
 
     private List<List<Integer>> ans;
 
-    private List<Integer> elements;
+    private List<Integer> temp;
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         ans = new ArrayList<>();
-        elements = new ArrayList<>();
-        Arrays.sort(candidates); // 快速排序，元素从小到大
-        find(candidates, target, 0);
+        temp = new ArrayList<>();
+        backtrace(candidates, 0, target);
         return ans;
     }
 
-    /**
-     * 回溯
-     * @param candidates
-     * @param target
-     * @param i 数组下标
-     */
-    private void find(int[] candidates, int target, int i) {
+    private void backtrace(int[] candidates, int i, int target) {
         if (target == 0) {
-            ans.add(new ArrayList<>(elements));
+            ans.add(new ArrayList<>(temp));
             return;
         }
-        if (i == candidates.length || candidates[i] > target) return; // 越界处理
-        int b = target / candidates[i]; // 余数
-        int size = elements.size(); // 存储增加前的大小
-        for (int j = 1; j <= b; j++) { // 将当前位置都找干净
-            elements.add(candidates[i]);
-            find(candidates, target - candidates[i] * j, i + 1); // 找下一位
+        if (i == candidates.length) return;
+        backtrace(candidates, i + 1, target); // 直接找下一个
+        target -= candidates[i];
+        if (target >= 0) { // 负数就停止
+            temp.add(candidates[i]);
+            backtrace(candidates, i, target); // 当前下标可一直选
+            temp.remove(temp.size() - 1);
         }
-        while (--b >= 0) { // 将增加的全部都减掉
-            elements.remove(size + b);
-        }
-        find(candidates, target, i + 1); // 当前位置一个都不加，找下一位
     }
 }
