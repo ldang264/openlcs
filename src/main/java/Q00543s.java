@@ -20,24 +20,19 @@ import tool.TreeNode;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00543s {
+
     private int ans;
 
     public int diameterOfBinaryTree(TreeNode root) {
-        if (root == null) return 0;
         dfs(root);
         return ans;
     }
 
     private int dfs(TreeNode root) {
-        if (root.left == null && root.right == null) return 0;
-        int l = 0, r = 0;
-        if (root.left != null) {
-            l = dfs(root.left) + 1; // 左子树的最大深度
-        }
-        if (root.right != null) { // 右子树的最大深度
-            r = dfs(root.right) + 1;
-        }
-        ans = Math.max(ans, l + r); // 计算最大直径，即左右相加
-        return Math.max(l ,r); // 返回最大深度
+        if (root == null) return 0;
+        int ld = dfs(root.left); // 左子树最大直径
+        int rd = dfs(root.right); // 右子树最大直径
+        ans= Math.max(ans, ld + rd); // 更新最值
+        return Math.max(ld, rd) + 1; // 返回加上自己后的最大直径
     }
 }
