@@ -14,30 +14,20 @@
  * 解释：无论怎样，总会到达下标为 3 的位置。但该下标的最大跳跃长度是 0 ， 所以永远不可能到达最后一个下标。
  *
  * 提示：
- *
  * 1 <= nums.length <= 3 * 104
  * 0 <= nums[i] <= 105
- *
  *
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/jump-game
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-
-/**
- * 使用回溯法时出现超时，因为做了太多的无效递归
- * 使用贪婪算法，在遍历过程中努力向后寻找最远的下标
- */
 public class Q00055m {
     public boolean canJump(int[] nums) {
         if (nums.length == 1) return true;
-        int maxIndex = nums[0]; // 初始可达最远下标
-        for (int i = 1; i <= maxIndex; i++) {
-            int j = nums[i] + i;
-            if (j >= nums.length - 1) return true;
-            if (maxIndex < j) {
-                maxIndex = j; // 取可达最远下标的较大值
-            }
+        int start = nums[0], end = 0; // 初始可达最远下标
+        for (int i = 1; i <= Math.max(start, end); i++) { // 取可达最远下标的较大值
+            end = Math.max(end, nums[i] + i);
+            if (end >= nums.length - 1) return true;
         }
         return false;
     }

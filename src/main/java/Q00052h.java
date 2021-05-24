@@ -30,45 +30,35 @@
  */
 public class Q00052h {
 
-    private int ans;
+    private int ans; // 结果
 
-    private boolean[] columns; // 列数组
-
-    private boolean[] tops; // 左上到右下的数组，行列的差总是相等，范围在-(n-1)到n-1
-
-    private boolean[] bottoms; // 左下到右上的数组，行列的和总是相等，范围在0到2(n-1)
+    private boolean[] columns, up2downs, down2ups; // 标记数组
 
     public int totalNQueens(int n) {
         ans = 0;
-        columns = new boolean[n];
-        tops = new boolean[2 * n - 1];
-        bottoms = new boolean[2 * n - 1];
-        find(n, 0);
+        columns = new boolean[n]; // 标记列是否被占
+        up2downs = new boolean[2 * n - 1]; // 标记左上到右下的对角线是否被占
+        down2ups = new boolean[up2downs.length]; // 标记左下到右上的对角线是否被占
+        backtrace(0);
         return ans;
     }
 
-    /**
-     * 回溯
-     * @param n
-     * @param i
-     */
-    private void find(int n, int i) {
-        if (n == i) {
+    private void backtrace(int i) {
+        if (i == columns.length) {
             ans++;
         } else {
-            for (int j = 0; j < n; j++) { // 在i行j列
-                if (columns[j]) continue; // 列被占
-                int iSj = (i - j) + (n - 1); // 避免越界
-                if (tops[iSj]) continue; // 左上到右下对角线被占
-                int iAj = i + j;
-                if (bottoms[iAj]) continue; // 左下到右上对角线被占
+            int ud, du;
+            for (int j = 0; j < columns.length; j++) {
+                if (columns[j]) continue; // 列已经放了
+                if (up2downs[ud = i - j + columns.length - 1]) continue; // 左上角到右下角已经放了
+                if (down2ups[du = i + j]) continue; // 左下角到右上角已经放了
                 columns[j] = true;
-                tops[iSj] = true;
-                bottoms[iAj] = true;
-                find(n, i + 1); // 下一行
+                up2downs[ud] = true;
+                down2ups[du] = true;
+                backtrace(i + 1);
                 columns[j] = false;
-                tops[iSj] = false;
-                bottoms[iAj] = false;
+                up2downs[ud] = false;
+                down2ups[du] = false;
             }
         }
     }

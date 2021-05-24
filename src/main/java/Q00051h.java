@@ -20,51 +20,46 @@ import java.util.*;
  */
 public class Q00051h {
 
-    private List<List<String>> ans;
+    private List<List<String>> ans; // 结果
 
-    private boolean[] columns; // 列数组
+    private boolean[] columns, up2downs, down2ups; // 标记数组
 
-    private boolean[] tops; // 左上到右下的数组，行列的差总是相等，范围在-(n-1)到n-1
-
-    private boolean[] bottoms; // 左下到右上的数组，行列的和总是相等，范围在0到2(n-1)
+    private int[] temp; // 存储每一列的位置
 
     public List<List<String>> solveNQueens(int n) {
         ans = new ArrayList<>();
-        columns = new boolean[n];
-        tops = new boolean[2 * n - 1];
-        bottoms = new boolean[2 * n - 1];
-        boolean[][] indexes = new boolean[n][n];
-        find(n, 0, indexes);
+        temp = new int[n];
+        columns = new boolean[n]; // 标记列是否被占
+        up2downs = new boolean[2 * n - 1]; // 标记左上到右下的对角线是否被占
+        down2ups = new boolean[up2downs.length]; // 标记左下到右上的对角线是否被占
+        backtrace(0);
         return ans;
     }
 
-    private void find(int n, int i, boolean[][] indexes) {
-        if (n == i) {
-            List<String> rowList = new ArrayList<>();
-            for (int j = 0; j < n; j++) {
-                StringBuilder sb = new StringBuilder();
-                for (int k = 0; k < n; k++) {
-                    sb.append(indexes[j][k] ? "Q" : ".");
-                }
-                rowList.add(sb.toString());
+    private void backtrace(int i) {
+        if (i == columns.length) {
+            List<String> list = new ArrayList<>(columns.length);
+            for (Integer idx : temp) {
+                char[] cs = new char[temp.length];
+                Arrays.fill(cs, '.');
+                cs[idx] = 'Q';
+                list.add(new String(cs));
             }
-            ans.add(rowList);
+            ans.add(list);
         } else {
-            for (int j = 0; j < n; j++) {
-                if (columns[j]) continue; // 行被占
-                int iSj = i - j + (n - 1); // 避免越界
-                if (tops[iSj]) continue; // 左上到右下的对角线被占
-                int iAj = i + j;
-                if (bottoms[iAj]) continue; // 左下到右上的对角线被占
-                indexes[i][j] = true;
+            int ud, du;
+            for (int j = 0; j < columns.length; j++) {
+                if (columns[j]) continue; // 列已经放了
+                if (up2downs[ud = i - j + columns.length - 1]) continue; // 左上角到右下角已经放了
+                if (down2ups[du = i + j]) continue; // 左下角到右上角已经放了
                 columns[j] = true;
-                tops[iSj] = true;
-                bottoms[iAj] = true;
-                find(n, i + 1, indexes); // 递归下一行
-                indexes[i][j] = false;
+                up2downs[ud] = true;
+                down2ups[du] = true;
+                temp[i] = j;
+                backtrace(i + 1);
                 columns[j] = false;
-                tops[iSj] = false;
-                bottoms[iAj] = false;
+                up2downs[ud] = false;
+                down2ups[du] = false;
             }
         }
     }
