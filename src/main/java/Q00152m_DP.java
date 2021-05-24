@@ -23,11 +23,12 @@ public class Q00152m_DP {
      * @return
      */
     public int maxProduct(int[] nums) {
-        int max = nums[0], min = nums[0], ans = nums[0];
+        int ans = nums[0], max = nums[0], min = nums[0];
         for (int i = 1; i < nums.length; i++) {
-            int mx = max, mn = min;
-            max = Math.max(mx * nums[i], Math.max(nums[i], mn * nums[i]));
-            min = Math.min(mx * nums[i], Math.min(nums[i], mn * nums[i]));
+            int tmax = Math.max(nums[i], Math.max(min * nums[i], max * nums[i]));
+            int tmin = Math.min(nums[i], Math.min(min * nums[i], max * nums[i]));
+            max = tmax;
+            min = tmin;
             ans = Math.max(ans, max);
         }
         return ans;
