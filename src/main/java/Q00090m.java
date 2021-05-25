@@ -30,7 +30,7 @@ public class Q00090m {
         ans = new ArrayList<>();
         Arrays.sort(nums);
         temp = new ArrayList<>();
-        backtrace(nums, 0, false);
+        backtrace(nums, 0, true);
         return ans;
     }
 
@@ -45,7 +45,7 @@ public class Q00090m {
             ans.add(new ArrayList<>(temp));
         } else {
             backtrace(nums, i + 1, false); // 跳过当前
-            if (prev || i == 0 || nums[i - 1] < nums[i]) { // 选了前面或者并且不重复才能继续选
+            if (prev || nums[i - 1] < nums[i]) { // 选了前面或者并且不重复才能继续选
                 temp.add(nums[i]);
                 backtrace(nums, i + 1, true);
                 temp.remove(temp.size() - 1);

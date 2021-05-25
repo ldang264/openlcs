@@ -28,7 +28,45 @@
  著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
  */
 public class Q00081m {
+
     public boolean search(int[] nums, int target) {
+        int start = 0, end = nums.length - 1, mid;
+        while (start <= end) {
+            if (nums[start] == target || nums[end] == target || nums[mid = (start + end) >> 1] == target) return true; // 相等直接返回true
+            if (nums[mid] == nums[start]) { // 左边非递增
+                start++;
+                continue;
+            }
+            if (nums[mid] == nums[end]) { // 右边非递增
+                end--;
+                continue;
+            }
+            if (nums[mid] > nums[start]) {
+                if (nums[mid] > target && nums[start] < target) { // 左侧递增，且在左侧
+                    end = mid - 1;
+                } else {
+                    start = mid + 1;
+                }
+            } else {
+                if (nums[mid] < target && target < nums[end]) { // 右侧递增，且在右侧
+                    start = mid + 1;
+                } else {
+                    end = mid - 1;
+                }
+            }
+        }
+        return false;
+    }
+
+
+
+
+
+
+
+
+
+    /*public boolean search(int[] nums, int target) {
         int start = 0;
         int end = nums.length - 1;
         int mid;
@@ -54,5 +92,5 @@ public class Q00081m {
             }
         }
         return false;
-    }
+    }*/
 }

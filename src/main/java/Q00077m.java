@@ -28,34 +28,32 @@ public class Q00077m {
 
     private List<List<Integer>> ans;
 
-    private List<Integer> temp;
+    private int[] temp;
 
-    private int K;
-
-    private int N;
+    private int idx;
 
     public List<List<Integer>> combine(int n, int k) {
         ans = new ArrayList<>();
-        temp = new ArrayList<>();
-        K = k;
-        N = n;
-        for (int i = 1; i <= n + 1 - k; i++) {
-            backtrace(i);
-        }
+        temp = new int[k];
+        idx = 0;
+        backtrace(n);
         return ans;
     }
 
     private void backtrace(int i) {
-        temp.add(i);
-        K--;
-        if (K == 0) {
-            ans.add(new ArrayList<>(temp));
-        } else {
-            for (int j = i + 1; j <= N - K + 1; j++) {  // 剪枝，剩余数字要够用
-                backtrace(j);
+        if (i >= temp.length - idx) { // 剪枝
+            backtrace(i - 1); // 直接回溯下一个
+            temp[idx++] = i;
+            if (idx == temp.length) { // k个数字已满
+                List<Integer> list = new ArrayList<>(temp.length);
+                for (Integer j : temp) {
+                    list.add(j);
+                }
+                ans.add(list);
+            } else {
+                backtrace(i - 1); // 继续回溯下一个
             }
+            idx--;
         }
-        temp.remove(temp.size() - 1);
-        K++;
     }
 }

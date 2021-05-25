@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,7 +32,6 @@ public class Q00078m {
     public List<List<Integer>> subsets(int[] nums) {
         ans = new ArrayList<>();
         temp = new ArrayList<>();
-        Arrays.sort(nums);
         backtrace(nums, 0);
         return ans;
     }
