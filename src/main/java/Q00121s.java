@@ -2,19 +2,22 @@
  * 给定一个数组，它的第i 个元素是一支给定股票第 i 天的价格。
  * 如果你最多只允许完成一笔交易（即买入和卖出一支股票一次），设计一个算法来计算你所能获取的最大利润。
  * 注意：你不能在买入股票前卖出股票。
- * <p>
+ *  
  * 示例 1:
- * <p>
  * 输入: [7,1,5,3,6,4]
  * 输出: 5
  * 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
  * 注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格；同时，你不能在买入前卖出股票。
+ *
  * 示例 2:
- * <p>
  * 输入: [7,6,4,3,1]
  * 输出: 0
  * 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
- * <p>
+ *
+ * 提示：
+ * 1 <= prices.length <= 105
+ * 0 <= prices[i] <= 104
+ *
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
@@ -22,31 +25,15 @@
 public class Q00121s {
 
     public int maxProfit(int[] prices) {
-        int ans = 0, min = prices[0], max = prices[0];
+        int ans = 0, min = prices[0];
         for (int i = 1; i < prices.length; i++) {
-            if (prices[i] < min) {
-                min = max = prices[i]; // 重置min和max
-            } else if (prices[i] > max) {
-                max = prices[i]; // 不断找到更大的值
-                ans = Math.max(ans, max - min);
+            int profit = prices[i] - min;
+            if (profit < 0) {
+                min = prices[i]; // 更新买入价
+            } else if (ans < profit){
+                ans = profit; // 更新最大利润
             }
         }
         return ans;
-    }
-
-    public int maxProfit1(int[] prices) {
-        int p = 0;
-        for (int i = 0; i < prices.length - 1; i++) {
-            if (prices[i + 1] > prices[i]) { // 如果后一个比前一个大
-                for (int j = i + 1; j < prices.length; j++) { //从i+1位置开始找
-                    int sub = prices[j] - prices[i];
-                    if (p < sub) { // 寻找差值作为最大利润
-                        p = sub;
-                    }
-                }
-                i++;
-            }
-        }
-        return p;
     }
 }

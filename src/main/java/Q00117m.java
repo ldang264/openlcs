@@ -61,12 +61,6 @@ public class Q00117m {
         return root;
     }
 
-    private void dfs(Node cl, Node cr, Node nl, Node nr) {
-        if (cl == null) return;
-        cl.next = cr != null ? cr : nl != null ? nl : nr;
-        // dfs(cl.left, cl.right);
-    }
-
     static class Node {
         public int val;
         public Node left;

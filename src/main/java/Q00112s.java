@@ -22,27 +22,13 @@ import tool.TreeNode;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00112s {
-    private boolean res;
 
-    public boolean hasPathSum(TreeNode root, int sum) {
+    public boolean hasPathSum(TreeNode root, int targetSum) {
         if (root == null) return false;
-        dfs(root, sum, 0);
-        return res;
-    }
-
-    /**
-     * 深度优先
-     * @return
-     */
-    private void dfs(TreeNode root, int sum, int now) {
-        if (res) {
-            return;
+        targetSum -= root.val;
+        if (root.left != null || root.right != null) { // 非叶节点
+            return hasPathSum(root.left, targetSum) || hasPathSum(root.right, targetSum);
         }
-        int n = now + root.val;
-        if (root.left == null && root.right == null && n == sum) res = true; // 叶子节点且相等
-        else {
-            if (root.left != null) dfs(root.left, sum, n);
-            if (root.right != null) dfs(root.right, sum, n);
-        }
+        return targetSum == 0;
     }
 }

@@ -41,21 +41,15 @@ public class Q00113m {
     }
 
     private void dfs(TreeNode node, int target) {
+        if (node == null) return;
         target -= node.val; // 加入当前节点的值
-        int size = temp.size(); // 记录原列表长度
         temp.add(node.val); // 候选加入
-        if (node.left == null && node.right == null) { // 考察叶子节点
-            if (0 == target) { // 如果相等则加入到结果
-                ans.add(new ArrayList<>(temp));
-            }
-        } else {
-            if (node.left != null) {
-                dfs(node.left, target); // 遍历左子树
-            }
-            if (node.right != null){
-                dfs(node.right, target); // 遍历右子树
-            }
+        if (node.left != null || node.right != null) { // 考察叶子节点
+            dfs(node.left, target); // 遍历左子树
+            dfs(node.right, target); // 遍历右子树
+        } else if (0 == target){ // 如果相等则加入到结果
+            ans.add(new ArrayList<>(temp));
         }
-        temp.remove(size);
+        temp.remove(temp.size() - 1);
     }
 }

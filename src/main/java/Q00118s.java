@@ -20,6 +20,8 @@ import java.util.List;
  *  [1,4,6,4,1]
  * ]
  *
+ * 1 <= numRows <= 30
+ *
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/pascals-triangle
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
@@ -27,20 +29,20 @@ import java.util.List;
 public class Q00118s {
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> ans = new ArrayList<>();
-        if (numRows <= 0) return ans;
         ans.add(Collections.singletonList(1));
         if (numRows == 1) return ans;
-        ans.add(Arrays.asList(1, 1));
+        List<Integer> lastList = Arrays.asList(1, 1);
+        ans.add(lastList);
         if (numRows == 2) return ans;
-        for (int i = 2; i < numRows; i++) {
-            List<Integer> lastList = ans.get(i - 1);
-            List<Integer> rowList = new ArrayList<>();
+        for (int i = 3; i <= numRows; i++) {
+            List<Integer> rowList = new ArrayList<>(i);
             rowList.add(1);
-            for (int j = 1; j < i; j++) {
+            for (int j = 1; j < i - 1; j++) {
                 rowList.add(lastList.get(j - 1) + lastList.get(j));
             }
             rowList.add(1);
             ans.add(rowList);
+            lastList = rowList;
         }
         return ans;
     }

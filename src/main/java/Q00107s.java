@@ -29,21 +29,16 @@ import java.util.Queue;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00107s {
+    /**
+     * 广度优先遍历
+     * @param root
+     * @return
+     */
     public List<List<Integer>> levelOrderBottom(TreeNode root) {
         LinkedList<List<Integer>> lists = new LinkedList<>();
         if (root == null) return lists;
         Queue<TreeNode> queue = new LinkedList<>(); // 队列，节点先进先出
         queue.offer(root);
-        return bfs(queue, lists);
-    }
-
-    /**
-     * 广度优先遍历
-     * @param queue
-     * @param lists
-     * @return
-     */
-    private List<List<Integer>> bfs(Queue<TreeNode> queue, LinkedList<List<Integer>> lists) {
         while (queue.size() > 0) {
             int size = queue.size();
             List<Integer> list = new ArrayList<>(size);

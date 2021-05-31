@@ -36,6 +36,11 @@ import java.util.List;
  */
 public class Q00120m {
 
+    /**
+     * 自顶向下
+     * @param triangle
+     * @return
+     */
     public int minimumTotal(List<List<Integer>> triangle) {
         int ans = Integer.MAX_VALUE;
         int[] nums = new int[triangle.size()];
@@ -56,49 +61,19 @@ public class Q00120m {
     private int ans;
 
     /**
-     * 逐行累加比较慢
+     * 自底向上
      * @param triangle
      * @return
      */
     public int minimumTotal1(List<List<Integer>> triangle) {
-        ans = Integer.MAX_VALUE;
-        for (int i = 1; i < triangle.size(); i++) {
-            for (int j = 0; j < triangle.get(i).size(); j++) {
-                int min;
-                if (j == 0) {
-                    min = triangle.get(i - 1).get(0);
-                } else if (j == triangle.get(i).size() - 1) {
-                    min = triangle.get(i - 1).get(j - 1);
-                } else {
-                    min = Math.min(triangle.get(i - 1).get(j), triangle.get(i - 1).get(j - 1));
-                }
-                triangle.get(i).set(j, triangle.get(i).get(j) + min);
+        List<Integer> next = triangle.get(triangle.size() - 1);
+        for (int i = triangle.size() - 2; i >= 0; i--) {
+            List<Integer> curr = triangle.get(i);
+            for (int j = 0; j < curr.size(); j++) {
+                curr.set(j, curr.get(j) + Math.min(next.get(j), next.get(j + 1)));
             }
+            next = curr;
         }
-        for (int j = 0; j < triangle.get(triangle.size() - 1).size(); j++) {
-            ans = Math.min(ans, triangle.get(triangle.size() - 1).get(j));
-        }
-        return ans;
-        /**
-         ans = Integer.MAX_VALUE;
-         find(triangle, 0, 0, 0);
-         return ans;
-         */
-    }
-
-    /**
-     * 回溯直接超时
-     * @param triangle
-     * @param row 当前选取的行
-     * @param col 当前选取的列
-     */
-    private void find(List<List<Integer>> triangle, int row, int col, int current) {
-        if (row == triangle.size()) {
-            ans = Math.min(ans, current);
-            return;
-        }
-        current += triangle.get(row).get(col);
-        find(triangle, row + 1, col, current);
-        find(triangle, row + 1, col + 1, current);
+        return triangle.get(0).get(0);
     }
 }

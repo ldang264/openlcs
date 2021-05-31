@@ -17,36 +17,26 @@ import tool.TreeNode;
  *    /   /
  *  -10  5
  *
+ * 提示：
+ * 1 <= nums.length <= 104
+ * -104 <= nums[i] <= 104
+ * nums 按 严格递增 顺序排列
+ *
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/convert-sorted-array-to-binary-search-tree
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00108s {
     public TreeNode sortedArrayToBST(int[] nums) {
-        if (nums == null || nums.length == 0) return null;
-        return loop(nums, 0, nums.length - 1);
+        return build(nums, 0, nums.length - 1);
     }
 
-    private TreeNode loop(int[] nums, int start, int end) {
-        if (end < start) return null;
-        if (end == start) return new TreeNode(nums[start]);
-        if (end - start == 1) {
-            TreeNode root = new TreeNode(nums[end]);
-            root.left = new TreeNode(nums[start]);
-            return root;
-        } else if (end - start == 2) {
-            TreeNode root = new TreeNode(nums[end - 1]);
-            root.left = new TreeNode(nums[start]);
-            root.right = new TreeNode(nums[end]);
-            return root;
-        } else {
-            int midIndex = (end + start) / 2;
-            TreeNode left = loop(nums, start, midIndex - 1);
-            TreeNode right = loop(nums, midIndex + 1, end);
-            TreeNode root = new TreeNode(nums[midIndex]);
-            root.left = left;
-            root.right = right;
-            return root;
-        }
+    private TreeNode build(int[] nums, int start, int end) {
+        if (start > end) return null;
+        int mid = (start + end) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = build(nums, start, mid - 1); // 递归生成左子树
+        root.right = build(nums, mid + 1, end); // 递归生成右子树
+        return root;
     }
 }
