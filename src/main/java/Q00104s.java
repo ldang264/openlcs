@@ -1,7 +1,5 @@
 import tool.TreeNode;
 
-import java.util.LinkedList;
-
 /**
  * 给定一个二叉树，找出其最大深度。
  *
@@ -35,50 +33,6 @@ public class Q00104s {
     public int maxDepth(TreeNode root) {
         if (root == null) return 0;
         return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
-    }
-
-    /**
-     * 广度优先
-     * @param root
-     * @return
-     */
-    public int maxDepth1(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        int degree = 0;
-        LinkedList<TreeNode> list = new LinkedList<>();
-        list.add(root);
-        while (!list.isEmpty()) {
-            int size = list.size();
-            while (size > 0) { // 该循环清空当前list，并将清出的每一个节点的左右子节点加入list
-                TreeNode curr = list.poll();
-                size--;
-                if (curr.left != null) {
-                    list.offer(curr.left);
-                }
-                if (curr.right != null) {
-                    list.offer(curr.right);
-                }
-            }
-            degree++; //清掉一层则+1
-        }
-        return degree;
-    }
-
-    /**
-     * 递归
-     * @param root
-     * @return
-     */
-    public int maxDepthAns(TreeNode root) {
-        if (root == null) {
-            return 0;
-        } else {
-            int leftHeight = maxDepth(root.left);
-            int rightHeight = maxDepth(root.right);
-            return Math.max(leftHeight, rightHeight) + 1;
-        }
     }
 
 }
