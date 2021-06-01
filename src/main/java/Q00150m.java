@@ -1,3 +1,6 @@
+import java.util.Deque;
+import java.util.LinkedList;
+
 /**
  * 根据 逆波兰表示法，求表达式的值。
  *
@@ -62,6 +65,11 @@ public class Q00150m {
         System.out.println(q00150m.evalRPN(array3));
     }
 
+    /**
+     * 数组模拟栈，3ms
+     * @param tokens
+     * @return
+     */
     public int evalRPN(String[] tokens) {
         int[] stack = new int[tokens.length/2+1];
         int index = 0;
@@ -85,4 +93,34 @@ public class Q00150m {
         }
         return stack[0];
     }
+
+    /**
+     * 栈 6ms
+     * @param tokens
+     * @return
+     */
+    public int evalRPN_Stack(String[] tokens) {
+        Deque<Integer> stack = new LinkedList<>();
+        for (String item : tokens) {
+            switch (item) {
+                case "+" :
+                    stack.push(stack.pop() + stack.pop());
+                    break;
+                case "-" :
+                    stack.push(-stack.pop() + stack.pop());
+                    break;
+                case "*" :
+                    stack.push(stack.pop() * stack.pop());
+                    break;
+                case "/" :
+                    int divisor = stack.pop();
+                    stack.push(stack.pop() / divisor);
+                    break;
+                default :
+                    stack.push(Integer.parseInt(item));
+            }
+        }
+        return stack.peek();
+    }
+
 }

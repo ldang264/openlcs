@@ -45,28 +45,19 @@ public class Q00129m {
 
     private int ans;
 
-    /**
-     * DFS
-     * @param root
-     * @return
-     */
     public int sumNumbers(TreeNode root) {
-        if (root == null) return 0;
         dfs(root, 0);
         return ans;
     }
 
-    private void dfs(TreeNode node, int prev) {
-        int sum = prev * 10 + node.val; // 先计算出到当前节点的数值
-        if (node.left == null && node.right == null) { // 无子节点，则结果加上之
+    private void dfs(TreeNode node, int sum) {
+        if (node == null) return;
+        sum = sum * 10 + node.val; // 先计算出到当前节点的数值
+        if (node.left != null || node.right != null) {
+            dfs(node.left, sum);
+            dfs(node.right, sum);
+        } else { // 无子节点，则结果加上之
             ans += sum;
-        } else {
-            if (node.left != null) {
-                dfs(node.left, sum);
-            }
-            if (node.right != null) {
-                dfs(node.right, sum);
-            }
         }
     }
 

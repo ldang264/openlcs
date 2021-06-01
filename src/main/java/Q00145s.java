@@ -20,7 +20,7 @@ import java.util.*;
  * 链接：https://leetcode-cn.com/problems/binary-tree-postorder-traversal
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class Q00145m {
+public class Q00145s {
     public List<Integer> postorderTraversal(TreeNode root) {
         // 后序遍历需要维护一个刚处理过的引用
         List<Integer> list = new LinkedList<>();

@@ -4,9 +4,9 @@ import tool.TreeNode;
 
 import java.util.List;
 
-public class Q00145mTest {
+public class Q00145sTest {
 
-    Q00145m pt = new Q00145m();
+    Q00145s pt = new Q00145s();
 
     @Test
     public void postorderTraversal() {

@@ -39,12 +39,8 @@ public class Q00131m {
         // dp[i][j]表示对s(i)到s(j)的判断，true是回文，false不是
         boolean[][] dp = new boolean[len][len];
         dp[len - 1][len - 1] = true;
-        if (len > 1) {
-            dp[len - 2][len - 2] = true;
-            dp[len - 2][len - 1] = s.charAt(len - 2) == s.charAt(len - 1);
-        }
         // 自底向上填充dp
-        for (int i = len - 3; i >= 0; i--) {
+        for (int i = len - 2; i >= 0; i--) {
             dp[i][i] = true;
             dp[i][i + 1] = s.charAt(i) == s.charAt(i + 1);
             for (int j = i + 2; j < len; j++) {

@@ -22,19 +22,28 @@ import java.util.*;
  * 输入: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
  * 输出: false
  *
+ * Constraints:
+ * 1 <= s.length <= 300
+ * 1 <= wordDict.length <= 1000
+ * 1 <= wordDict[i].length <= 20
+ * s and wordDict[i] consist of only lowercase English letters.
+ * All the strings of wordDict are unique.
+ *
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/word-break
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00139m {
     public boolean wordBreak(String s, List<String> wordDict) {
-        if (wordDict.size() == 0) return false;
         Set<String> set = new HashSet<>(wordDict);
         boolean[] dp = new boolean[s.length() + 1]; // dp[i]表示s(i)是否被单词列表组成
         dp[0] = true;
-        for (int i = 1; i < dp.length; i++) {
+        for (int i = 1; i <= s.length(); i++) {
             for (int j = 0; j < i; j++) {
-                dp[i] = dp[i] || (dp[j] && set.contains(s.substring(j, i)));
+                if (dp[j] && set.contains(s.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
             }
         }
         return dp[s.length()];

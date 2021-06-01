@@ -20,7 +20,6 @@
  * nums 中的所有整数都是 唯一 的
  * nums 原来是一个升序排序的数组，但在预先未知的某个点上进行了旋转
  *
- *
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。

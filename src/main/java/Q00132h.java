@@ -29,9 +29,8 @@ public class Q00132h {
         int end = s.length() - 1;
         if (end == 0) return 0;
         boolean[][] help = new boolean[s.length()][s.length()]; // help[i][j]表示s(i)到s(j)是否是回文
-        help[end][end] = help[end - 1][end - 1] = true;
-        help[end - 1][end] = s.charAt(end - 1) == s.charAt(end);
-        for (int i = end - 2; i >= 0; i--) {
+        help[end][end] = true;
+        for (int i = end - 1; i >= 0; i--) {
             char c = s.charAt(i);
             help[i][i] = true;
             help[i][i + 1] = c == s.charAt(i + 1);
