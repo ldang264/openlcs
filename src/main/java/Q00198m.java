@@ -34,17 +34,11 @@ public class Q00198m {
      * @return
      */
     public int rob(int[] nums) {
-        if (nums.length == 0) return 0;
-        if (nums.length == 1) return nums[0];
         int prev = 0, next = nums[0];
-        for (int i = 1; i < nums.length; i++) { // 从1开始，更新prev和next
-            int val;
-            if ((val = nums[i] + prev) > next) { // 如果当前加上prev比前next大，则两个都要更新
-                prev = next;
-                next = val;
-            } else {
-                prev = next; // 否则只更新prev
-            }
+        for (int i = 1; i < nums.length; i++) {
+            int temp = prev + nums[i]; // 新的候选值
+            prev = next;
+            next = Math.max(next, temp); // 取较大的
         }
         return next;
     }
