@@ -26,21 +26,41 @@
  */
 public class Q00153m {
 
+    /**
+     * 为啥 high = pivot ，而 low = pivot + 1 呢？
+     *
+     * 我脑子里的二分查找的模板，还以为都是 right = middle - 1 或者 left = middle + 1 。。。。
+     *
+     * 求指点
+     *
+     * ========================================================================================
+     *
+     * 感谢各位大佬们解答！！！
+     *
+     * 本题的 left + 1 ，要么是更大的值（升序），要么突然降序，掉到了最小值。所以无论如何，最小值还是包括在寻找范围内的。而右侧区域，如果草率就 right - 1 的话，可能就会错过最小值了
+     *
+     * ========================================================================================
+     *
+     * 还有同学指出这么一个规律：
+     *
+     * 当 while (left < right) 时，对应的更新式是 left = middle + 1 ， right = middle
+     *
+     * 当 while (left <= right) 时，对应的更新式是 left = middle + 1，right = middle - 1
+     *
+     * 本题由于【当区间长度为1时，即可停止二分查找】，所以是 while (left < right) ，所以是 left = middle + 1，right = middle
+     * @param nums
+     * @return
+     */
     public int findMin(int[] nums) {
-        if (nums.length == 1 || nums[0] < nums[nums.length - 1]) return nums[0]; // 处理唯一元素和升序的情况
-        int start = 0, end = nums.length - 1; // 左右指针
-        int mid;
-        while (start < end) {
-            mid = (start + end) / 2;
-            if (mid == 0) return nums[1]; // 形如3,1,2这样
-            if (mid == nums.length - 1) return nums[mid]; // 形如2,3,1这样
-            if (nums[mid - 1] > nums[mid] && nums[mid] < nums[mid + 1]) return nums[mid]; // 形如3,1,2这样
-            if (nums[mid] > nums[0]) { // 在左边半边
-                start = mid + 1;
-            } else { // 在右半边
-                end = mid - 1;
+        int left = 0, right = nums.length - 1, mid;
+        while (left < right) {
+            mid = (left + right) >> 1;
+            if (nums[mid] < nums[right]) { // 可能mid就是最小值，所以不能right=mid-1
+                right = mid;
+            } else {
+                left = mid + 1;
             }
         }
-        return nums[end];
+        return nums[left];
     }
 }

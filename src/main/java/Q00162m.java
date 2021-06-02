@@ -34,40 +34,15 @@ public class Q00162m {
      * @return
      */
     public int findPeakElement(int[] nums) {
-        int start = 0, end = nums.length - 1, mid;
-        while (true) {
-            if (start == end) return start; //
-            mid = (start + end) / 2;
-            if (nums[mid] < nums[mid + 1]) { // 递增
-                start = mid + 1; // 向右找
-            } else {
-                end = mid; // 向左找
+        int left = 0, right = nums.length - 1, mid;
+        while (left < right) {
+            mid = (left + right) >> 1;
+            if (nums[mid] < nums[mid + 1]) { // 向右找
+                left = mid + 1;
+            } else { // 向左找
+                right = mid;
             }
         }
-    }
-
-    private int ans;
-
-    /**
-     * 比较傻的方法
-     * @param nums
-     * @return
-     */
-    public int findPeakElement1(int[] nums) {
-        if (nums.length == 1) return 0; // 一个数直接返回
-        if (nums[0] > nums[1]) return 0; // 第一个是峰值
-        if (nums[nums.length - 1] > nums[nums.length - 2]) return nums.length - 1; // 最后一个是峰值
-        find(nums, 1, nums.length - 2); // 在第一个与最后一个之间找峰值
-        return ans;
-    }
-
-    private boolean find(int[] nums, int start, int end) {
-        if (start > end) return false; // 跳出寻找
-        int mid = (start + end) / 2;
-        if (nums[mid] > nums[mid - 1] && nums[mid] > nums[mid + 1]) { // 找到峰值
-            ans = mid;
-            return true;
-        }
-        return find(nums, start, mid - 1) || find(nums, mid + 1, end); // 先左后右
+        return left;
     }
 }

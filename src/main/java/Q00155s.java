@@ -1,23 +1,22 @@
-import java.util.Stack;
+import java.util.Deque;
+import java.util.LinkedList;
 
 public class Q00155s {
 
-    private Stack<Integer> minStack;
+    private final Deque<Integer> minStack;
 
-    private Stack<Integer> dataStack;
+    private final Deque<Integer> dataStack;
 
     /** initialize your data structure here. */
     public Q00155s() {
-        minStack = new Stack<>();
-        dataStack = new Stack<>();
+        minStack = new LinkedList<>();
+        minStack.push(Integer.MAX_VALUE);
+        dataStack = new LinkedList<>();
+        dataStack.push(0);
     }
 
     public void push(int x) {
-        if (minStack.size() == 0) {
-            minStack.push(x);
-        } else {
-            minStack.push(Math.min(minStack.peek(), x));
-        }
+        minStack.push(Math.min(minStack.peek(), x));
         dataStack.push(x);
     }
 
