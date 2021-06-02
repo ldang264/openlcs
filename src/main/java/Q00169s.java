@@ -1,5 +1,4 @@
-import java.util.HashMap;
-import java.util.Map;
+
 
 /**
  * 给定一个大小为 n 的数组，找到其中的多数元素。多数元素是指在数组中出现次数 大于⌊ n/2 ⌋的元素。
@@ -22,19 +21,23 @@ import java.util.Map;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00169s {
+
+    /**
+     * 摩尔投票法
+     * @param nums
+     * @return
+     */
     public int majorityElement(int[] nums) {
-        if (nums.length == 1) return nums[0];
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int num : nums) {
-            Integer count = map.get(num);
-            if (count == null) {
-                map.put(num, 1);
-            } else if (count == nums.length / 2) {
-                return num;
+        int value = nums[0], count = 1;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] == value) {
+                count++;
+            } else if (count == 1) {
+                value = nums[i];
             } else {
-                map.put(num, count + 1);
+                count--;
             }
         }
-        return -1;
+        return value;
     }
 }
