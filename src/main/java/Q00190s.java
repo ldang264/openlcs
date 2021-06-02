@@ -51,6 +51,7 @@ public class Q00190s {
         }
         return ans;
     }
+
     private static final int M1 = 0x55555555; // 01010101010101010101010101010101
     private static final int M2 = 0x33333333; // 00110011001100110011001100110011
     private static final int M4 = 0x0f0f0f0f; // 00001111000011110000111100001111
