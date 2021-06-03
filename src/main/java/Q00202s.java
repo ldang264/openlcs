@@ -22,20 +22,16 @@ import java.util.Set;
 public class Q00202s {
     public boolean isHappy(int n) {
         Set<Integer> set = new HashSet<>();
-        return exec(n, set);
-    }
-
-    private boolean exec(int n, Set<Integer> set) {
-        int temp = 0;
-        while (n >= 10) {
-            int g = n % 10;
-            n /= 10;
-            temp += g * g;
+        while (n != 1) {
+            int m = 0;
+            while (n > 0) {
+                int g = n % 10;
+                n /= 10;
+                m += g * g;
+            }
+            if (!set.add(m)) return false; // 如果死循环，则false
+            n = m;
         }
-        int nn = n * n + temp; // 算平方和
-        if (nn == 1) return true; // true
-        if (set.contains(nn)) return false; // 如果死循环，则false
-        set.add(nn);
-        return exec(nn, set);
+        return true;
     }
 }
