@@ -1,10 +1,24 @@
 /**
- * 给定一个含有n个正整数的数组和一个正整数s ，找出该数组中满足其和 ≥ s 的长度最小的 连续 子数组，并返回其长度。如果不存在符合条件的子数组，返回 0。
+ * 给定一个含有 n 个正整数的数组和一个正整数 target 。
+ * 找出该数组中满足其和 ≥ target 的长度最小的 连续子数组 [numsl, numsl+1, ..., numsr-1, numsr] ，并返回其长度。如果不存在符合条件的子数组，返回 0 。
  *
- * 示例：
- * 输入：s = 7, nums = [2,3,1,2,4,3]
+ * 示例 1：
+ * 输入：target = 7, nums = [2,3,1,2,4,3]
  * 输出：2
- * 解释：子数组[4,3]是该条件下的长度最小的子数组。
+ * 解释：子数组 [4,3] 是该条件下的长度最小的子数组。
+ *
+ * 示例 2：
+ * 输入：target = 4, nums = [1,4,4]
+ * 输出：1
+ *
+ * 示例 3：
+ * 输入：target = 11, nums = [1,1,1,1,1,1,1,1]
+ * 输出：0
+ *
+ * 提示：
+ * 1 <= target <= 109
+ * 1 <= nums.length <= 105
+ * 1 <= nums[i] <= 105
  *
  * 进阶：
  * 如果你已经完成了 O(n) 时间复杂度的解法, 请尝试 O(n log n) 时间复杂度的解法。
@@ -16,47 +30,22 @@
 public class Q00209m {
 
     /**
-     * 参考题解
-     * 双指针
-     * @param s
+     * 滑动窗口
+     * @param target
      * @param nums
      * @return
      */
-    public int minSubArrayLen(int s, int[] nums) {
-        if (nums == null || nums.length == 0) return 0;
-        int ans = nums.length + 1;
-        int sum = 0, start = 0, end = 0;
-        while (end < nums.length) {
-            sum += nums[end]; // 累加
-            while (sum >= s) { // 一旦超过，计算一次，start开始右移，直到再次小于s后，跳出循环，并右移end
-                ans = Math.min(ans, end - start + 1);
-                sum -= nums[start]; // 减掉移出的start
-                start++;
-            }
-            end++;
-        }
-        return ans == nums.length + 1 ? 0 : ans;
-    }
-
-    /**
-     * O(n^2)效率比较低
-     * @param s
-     * @param nums
-     * @return
-     */
-    public int minSubArrayLen1(int s, int[] nums) {
-        if (nums == null || nums.length == 0) return 0;
-        int ans = nums.length + 1;
-        for (int i = 0; i < nums.length; i++) {
-            int sum = 0, min = Math.min(ans + i - 1, nums.length), pointer = i;
-            while (pointer < min) {
-                sum += nums[pointer];
-                if (sum >= s) {
-                    ans = pointer - i + 1;
-                    break;
+    public int minSubArrayLen(int target, int[] nums) {
+        int ans = nums.length + 1, left = 0, right = 0;
+        while (right < nums.length) {
+            target -= nums[right]; // 一直减
+            if (target <= 0) { // 至少在区间内满足
+                while (left <= right && target <= 0) {
+                    target += nums[left++]; // 直到target>0
                 }
-                pointer++;
+                ans = Math.min(ans, right - left + 2); // 这时，应该是left-1到right是满足的区间
             }
+            right++;
         }
         return ans == nums.length + 1 ? 0 : ans;
     }

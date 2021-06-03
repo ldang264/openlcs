@@ -27,7 +27,6 @@
  */
 public class Q00213m {
     public int rob(int[] nums) {
-        int ans = 0;
         // 先从0 偷到 n - 2
         int prev = 0, curr = nums[0];
         for (int i = 1; i < nums.length - 1; i++) {
@@ -35,7 +34,7 @@ public class Q00213m {
             prev = curr;
             curr = Math.max(temp, curr); // 如果比当前值大，则更新当前值
         }
-        ans = curr;
+        int ans = curr;
         if (nums.length > 1) {
             // 在从1 偷到 n - 1
             prev = 0; curr = nums[1];

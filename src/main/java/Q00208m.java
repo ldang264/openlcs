@@ -12,10 +12,7 @@ public class Q00208m {
         TrieNode last = trie;
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
-            if (last.nodes == null) {
-                last.nodes = new TrieNode[26];
-                last.nodes[c - 'a'] = new TrieNode();
-            } else if (last.nodes[c - 'a'] == null) {
+            if (last.nodes[c - 'a'] == null) {
                 last.nodes[c - 'a'] = new TrieNode();
             }
             last = last.nodes[c - 'a'];
@@ -38,7 +35,7 @@ public class Q00208m {
         TrieNode last = trie;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if (last.nodes == null || last.nodes[c - 'a'] == null) {
+            if (last.nodes[c - 'a'] == null) {
                 return null;
             }
             last = last.nodes[c - 'a'];
@@ -47,7 +44,7 @@ public class Q00208m {
     }
 
     private class TrieNode {
-        private TrieNode[] nodes;
+        private TrieNode[] nodes = new TrieNode[26];
 
         private boolean match; // 表示这个是结束字符节点
     }

@@ -20,7 +20,7 @@
  */
 public class Q00215m {
     public int findKthLargest(int[] nums, int k) {
-        return find(nums, k, 0, nums.length - 1);
+        return quickSelect(nums, k, 0, nums.length - 1);
     }
 
     /**
@@ -30,7 +30,7 @@ public class Q00215m {
      * @param left
      * @param right
      */
-    private int find(int[] nums, int k, int left, int right) {
+    private int quickSelect(int[] nums, int k, int left, int right) {
         if (left >= right) return nums[left];
         int l = left, r = right, pivot = nums[left];
         while (left < right) {
@@ -44,11 +44,7 @@ public class Q00215m {
             nums[right] = nums[left];
         }
         nums[left] = pivot;
-        int pos = left - k + 1;
-        if (pos == 0) {
-            return nums[left];
-        } else {
-            return pos < 0 ? find(nums, k, left + 1, r) : find(nums, k, l, left - 1);
-        }
+        int pos = left - k + 1; // 这一步很重要
+        return pos == 0 ? pivot : pos < 0 ? quickSelect(nums, k, left + 1, r) : quickSelect(nums, k, l, left - 1);
     }
 }
