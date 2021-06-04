@@ -25,7 +25,7 @@ public class Q00222m {
     private int ans;
 
     public int countNodes(TreeNode root) {
-        if (root == null) return 0;
+        ans = 0;
         dfs(root);
         return ans;
     }
@@ -35,8 +35,9 @@ public class Q00222m {
      * @param node
      */
     private void dfs(TreeNode node) {
+        if (node == null) return;
         ans++;
-        if (node.left != null) dfs(node.left);
-        if (node.right != null) dfs(node.right);
+        dfs(node.left);
+        dfs(node.right);
     }
 }

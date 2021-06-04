@@ -23,7 +23,7 @@ import java.util.Set;
  */
 public class Q00217s {
     public boolean containsDuplicate(int[] nums) {
-        Set<Integer> set = new HashSet<>(nums.length);
+        Set<Integer> set = new HashSet<>(nums.length << 1);
         for (int num : nums) {
             if (!set.add(num)) { // 存在num就会返回false
                 return true;
