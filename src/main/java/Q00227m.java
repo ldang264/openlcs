@@ -17,8 +17,12 @@ import java.util.LinkedList;
  * 输出: 5
  * 说明：
  *
- * 你可以假设所给定的表达式都是有效的。
- * 请不要使用内置的库函数 eval。
+ * 提示：
+ * 1 <= s.length <= 3 * 105
+ * s 由整数和算符 ('+', '-', '*', '/') 组成，中间由一些空格隔开
+ * s 表示一个 有效表达式
+ * 表达式中的所有整数都是非负整数，且在范围 [0, 231 - 1] 内
+ * 题目数据保证答案是一个 32-bit 整数
  *
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/basic-calculator-ii
@@ -26,59 +30,48 @@ import java.util.LinkedList;
  */
 public class Q00227m {
     public int calculate(String s) {
-        LinkedList<Boolean> symbolStack = new LinkedList<>(); // true表示+，false表示-
-        LinkedList<Integer> numStack = new LinkedList<>();
-        int ns = 0;
+        LinkedList<Boolean> symbolList = new LinkedList<>(); // true表示+，false表示-
+        LinkedList<Integer> digitList = new LinkedList<>();
+        int prev = 0;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if (c != ' ') {
-                if (c == '*' || c == '/') {
-                    // 找到下一个符号前，把这串字符串转为 被乘数
-                    StringBuilder bcsStr = new StringBuilder();
-                    int j = i + 1; // 往后寻找被乘或被除数
-                    while (j < s.length()) {
-                        if (s.charAt(j) != ' ') {
-                            if (!isNum(s.charAt(j))) {
-                                break;
-                            }
-                            bcsStr.append(s.charAt(j));
-                        }
-                        j++;
+            if (c == ' ') continue;
+            if (c == '*' || c == '/') {
+                // 找到下一个符号前，把这串字符串转为 被乘数
+                int next = 0;
+                while (++i < s.length()) {
+                    if (s.charAt(i) != ' ') {
+                        if (!Character.isDigit(s.charAt(i))) break;
+                        next = next * 10 + (s.charAt(i) - '0');
                     }
-                    i = j - 1; // i直接跳到下一个字符
-                    if (c == '*') {
-                        ns *= Integer.parseInt(bcsStr.toString());
-                    } else {
-                        ns /= Integer.parseInt(bcsStr.toString());
-                    }
-                } else if (c == '+') {
-                    symbolStack.addLast(true);
-                    numStack.addLast(ns);
-                    ns = 0;
-                } else if (c == '-') {
-                    symbolStack.addLast(false);
-                    numStack.addLast(ns);
-                    ns = 0;
-                } else { // 一定是数字
-                    ns = ns * 10 + (c - '0'); // 累加数字
                 }
+                if (c == '*') {
+                    prev *= next;
+                } else {
+                    prev /= next;
+                }
+                i--; // i回拨
+            } else if (c == '+') {
+                symbolList.addLast(true);
+                digitList.addLast(prev);
+                prev = 0;
+            } else if (c == '-') {
+                symbolList.addLast(false);
+                digitList.addLast(prev);
+                prev = 0;
+            } else { // 一定是数字
+                prev = prev * 10 + (c - '0'); // 累加数字
             }
         }
-        numStack.addLast(ns); // 先把最后的证书加入栈
-        int size = symbolStack.size();
-        int ans = numStack.removeFirst();
-        while (size-- > 0) {
-            int num = numStack.removeFirst();
-            if (symbolStack.removeFirst()) {
-                ans += num;
+        digitList.addLast(prev); // 先把最后的整数加入栈
+        prev = digitList.removeFirst();
+        while (symbolList.size() > 0) {
+            if (symbolList.removeFirst()) {
+                prev += digitList.removeFirst();
             } else {
-                ans -= num;
+                prev -= digitList.removeFirst();
             }
         }
-        return ans;
-    }
-
-    private boolean isNum(char c) {
-        return '0' <= c && c <= '9';
+        return prev;
     }
 }

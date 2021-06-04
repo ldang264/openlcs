@@ -26,72 +26,49 @@ import java.util.LinkedList;
  */
 public class Q00224h {
     public int calculate(String s) {
-        LinkedList<String> stack = new LinkedList<>(); // 字符串栈，后进先出
-        LinkedList<String> compStack = new LinkedList<>();
-        StringBuilder nsb = new StringBuilder();
+        LinkedList<Character> symbolList = new LinkedList<>(); // 符号列表
+        LinkedList<Integer> digitList = new LinkedList<>(); // 数字列表
+        LinkedList<Character> scList = new LinkedList<>();
+        LinkedList<Integer> dcList = new LinkedList<>(); // 计算表
+        int num = 0;
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if (c != ' ') {
-                if (c == ')') { // 右括号
-                    if (nsb.length() > 0) {
-                        compStack.addFirst(nsb.toString());
-                        nsb = new StringBuilder();
-                    }
-                    while (stack.size() > 0) {
-                        String a = stack.removeLast();
-                        if (a.equals("(")) {
-                            break;
-                        }
-                        compStack.addFirst(a);
-                    }
-                    // 计算弹出的数据
-                    int num;
-                    String f = compStack.removeFirst();
-                    if (f.equals("-")) {
-                        num = - Integer.parseInt(compStack.removeFirst());
-                    } else {
-                        num = Integer.parseInt(f);
-                    }
-                    while (compStack.size() > 0) {
-                        String symb = compStack.removeFirst();
-                        int next = Integer.parseInt(compStack.removeFirst());
-                        if (symb.equals("+")) {
-                            num += next;
-                        } else {
-                            num -= next;
-                        }
-                    }
-                    stack.addLast(num + "");
-                } else if (c >= '0' && c <= '9') { // 数字，需要拼接
-                    nsb.append(c);
-                } else { //（+-直接入栈
-                    if (nsb.length() > 0) {
-                        stack.addLast(nsb.toString());
-                        nsb = new StringBuilder();
-                    }
-                    stack.addLast(c + "");
+            if (c == ' ') continue;
+            if (c == ')') { // 右括号
+                char f;
+                while ((f = symbolList.removeLast()) != '(') {
+                    scList.addFirst(f);
+                    dcList.addFirst(digitList.removeLast());
                 }
+                // 计算弹出的数据
+                dcList.addLast(num);
+                num = dcList.removeFirst();
+                while (dcList.size() > 0) {
+                    if (scList.removeFirst() == '+') {
+                        num += dcList.removeFirst();
+                    } else {
+                        num -= dcList.removeFirst();
+                    }
+                }
+            } else if (c >= '0' && c <= '9') { // 数字，需要拼接
+                num = num * 10 + (c - '0');
+            } else if (c == '(') {
+                symbolList.addLast(c);
+            } else { //（+-直接入栈
+                digitList.addLast(num);
+                num = 0;
+                symbolList.addLast(c);
             }
         }
-        if (nsb.length() > 0) {
-            stack.addLast(nsb.toString());
-        }
-        int ans;
-        String f = stack.removeFirst();
-        if (f.equals("-")) {
-            ans = - Integer.parseInt(stack.removeFirst());
-        } else {
-            ans = Integer.parseInt(f);
-        }
-        while (stack.size() > 0) {
-            String symb = stack.removeFirst();
-            int next = Integer.parseInt(stack.removeFirst());
-            if (symb.equals("+")) {
-                ans += next;
+        digitList.addLast(num);
+        num = digitList.removeFirst();
+        while (symbolList.size() > 0) {
+            if (symbolList.removeFirst() == '+') {
+                num += digitList.removeFirst();
             } else {
-                ans -= next;
+                num -= digitList.removeFirst();
             }
         }
-        return ans;
+        return num;
     }
 }

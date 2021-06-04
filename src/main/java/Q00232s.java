@@ -1,4 +1,5 @@
-import java.util.Stack;
+import java.util.Deque;
+import java.util.LinkedList;
 
 /**
  * 请你仅使用两个栈实现先入先出队列。队列应当支持一般队列的支持的所有操作（push、pop、peek、empty）：
@@ -13,9 +14,7 @@ import java.util.Stack;
  * 你所使用的语言也许不支持栈。你可以使用 list 或者 deque（双端队列）来模拟一个栈，只要是标准的栈操作即可。
  *
  * 进阶：
- *
  * 你能否实现每个操作均摊时间复杂度为 O(1) 的队列？换句话说，执行 n 个操作的总时间复杂度为 O(n) ，即使其中一个操作可能花费较长时间。
- * 
  *
  * 示例：
  * 输入：
@@ -44,55 +43,44 @@ import java.util.Stack;
  */
 public class Q00232s {
 
-    private Stack<Integer> stack1;
-
-    private Stack<Integer> stack2;
+    private final Deque<Integer> stack1, stack2;
 
     /** Initialize your data structure here. */
     public Q00232s() {
-        stack1 = new Stack<>();
-        stack2 = new Stack<>();
+        stack1 = new LinkedList<>();
+        stack2 = new LinkedList<>();
     }
 
     /** Push element x to the back of queue. */
     public void push(int x) {
-        if (stack1.isEmpty()) {
-            stack1.push(x); // 栈1为空，直接入栈
-        } else {
-            if (stack2.isEmpty()) {
-                stack2.push(x); // 栈2为空，也直接入栈
-            } else {
-                int val = stack2.pop(); // 栈2只会有一个元素，出栈，栈2为空
-                int size = stack1.size();
-                while (size-- > 0) {
-                    stack2.push(stack1.pop()); // 将栈1的元素全部放入栈2，此时元素是反的
-                }
-                stack1.push(val); // 将val放入栈1
-                size = stack2.size();
-                while (size-- > 0) {
-                    stack1.push(stack2.pop()); // 将元素放入栈1，此时栈1元素是按入队顺序的
-                }
-                stack2.push(x); // 将新元素放入栈2
-            }
-        }
+        stack1.push(x); // 直接入栈
     }
 
     /** Removes the element from in front of queue and returns that element. */
     public int pop() {
-        int val = stack1.pop();
-        if (stack1.isEmpty() && !stack2.isEmpty()) { // 如果栈1空了，则将栈2元素放入栈1
-            stack1.push(stack2.pop());
-        }
-        return val;
+        transfer();
+        return stack2.pop();
     }
 
     /** Get the front element. */
     public int peek() {
-        return stack1.isEmpty() ? stack2.peek() : stack1.peek();
+        transfer();
+        return stack2.peek();
     }
 
     /** Returns whether the queue is empty. */
     public boolean empty() {
-        return stack1.isEmpty() && stack2.isEmpty();
+        return stack1.size() == 0 && stack2.size() == 0;
+    }
+
+    /**
+     * 保证在出队的时候，最老的元素放到队头
+     */
+    private void transfer() {
+        if (stack2.size() == 0) {
+            while (stack1.size() > 0) {
+                stack2.push(stack1.pop());
+            }
+        }
     }
 }

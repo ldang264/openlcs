@@ -22,9 +22,7 @@ import tool.TreeNode;
  */
 public class Q00230m {
 
-    private int ans;
-
-    private int n;
+    private int ans, n;
 
     /**
      * 性质：二叉搜索树的中序遍历是严格递增序列
@@ -40,7 +38,7 @@ public class Q00230m {
     }
 
     private void dfs(TreeNode root) {
-        if (root == null || n == 0) return;
+        if (root == null) return;
         dfs(root.left);
         if (--n == 0) {
             ans = root.val;
