@@ -22,18 +22,39 @@ import java.util.LinkedList;
  */
 public class Q00234s {
 
-    public static void main(String[] args) {
-        Q00234s ip = new Q00234s();
-        ListNode l1 = new ListNode(1);
-        l1.next = new ListNode(2);
-        l1.next.next = new ListNode(3);
-        l1.next.next.next = new ListNode(2);
-        l1.next.next.next.next = new ListNode(2);
-        System.out.println(l1);
-        System.out.println(ip.isPalindrome(l1));
+    public boolean isPalindrome(ListNode head) {
+        if (head.next == null) return true;
+        int len = 0; // 得到整个链表长度
+        ListNode hair = new ListNode(0);
+        hair.next = head;
+        while (head != null) {
+            len++;
+            head = head.next;
+        }
+        head = hair.next;
+        int half = (len >> 1);
+        while (--half > 0) {
+            ListNode hn = hair.next;
+            ListNode cn = head.next;
+            head.next = head.next.next;
+            hair.next = cn;
+            cn.next = hn;
+        }
+        hair = hair.next;
+        if ((len & 1) == 1) {
+            head = head.next.next;
+        } else {
+            head = head.next;
+        }
+        while (head != null) {
+            if (hair.val != head.val) return false;
+            hair = hair.next;
+            head = head.next;
+        }
+        return true;
     }
 
-    public boolean isPalindrome(ListNode head) {
+    public boolean isPalindrome2(ListNode head) {
         ListNode slow = head, high = head;
         int h = 1;
         LinkedList<Integer> list = new LinkedList<>();

@@ -20,35 +20,12 @@ public class Q00238m {
     public int[] productExceptSelf(int[] nums) {
         int[] ans = new int[nums.length];
         ans[0] = 1;
-        for (int i = 1; i < nums.length; i++) {
-            ans[i] = ans[i - 1] * nums[i - 1];
+        for (int i = 1; i < ans.length; i++) {
+            ans[i] = ans[i - 1] * nums[i - 1]; // 算出前n项积
         }
-        int temp = 1;
-        for (int i = nums.length - 2; i >= 0; i--) {
-            temp *= nums[i + 1];
-            ans[i] *= temp;
-        }
-        return ans;
-    }
-
-    public int[] productExceptSelf2(int[] nums) {
-        int multiResult = 1, temp = 1, zn = 0;
-        int[] ans = new int[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] != 0) {
-                multiResult *= nums[i];
-            } else {
-                zn++;
-                temp = 0;
-            }
-        }
-        if (zn > 1) return ans;
-        for (int i = 0; i < ans.length; i++) {
-            if (nums[i] != 0) {
-                ans[i] = multiResult * temp / nums[i];
-            } else {
-                ans[i] = multiResult;
-            }
+        for (int i = ans.length - 2; i>= 0; i--) {
+            ans[i] *= nums[i + 1]; // 前后相乘
+            nums[i] *= nums[i + 1]; // 算出前后项积
         }
         return ans;
     }

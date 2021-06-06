@@ -42,10 +42,9 @@ public class Q00099h {
         if (root == null) return;
         dfs(root.left);
         if (prev != null && prev.val > root.val) {
-            if (node1 == null) { // node1只会初始化一次
-                node1 = prev;
-            }
             node2 = root; // node2有可能是它相邻的，也可能在后面
+            if (node1 != null) return;
+            node1 = prev; // node1只会初始化一次
         }
         prev = root; // prev要不断更新
         dfs(root.right);
