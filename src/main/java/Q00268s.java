@@ -38,11 +38,24 @@
 public class Q00268s {
 
     /**
-     * 本来所有数的和应该是n * (n + 1) / 2，减去当前所有数字的总和，就是缺失的数字
+     * 异或
      * @param nums
      * @return
      */
     public int missingNumber(int[] nums) {
+        int val = nums.length;
+        for (int i = 0; i < nums.length; i++) {
+            val ^= (i ^ nums[i]);
+        }
+        return val;
+    }
+
+    /**
+     * 本来所有数的和应该是n * (n + 1) / 2，减去当前所有数字的总和，就是缺失的数字
+     * @param nums
+     * @return
+     */
+    public int missingNumber_Math(int[] nums) {
         int sum = (nums.length + 1) * nums.length / 2;
         for (int num : nums) {
             sum -= num;
