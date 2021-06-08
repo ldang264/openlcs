@@ -1,5 +1,3 @@
-package ans;
-
 import tool.TreeNode;
 
 import java.util.LinkedList;
@@ -35,7 +33,7 @@ import java.util.Queue;
  * 链接：https://leetcode-cn.com/problems/serialize-and-deserialize-binary-tree
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class Q00297h_Ans {
+public class Q00297h {
 
     /**
      * 广度优先的层序遍历
@@ -70,7 +68,7 @@ public class Q00297h_Ans {
         queue.add(root); // 根节点入栈
         TreeNode parent;
         String child; // 左右子节点的值
-        while (!queue.isEmpty() && !values.isEmpty()) {
+        while (!values.isEmpty()) {
             parent = queue.poll(); // 弹出父节点
             child = values.poll(); // 弹出左节点
             if (child.length() > 0) {

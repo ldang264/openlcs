@@ -1,8 +1,5 @@
 import tool.TreeNode;
 
-import java.util.Deque;
-import java.util.LinkedList;
-
 /**
  * 给定一棵二叉搜索树和其中的一个节点 p ，找到该节点在树中的中序后继。如果节点没有中序后继，请返回 null 。
  *
@@ -34,35 +31,17 @@ public class Q00285m {
     private TreeNode prev;
 
     public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        if (root.val < p.val) return inorderSuccessor(root.right, p); // 在右子树上
         if (root.val > p.val) { // 在左子树上
             prev = root; // prev一直变小，它是比目标节点右子树大一点的节点
             return inorderSuccessor(root.left, p);
         }
-        if (root.val < p.val) return inorderSuccessor(root.right, p); // 在右子树上
-        return root.right == null ? prev : dfs(root.right); // 无右子树，返回prev；递归右子树，找最左节点
-    }
-
-    private TreeNode dfs(TreeNode node) {
-        return node.left == null ? node : dfs(node.left); // 有左子树则一直递归，否则返回最左节点
-    }
-
-    /**
-     * 迭代
-     * @param root
-     * @param p
-     * @return
-     */
-    public TreeNode inorderSuccessorRecursive(TreeNode root, TreeNode p) {
-        Deque<TreeNode> stack = new LinkedList<>();
-        while (stack.size() > 0 || root != null) {
-            while (root != null) {
-                stack.push(root);
-                root = root.left;
-            }
-            root = stack.pop();
-            if (root.val > p.val) return root;
-            root = root.right;
+        if (root.right == null) return prev; // 无右子树，返回prev
+        root = root.right;
+        while (root.left != null) {
+            root = root.left; // 找右子树的最左节点
         }
-        return null;
+        return root;
     }
+
 }

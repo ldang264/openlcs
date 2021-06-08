@@ -83,7 +83,7 @@ public class Q00310m {
         int size;
         while ((size = fifo.size()) > 0) {
             ans.clear(); // 清空上一层，向根逼近
-            while (size-- > 0) {
+            while (size-- > 0) { // 一次弹出所有度相同的
                 int i = fifo.poll();
                 ans.add(i);
                 for (Integer out : outgoings[i]) {

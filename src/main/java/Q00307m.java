@@ -37,45 +37,38 @@
  */
 public class Q00307m {
 
-    private int len;
+    private final int N;
 
-    private int[] tree;
+    private final int[] tree;
 
     public Q00307m(int[] nums) {
-        len = nums.length;
-        tree = new int[len << 1]; // 线段树的长度是原数组的二倍
-        System.arraycopy(nums, 0, tree, len, len); // 复制到len后
-        for (int i = len - 1; i > 0; i--) {
+        N = nums.length;
+        tree = new int[N << 1]; // 线段树的长度是原数组的二倍
+        System.arraycopy(nums, 0, tree, N, N); // 复制到len后
+        for (int i = N - 1; i > 0; i--) {
             tree[i] = tree[2 * i] + tree[2 * i + 1]; // 计算区间和
         }
     }
 
     public void update(int index, int val) {
-        index += len; // 定位到tree的位置
-        if (val == tree[index]) return; // 相同就不更新了
+        index += N; // 定位到tree的位置
         tree[index] = val; // 更新当前值
-        int left, right;
-        while (index > 0) {
-            if ((index & 1) == 1) { // 奇数
-                left = index - 1; // 左取偶数
-                right = index;
-            } else { // 偶数
-                left = index;
-                right = index + 1; // 右取奇数
-            }
-            tree[index >>= 1] = tree[left] + tree[right];
+        int p;
+        while (index > 1) {
+            tree[p = (index >> 1)] = tree[index] + (((index & 1) == 1) ? tree[index - 1] : tree[index + 1]); // 取左偶右奇
+            index = p;
         }
     }
 
     public int sumRange(int left, int right) {
         int ans = 0;
-        left += len;
-        right += len;
+        left += N;
+        right += N;
         while (left <= right) {
-            if ((left & 1) == 1) { // 左为奇数
+            if ((left & 1) == 1) { // left是奇数
                 ans += tree[left++];
             }
-            if ((right & 1) == 0) { // 右为偶数
+            if ((right & 1) == 0) { // right是偶数
                 ans += tree[right--];
             }
             left >>= 1;

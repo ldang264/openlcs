@@ -25,52 +25,34 @@ import java.util.Arrays;
  * 输入：coins = [1], amount = 2
  * 输出：2
  *
+ * Constraints:
+ * 1 <= coins.length <= 12
+ * 1 <= coins[i] <= 231 - 1
+ * 0 <= amount <= 104
+ *
+ * 来源：力扣（LeetCode）
+ * 链接：https://leetcode-cn.com/problems/coin-change
+ * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/coin-change
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00322m {
 
-    private int ans;
-
-    public int coinChange(int[] coins, int amount) {
-        if (coins == null || coins.length == 0) return -1;
-        if (amount == 0) return 0;
-        Arrays.sort(coins); // 排个序
-        ans = amount + 1;
-        find(coins, amount, coins.length - 1, 0);
-        return ans == amount + 1 ? -1 : ans;
-    }
-
-    private void find(int[] coins, int amount, int index, int count) {
-        if (index < 0) return;
-        int candidateCount = amount / coins[index];
-        if (amount % coins[index] == 0) { // 能整除，直接return
-            ans = Math.min(ans, count + candidateCount);
-            return;
-        }
-        if (candidateCount < ans - count) { // 如果当前待加入的个数小于当前最小值与当前计数的差，直接不算了，因为算的个数肯定要比ans多了
-            while (candidateCount >= 0) {
-                find(coins, amount - candidateCount * coins[index], index - 1, count + candidateCount);
-                candidateCount--;
-            }
-        }
-    }
-
     /**
-     * 答案：动态规划
+     * 动态规划
      * @param coins
      * @param amount
      * @return
      */
-    public int coinChangeDp(int[] coins, int amount) {
+    public int coinChange(int[] coins, int amount) {
         int[] dp = new int[amount + 1]; // dp[i]表示组成i元所需的最小个数
         Arrays.fill(dp, amount + 1);
         dp[0] = 0;
-        for (int i = 1; i <= amount; i++) {
-            for (int j = 0; j < coins.length; j++) {
-                if (i >= coins[j]) {
-                    dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
+        for (int money = 1; money <= amount; money++) {
+            for (Integer coin : coins) {
+                if (money >= coin) {
+                    dp[money] = Math.min(dp[money], dp[money - coin] + 1);
                 }
             }
         }

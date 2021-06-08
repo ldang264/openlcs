@@ -26,42 +26,18 @@
  */
 public class Q00304m {
 
-    private int[][] twoArray; // 二维前缀和
+    private final int[][] sums; // 二维前缀和
 
     public Q00304m(int[][] matrix) {
-        if (matrix == null || matrix.length == 0) return;
-        twoArray = new int[matrix.length + 1][matrix[0].length + 1]; // 扩充一行和一列，以避免边界判断
+        sums = new int[matrix.length + 1][matrix[0].length + 1];
         for (int i = 1; i <= matrix.length; i++) {
             for (int j = 1; j <= matrix[0].length; j++) {
-                twoArray[i][j] = twoArray[i][j - 1] + twoArray[i - 1][j] - twoArray[i - 1][j - 1] + matrix[i - 1][j - 1]; // 横向和竖向都求和
+                sums[i][j] = sums[i][j - 1] + sums[i - 1][j] - sums[i - 1][j - 1] + matrix[i - 1][j - 1]; // 减掉被加了两次的
             }
         }
     }
 
     public int sumRegion(int row1, int col1, int row2, int col2) {
-        if (twoArray == null) return 0;
-        return (twoArray[row2 + 1][col2 + 1] - twoArray[row1][col2 + 1]) - (twoArray[row2 + 1][col1] - twoArray[row1][col1]);
+        return (sums[row2 + 1][col2 + 1] - sums[row1][col2 + 1]) - (sums[row2 + 1][col1] - sums[row1][col1]);
     }
-
-    /*
-    private int[][] oneArray; // 一维前缀和
-
-    public Q00304m(int[][] matrix) {
-        if (matrix == null || matrix.length == 0) return;
-        oneArray = new int[matrix.length][matrix[0].length + 1];
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 1; j <= matrix[0].length; j++) {
-                oneArray[i][j] = oneArray[i][j - 1] + matrix[i][j - 1];
-            }
-        }
-    }
-
-    public int sumRegion(int row1, int col1, int row2, int col2) {
-        if (oneArray == null) return 0;
-        int sum = 0;
-        for (int i = row1; i <= row2; i++) {
-            sum += oneArray[i][col2 + 1] - oneArray[i][col1];
-        }
-        return sum;
-    }*/
 }

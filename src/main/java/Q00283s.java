@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+
 
 /**
  * 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
@@ -21,32 +19,13 @@ import java.util.List;
 public class Q00283s {
 
     public void moveZeroes(int[] nums) {
-        if (nums == null || nums.length == 0) return;
-        LinkedList<Integer> list = new LinkedList<>();
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] == 0) {
-                list.add(i);
-            } else if (list.size() > 0){
-                int z = list.removeFirst();
-                swap(nums, z, i);
-                list.add(i);
+        int left = 0, right = 0;
+        while (right < nums.length) {
+            if (nums[right] != 0) {
+                swap(nums, left, right); // 非0与0交换
+                left++;
             }
-        }
-    }
-
-    public void moveZeroes1(int[] nums) {
-        if (nums == null || nums.length == 0) return;
-        List<Integer> list = new ArrayList<>(nums.length);
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] != 0) {
-                list.add(nums[i]); // 非0的放入list
-            }
-        }
-        for (int i = 0; i < list.size(); i++) {
-            nums[i] = list.get(i); // 挨个放进nums
-        }
-        for (int i = list.size(); i < nums.length; i++) {
-            nums[i] = 0; // 剩余的补0
+            right++;
         }
     }
 
@@ -55,4 +34,20 @@ public class Q00283s {
         nums[i] = nums[j];
         nums[j] = temp;
     }
+
+    public void moveZeroes1(int[] nums) {
+        int left = 0, right = 0;
+        while (right < nums.length) {
+            if (nums[right] != 0) { // 非0向前放
+                nums[left] = nums[right];
+                left++;
+            }
+            right++;
+        }
+        while (left < nums.length) {
+            nums[left] = 0; // 尾部置为0
+            left++;
+        }
+    }
+
 }

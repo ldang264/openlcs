@@ -1,5 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 /**
  * 中位数是有序列表中间的数。如果列表长度是偶数，中位数则是中间两个数的平均值。
@@ -32,9 +32,30 @@ import java.util.List;
  */
 public class Q00295h {
 
+    private final PriorityQueue<Integer> minQueue, maxQueue;
+
+    public Q00295h() {
+        minQueue = new PriorityQueue<>(); // 小根堆，存储较大的一半。小根堆在总数据为奇数时，会多一个
+        maxQueue = new PriorityQueue<>(Comparator.reverseOrder()); // 大根堆，存储较小的一半
+    }
+
+    public void addNum(int num) {
+        if (minQueue.size() == maxQueue.size()) {
+            maxQueue.offer(num);
+            minQueue.offer(maxQueue.poll());
+        } else {
+            minQueue.offer(num);
+            maxQueue.offer(minQueue.poll());
+        }
+    }
+
+    public double findMedian() {
+        return minQueue.size() == maxQueue.size() ? (minQueue.peek() / 2.0 + maxQueue.peek() / 2.0) : minQueue.peek();
+    }
+
+    /*
     private final List<Integer> nums;
 
-    /** initialize your data structure here. */
     public Q00295h() {
         nums = new ArrayList<>();
     }
@@ -48,10 +69,6 @@ public class Q00295h {
             int left = 1, right = nums.size() - 2, mid;
             while (left <= right) {
                 mid = (left + right) >> 1;
-                if (nums.get(mid) == num) {
-                    nums.add(mid, num);
-                    return;
-                }
                 if (nums.get(mid) < num) {
                     left = mid + 1;
                 } else {
@@ -63,10 +80,8 @@ public class Q00295h {
     }
 
     public double findMedian() {
-        if (nums.size() == 0) return 0;
         int mid = nums.size() >> 1;
-        if ((nums.size() & 1) == 1)
-            return nums.get(mid);
-        return (nums.get(mid) + nums.get((mid) - 1)) / 2.00000;
+        return (nums.size() & 1) == 1 ? nums.get(mid) : nums.get(mid) / 2.0 + nums.get((mid) - 1) / 2.0;
     }
+    */
 }
