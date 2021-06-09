@@ -12,6 +12,15 @@ import java.util.LinkedList;
  * 第二个 1 的下一个最大的数需要循环搜索，结果也是 2。
  * 注意: 输入数组的长度不会超过 10000。
  *
+ * Constraints:
+ * The number of nodes in the tree is in the range [1, 104].
+ * -105 <= Node.val <= 105
+ *
+ * Follow up: Could you do that without using any extra space? (Assume that the implicit stack space incurred due to recursion does not count).
+ *
+ * 来源：力扣（LeetCode）
+ * 链接：https://leetcode-cn.com/problems/find-mode-in-binary-search-tree
+ * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/next-greater-element-ii
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
@@ -24,27 +33,21 @@ public class Q00503m {
      * @return
      */
     public int[] nextGreaterElements(int[] nums) {
-        if (nums == null || nums.length == 0) return new int[0];
         int[] ans = new int[nums.length];
-        LinkedList<Integer> stack = new LinkedList<>(); // 存放下标
-        stack.push(0);
-        for (int i = 1; i < nums.length; i++) {
-            if (stack.size() == 0 || nums[i] <= nums[stack.peek()]) {
-                stack.push(i);
-            } else {
-                Integer head;
-                while ((head = stack.peek()) != null && nums[i] > nums[head]) {
-                    stack.pop();
-                    ans[head] = nums[i];
-                }
-                stack.push(i);
+        LinkedList<Integer> list = new LinkedList<>(); // 存放下标
+        for (int i = 0; i < nums.length; i++) {
+            Integer head;
+            while ((head = list.peekLast()) != null && nums[i] > nums[head]) {
+                list.removeLast();
+                ans[head] = nums[i];
             }
+            list.addLast(i);
         }
         int i;
-        int end = stack.peekLast(); // 一定不会超过峰值
-        while (stack.size() > 0) {
+        int end = list.peekFirst(); // 一定不会超过峰值
+        while (list.size() > 0) {
             i = 0;
-            int index = stack.pop(); // 依次从小到大取出
+            int index = list.removeLast(); // 依次从小到大取出
             ans[index] = -1;
             while (i <= end) { // 从0遍历到最大值
                 if (nums[i] > nums[index]) {

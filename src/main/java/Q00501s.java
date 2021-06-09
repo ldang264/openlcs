@@ -19,67 +19,58 @@ import java.util.*;
  *     /
  *    2
  *
+ * Constraints:
+ * The number of nodes in the tree is in the range [1, 104].
+ * -105 <= Node.val <= 105
+ *
+ * 来源：力扣（LeetCode）
+ * 链接：https://leetcode-cn.com/problems/find-mode-in-binary-search-tree
+ * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/find-mode-in-binary-search-tree
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00501s {
-    public static void main(String[] args) {
-        Q00501s fm = new Q00501s();
-        TreeNode root = new TreeNode(1);
-        TreeNode t1 = new TreeNode(2);
-        root.right = t1;
-        TreeNode t2 = new TreeNode(2);
-        t1.left = t2;
-        int[] res = fm.findMode(root);
-        for (int i : res) {
-            System.out.print(i + " ");
-        }
-    }
 
-    /**
-     * 将每一个值出现的次数存在map里
-     * @param root
-     * @return
-     */
+    private List<Integer> list;
+
+    private int prev, count, max;
+
     public int[] findMode(TreeNode root) {
-        if (root == null) {
-            return new int[0];
+        if (root == null) return new int[0];
+        list = new ArrayList<>();
+        count = max = 0;
+        prev = -100001; // 数据范围之外的初始化值
+        dfs(root);
+        if (count > max) {
+            return new int[]{ prev };
         }
-        Map<Integer, Integer> modes = new HashMap<>();
-        find(root, modes);
-        int key = 0;
-        int max = 0;
-        for (Map.Entry<Integer, Integer> entry : modes.entrySet()) {
-            if (entry.getValue() > max) {
-                key = entry.getKey();
-                max = entry.getValue();
-            }
+        if (count == max) {
+            list.add(prev);
         }
-        List<Integer> list = new ArrayList<>();
-        for (Map.Entry<Integer, Integer> entry : modes.entrySet()) {
-            if (max == entry.getValue()) {
-                list.add(entry.getKey());
-            }
-        }
-        int[] arr = new int[list.size()];
+        int[] ans = new int[list.size()];
         for (int i = 0; i < list.size(); i++) {
-            arr[i] = list.get(i);
+            ans[i] = list.get(i);
         }
-        return arr;
+        return ans;
     }
 
-    private void find(TreeNode left, Map<Integer, Integer> modes) {
-        if (!modes.containsKey(left.val)) {
-            modes.put(left.val, 1);
+    private void dfs(TreeNode root) {
+        if (root == null) return;
+        dfs(root.left);
+        if (prev == root.val) {
+            count++;
         } else {
-            modes.put(left.val, modes.get(left.val) + 1);
+            if (count == max) {
+                list.add(prev);
+            } else if (count > max) {
+                list.clear();
+                list.add(prev);
+                max = count;
+            }
+            count = 1;
         }
-        if (left.left != null) {
-            find(left.left, modes);
-        }
-        if (left.right != null) {
-            find(left.right, modes);
-        }
+        prev = root.val;
+        dfs(root.right);
     }
 }

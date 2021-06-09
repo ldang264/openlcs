@@ -67,7 +67,7 @@ public class Q00480h {
                 } else { // k偶数
                     ans[idx] = maxQueue.peek() / 2.0d + minQueue.peek() / 2.0d; // 平均数
                     if (!maxQueue.remove(nums[idx])) { // 尝试在大根堆中删除该元素
-                        minQueue.remove(nums[idx]); // 未删除成功，则必然在大根堆
+                        minQueue.remove(nums[idx]); // 未删除成功，则必然在小根堆
                         minQueue.offer(maxQueue.poll()); // 大根堆比小根堆多一个元素，平衡一下
                     }
                 }

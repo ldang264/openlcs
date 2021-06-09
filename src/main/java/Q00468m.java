@@ -72,10 +72,12 @@ public class Q00468m {
             // 校验.号个数
             for (String s : arr) {
                 if (s.length() == 0 || s.length() > 3 || (s.charAt(0) == '0' && s.length() != 1)) return Neither;
+                int num = 0;
+                char c;
                 for (int i = 0; i < s.length(); i++) {
-                    if (!Character.isDigit(s.charAt(i))) return Neither;
+                    if (!Character.isDigit(c = s.charAt(i))) return Neither;
+                    num = num * 10 + (c - '0');
                 }
-                int num = Integer.parseInt(s);
                 if (num > 255) return Neither;
             }
             return IPv4;
@@ -83,11 +85,6 @@ public class Q00468m {
     }
 
     private boolean isLetter(char c) {
-        return c == 'A' || c == 'a' ||
-                c == 'B' || c == 'b' ||
-                c == 'C' || c == 'c' ||
-                c == 'D' || c == 'd' ||
-                c == 'E' || c == 'e' ||
-                c == 'F' || c == 'f';
+        return (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f');
     }
 }

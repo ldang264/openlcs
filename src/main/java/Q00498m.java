@@ -32,17 +32,24 @@
  * 说明:
  * 给定矩阵中的元素总数不会超过 100000 
  *
+ * Constraints:
+ * m == mat.length
+ * n == mat[i].length
+ * 1 <= m, n <= 104
+ * 1 <= m * n <= 104
+ * -105 <= mat[i][j] <= 105
+ *
+ * 来源：力扣（LeetCode）
+ * 链接：https://leetcode-cn.com/problems/diagonal-traverse
+ * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/diagonal-traverse
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00498m {
     public int[] findDiagonalOrder(int[][] matrix) {
-        int m;
-        int n;
-        if (matrix == null || (m = matrix.length) == 0 || (n = matrix[0].length) == 0) {
-            return new int[0];
-        }
+        int m = matrix.length;
+        int n = matrix[0].length;
         int[] ans = new int[m * n];
         int i = 0, j = 0, index = 0;
         boolean rc = true;

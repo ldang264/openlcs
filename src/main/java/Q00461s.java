@@ -22,14 +22,10 @@
 public class Q00461s {
     public int hammingDistance(int x, int y) {
         // return Integer.bitCount(x ^ y);  API 方法
-        int num = x^y; // 首先通过异或产生一个包含结果个数1的整数
-        int ans = 0;
-        while (num > 0) {
-            if ((num & 1) == 1) { // 如果是奇数，则加一
-                ans++;
-            }
-            num >>= 1; // 右移一位
-            // 布赖恩·克尼根算法 num &= (num - 1)
+        int ans = 0, num = x^y; // 首先通过异或产生一个包含结果个数1的整数
+        while (num != 0) {
+            num &= (num - 1); // 布赖恩·克尼根算法
+            ans++;
         }
         return ans;
     }
