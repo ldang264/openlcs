@@ -22,11 +22,6 @@ import java.util.Map;
  */
 public class Q00525m {
 
-    /**
-     * 前缀和：自己没做出来，看了答案后有了思路
-     * @param nums
-     * @return
-     */
     public int findMaxLength(int[] nums) {
         int ans = 0, preSum = 0;
         Map<Integer, Integer> map = new HashMap<>();
