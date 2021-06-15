@@ -35,20 +35,20 @@ public class Q00678m {
         while (i < sb.length()) {
             char c = sb.charAt(i);
             if (c == ')') {
-                if (i == 0) return false;
-                sb.deleteCharAt(i);
-                boolean left = false;
+                if (i == 0) return false; // 无左括号或星号
+                sb.deleteCharAt(i); // 删除右括号
+                boolean left = false; // 是否找到左括号
                 for (int j = i - 1; j >= 0; j--) {
                     if (sb.charAt(j) == '(') {
                         left = true;
-                        sb.deleteCharAt(j);
+                        sb.deleteCharAt(j); // 1.1 有左括号则删除左括号
                         break;
                     }
                 }
                 if (!left) {
-                    sb.deleteCharAt(i - 1);
+                    sb.deleteCharAt(i - 1); // 1.2 否则删除星号
                 }
-                i--;
+                i--; // 回拨
             } else {
                 i++;
             }
@@ -58,9 +58,9 @@ public class Q00678m {
         while (i >= 0) {
             if (sb.charAt(i) == '*') {
                 n++;
-            } else if (n == 0) {
+            } else if (n == 0) { // 左括号没有星号对应
                 return false;
-            } else {
+            } else { // 用星号抵消
                 n--;
             }
             i--;
