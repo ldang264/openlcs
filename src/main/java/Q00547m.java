@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 有 n 个城市，其中一些彼此相连，另一些没有相连。如果城市 a 与城市 b 直接相连，且城市 b 与城市 c 直接相连，那么城市 a 与城市 c 间接相连。
  * 省份 是一组直接或间接相连的城市，组内不含其他没有相连的城市。
@@ -31,30 +28,23 @@ public class Q00547m {
 
     public int findCircleNum(int[][] isConnected) {
         int ans = 0;
-        List<Integer>[] outgoings = new List[isConnected.length];
         boolean[] visited = new boolean[isConnected.length];
-        for (int i = 0; i < isConnected.length; i++) {
-            outgoings[i] = new ArrayList<>();
-            for (int j = 0; j < isConnected.length; j++) {
-                if (i != j && isConnected[i][j] == 1) {
-                    outgoings[i].add(j);
-                }
-            }
-        }
-        for (int i = 0; i < outgoings.length; i++) {
-            if (!visited[i]) {
+        for (int i = 0; i < visited.length; i++) { // 遍历每一个城市
+            if (!visited[i]) { // 以其为起点，深度搜索去染色其他城市
                 ans++;
-                dfs(outgoings, visited, i);
+                dfs(isConnected, visited, i);
             }
         }
         return ans;
     }
 
-    private void dfs(List<Integer>[] outgoings, boolean[] visited, int idx) {
+    private void dfs(int[][] isConnected, boolean[] visited, int idx) {
         if (visited[idx]) return;
         visited[idx] = true;
-        for (Integer out : outgoings[idx]) {
-            dfs(outgoings, visited, out);
+        for (int j = 0; j < isConnected.length; j++) {
+            if (isConnected[idx][j] == 1) {
+                dfs(isConnected, visited, j);
+            }
         }
     }
 }
