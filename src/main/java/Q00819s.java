@@ -32,16 +32,33 @@ import java.util.*;
 public class Q00819s {
     public String mostCommonWord(String paragraph, String[] banned) {
         Map<String, Integer> map = new HashMap<>();
-        Set<String> bans = new HashSet<>(Arrays.asList(banned));
+        Set<String> bans = new HashSet<>(Arrays.asList(banned)); // 用作去重
+        String ans = null;
         int i = 0, j = 0, maxCount = 0;
+        boolean flag = false; // 是否在处理单词
         for (; i < paragraph.length(); i++) {
-            if (!Character.isLetter(paragraph.charAt(i))) {
-                String s = paragraph.substring(j, i).toLowerCase();
-                if (!bans.contains(s)) {
-                    maxCount = Math.max(maxCount, map.merge(s, 1, Integer::sum));
+            if (!Character.isLetter(paragraph.charAt(i))) { // 符号或空格
+                if (flag) { // 需要处理这一段单词
+                    String s = paragraph.substring(j, i).toLowerCase();
+                    if (!bans.contains(s)) {
+                        if (map.merge(s, 1, Integer::sum) > maxCount) {
+                            maxCount++;
+                            ans = s;
+                        }
+                    }
                 }
-
+                flag = false; // 被符号中断
+            } else if (!flag) { // 切换为开始处理单词
+                j = i;
+                flag = true;
             }
         }
+        if (flag) { // 结尾是单词
+            String s = paragraph.substring(j, i).toLowerCase();
+            if (!bans.contains(s) && map.getOrDefault(s, 0) == maxCount) {
+                return s;
+            }
+        }
+        return ans;
     }
 }
