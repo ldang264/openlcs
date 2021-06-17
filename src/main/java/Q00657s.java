@@ -22,18 +22,15 @@ public class Q00657s {
         if ((moves.length() & 1) == 1) return false; // 奇数一定回不来
         int ud = 0, lr = 0;
         for (int i = 0; i < moves.length(); i++) {
-            switch (moves.charAt(i)) {
-                case 'L' :
-                    lr--;
-                    break;
-                case 'R' :
-                    lr++;
-                    break;
-                case 'U' :
-                    ud--;
-                    break;
-                default:
-                    ud++;
+            char c = moves.charAt(i);
+            if (c == 'L') {
+                lr--;
+            } else if (c == 'R') {
+                lr++;
+            } else if (c == 'U') {
+                ud--;
+            } else {
+                ud++;
             }
         }
         return ud == 0 && lr == 0;
