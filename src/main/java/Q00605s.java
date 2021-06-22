@@ -23,17 +23,16 @@
 public class Q00605s {
     public boolean canPlaceFlowers(int[] flowerbed, int n) {
         if (n == 0) return true;
-        if (n > (flowerbed.length + 1) / 2) return false;
+        if (n > (flowerbed.length + 1) / 2) return false; // 铁定种不了
         int i = 0;
         while (i < flowerbed.length) {
-            if (flowerbed[i] == 1) {
+            if (flowerbed[i] == 1) { // 当前有花
                 i += 2;
-            } else if (i < flowerbed.length - 1 && flowerbed[i + 1] == 1) {
+            } else if (i < flowerbed.length - 1 && flowerbed[i + 1] == 1) { // 后一个有花
                 i += 3;
             } else {
                 i += 2;
-                n--;
-                if (n == 0) return true;
+                if (--n == 0) return true; // 种一朵
             }
         }
         return false;
