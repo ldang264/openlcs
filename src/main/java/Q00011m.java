@@ -36,19 +36,17 @@ public class Q00011m {
      * @return
      */
     public int maxArea(int[] height) {
-        int ans = 0, i = 0, j = height.length - 1;
-        while (i < j) {
+        int ans = 0, left = 0, right = height.length - 1;
+        while (left < right) {
             int area;
-            if (height[i] > height[j]) {
-                area = height[j] * (j - i);
-                j--;
+            if (height[left] > height[right]) {
+                area = height[right] * (right - left);
+                right--;
             } else {
-                area = height[i] * (j - i);
-                i++;
+                area = height[left] * (right - left);
+                left++;
             }
-            if (ans < area) {
-                ans = area;
-            }
+            ans = Math.max(ans, area);
         }
         return ans;
     }
