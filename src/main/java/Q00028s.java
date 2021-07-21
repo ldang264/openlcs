@@ -21,8 +21,7 @@
  */
 public class Q00028s {
     public int strStr(String haystack, String needle) {
-        if (haystack == null) return -1;
-        if (needle == null || "".equals(needle)) return 0;
+        if ("".equals(needle)) return 0;
         for (int i = 0; i <= haystack.length() - needle.length(); i++) {
             if (haystack.charAt(i) == needle.charAt(0)) {
                 boolean find = true;

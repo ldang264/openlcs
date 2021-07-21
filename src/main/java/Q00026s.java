@@ -51,7 +51,7 @@ public class Q00026s {
     }
 
     /**
-     * 滑动窗口
+     * 双指针
      * @param nums
      * @return
      */
@@ -68,5 +68,17 @@ public class Q00026s {
             j++;
         }
         return i;
+    }
+
+    public int removeDuplicatesAns(int[] nums) {
+        if (nums.length == 0) return 0;
+        int i = 0;
+        for (int j = 1; j < nums.length; j++) {
+            if (nums[j] != nums[i]) {
+                i++;
+                nums[i] = nums[j];
+            }
+        }
+        return i + 1;
     }
 }

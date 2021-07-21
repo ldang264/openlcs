@@ -2,7 +2,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 /**
- * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+ * 给定一个只包括 '('，')'，'{'，'}'，'['，']'的字符串，判断字符串是否有效。
  *
  * 有效字符串需满足：
  *
@@ -14,19 +14,19 @@ import java.util.LinkedList;
  *
  * 输入: "()"
  * 输出: true
- * 示例 2:
+ * 示例2:
  *
  * 输入: "()[]{}"
  * 输出: true
- * 示例 3:
+ * 示例3:
  *
  * 输入: "(]"
  * 输出: false
- * 示例 4:
+ * 示例4:
  *
  * 输入: "([)]"
  * 输出: false
- * 示例 5:
+ * 示例5:
  *
  * 输入: "{[]}"
  * 输出: true
@@ -70,7 +70,7 @@ public class Q00020s {
         char[] cs = new char[s.length() + 1];
         int j = 1;
         cs[0] = ' ';
-        for (int i=0; i<s.length(); i++) {
+        for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (c == '(' || c == '[' || c == '{') {
                 cs[j++] = c;
