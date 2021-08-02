@@ -35,26 +35,26 @@ public class Q00821s {
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) == c) {
                 if (start < 0) {
-                    start = i;
+                    start = i; // 第一个c
                 }
                 ans[i] = 0;
-                end = i;
+                end = i; // 最后一个c
             }
         }
         int idx = start, temp = 1;
         while (--idx >= 0) {
-            ans[idx] = temp++;
+            ans[idx] = temp++; // 第一个c前递减
         }
         idx = end; temp = 1;
         while (++idx < s.length()) {
-            ans[idx] = temp++;
+            ans[idx] = temp++; // 最后一个c后递增
         }
         idx = start; temp = 1;
         while (++idx < end) {
             if (ans[idx] == 0) {
                 temp = 1;
             } else {
-                ans[idx] = temp++;
+                ans[idx] = temp++; // 从左向右更新
             }
         }
         idx = end; temp = 1;
@@ -62,7 +62,7 @@ public class Q00821s {
             if (ans[idx] == 0) {
                 temp = 1;
             } else if (ans[idx] > temp){
-                ans[idx] = temp++;
+                ans[idx] = temp++; // 从右向左更新
             }
         }
         return ans;
