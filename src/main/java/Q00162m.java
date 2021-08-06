@@ -29,7 +29,7 @@
 public class Q00162m {
 
     /**
-     * 二分法+迭代
+     * 二分查找
      * @param nums
      * @return
      */

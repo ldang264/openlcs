@@ -25,15 +25,12 @@ import java.util.Queue;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00111s {
-    public int minDepth(TreeNode root) {
-        if (root == null) return 0;
-        return bfs(root);
-    }
 
     /**
      * 广度优先搜索
      */
-    private int bfs(TreeNode root) {
+    public int minDepth(TreeNode root) {
+        if (root == null) return 0;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
         int depth = 0, size;

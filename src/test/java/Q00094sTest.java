@@ -4,9 +4,9 @@ import tool.TreeNode;
 
 import java.util.List;
 
-public class Q00094mTest {
+public class Q00094sTest {
 
-    Q00094m it = new Q00094m();
+    Q00094s it = new Q00094s();
 
     @Test
     public void inorderTraversal() {

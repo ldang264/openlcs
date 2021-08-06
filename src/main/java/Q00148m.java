@@ -28,9 +28,9 @@ import java.util.Arrays;
  * 链接：https://leetcode-cn.com/problems/sort-list
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class Q00148m_12 {
+public class Q00148m {
     public static void main(String[] args) {
-        Q00148m_12 sl = new Q00148m_12();
+        Q00148m sl = new Q00148m();
         ListNode l1 = new ListNode(4);
         l1.next = new ListNode(2);
         l1.next.next = new ListNode(1);

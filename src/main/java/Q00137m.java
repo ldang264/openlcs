@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class Q00137m {
     public int singleNumber(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>(nums.length / 3 + 1);
+        Map<Integer, Integer> map = new HashMap<>();
         for (int num : nums) {
             if (map.merge(num, 1, Integer::sum) == 3) {
                 map.remove(num); // 3个的时候就移除，最后只会剩余1个

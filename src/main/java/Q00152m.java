@@ -34,4 +34,22 @@ public class Q00152m {
         }
         return ans;
     }
+
+
+    /**
+     * 官方动态规划思路，滚动数组维护最大值和最小值
+     * @param nums
+     * @return
+     */
+    public int maxProduct_Ans(int[] nums) {
+        int ans = nums[0], max = nums[0], min = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            int tmax = Math.max(nums[i], Math.max(min * nums[i], max * nums[i]));
+            int tmin = Math.min(nums[i], Math.min(min * nums[i], max * nums[i]));
+            max = tmax;
+            min = tmin;
+            ans = Math.max(ans, max);
+        }
+        return ans;
+    }
 }

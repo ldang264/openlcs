@@ -39,32 +39,34 @@ public class Q00093m {
 
     private List<String> ans;
 
+    private String[] temp;
+
+    private int idx;
+
     public List<String> restoreIpAddresses(String s) {
         ans = new LinkedList<>();
+        temp = new String[4];
+        idx = 0;
         if (s.length() < 4 || s.length() > 12) { // <a.b.c.d || > aaa.bbb.ccc.ddd
             return ans;
         }
-        dfs(s, 4, new LinkedList<>());
+        dfs(s, 4);
         return ans;
     }
 
-    private void dfs(String s, int pos, LinkedList<String> temp) {
+    private void dfs(String s, int pos) {
         if (pos > 1) {
             // 保证自身取1-3个数字，且剩余数字在(1-3)pos个
             for (int i = Math.max(0, s.length() - 3 * (pos - 1) - 1); i <= Math.min(s.length() - pos, 2); i++) {
                 String sub = s.substring(0, i + 1);
                 if (!validate(sub)) break;
-                temp.addLast(sub);
-                dfs(s.substring(i + 1), pos - 1, temp);
-                temp.removeLast();
+                temp[idx++] = sub;
+                dfs(s.substring(i + 1), pos - 1);
+                idx--;
             }
         } else if (validate(s)) {  // 倒数第一个位置的时候，应当将字符串全部取完
-            StringBuilder sb = new StringBuilder();
-            for (String t : temp) {
-                sb.append(t).append('.');
-            }
-            sb.append(s);
-            ans.add(sb.toString());
+            temp[3] = s;
+            ans.add(String.join(".", temp));
         }
     }
 

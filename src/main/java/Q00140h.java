@@ -49,7 +49,7 @@ import java.util.List;
 public class Q00140h {
     public List<String> wordBreak(String s, List<String> wordDict) {
         for (int i = wordDict.size() - 1; i >= 0; i--) {
-            if (s.indexOf(wordDict.get(i)) == -1) {
+            if (!s.contains(wordDict.get(i))) {
                 wordDict.remove(i);
             }
         }

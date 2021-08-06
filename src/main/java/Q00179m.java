@@ -30,12 +30,12 @@ import java.util.Arrays;
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
 public class Q00179m {
-    public String largestNumber1(int[] nums) {
+    public String largestNumber(int[] nums) {
         String[] arr = new String[nums.length];
         for (int i = 0; i < nums.length; i++) {
             arr[i] = Integer.toString(nums[i]);
         }
-        Arrays.sort(arr, (s1, s2) -> (s2 + s1).compareTo(s1 + s2));
+        Arrays.sort(arr, (s1, s2) -> (s2 + s1).compareTo(s1 + s2)); // 关键一步
         StringBuilder ans = new StringBuilder();
         for (int i = 0; i < nums.length; i++) {
             ans.append(arr[i]);
@@ -43,37 +43,4 @@ public class Q00179m {
         return ans.charAt(0) == '0' ? "0" : ans.toString();
     }
 
-    public String largestNumber(int[] nums) {
-        int[] array = sort(nums);
-        StringBuilder sb = new StringBuilder();
-        for (int i : array) {
-            sb.append(i);
-        }
-        return sb.charAt(0) == '0' ? "0" : sb.toString();
-    }
-
-    private int[] sort(int[] nums) {
-        if (nums.length == 1) return nums;
-        int mid = nums.length / 2;
-        int[] left = Arrays.copyOfRange(nums, 0, mid);
-        int[] right = Arrays.copyOfRange(nums, mid, nums.length);
-        return merge(sort(left), sort(right));
-    }
-
-    private int[] merge(int[] left, int[] right) {
-        int[] array = new int[left.length + right.length];
-        for (int i = 0, j = 0, k = 0; i < array.length; i++) {
-            if (j == left.length) {
-                array[i] = right[k++];
-            } else if (k == right.length) {
-                array[i] = left[j++];
-            } else {
-                // 两两正反拼接比较，大的在前
-                String l = String.valueOf(left[j]);
-                String r = String.valueOf(right[k]);
-                array[i] = (l + r).compareTo(r + l) > 0 ? left[j++] : right[k++];
-            }
-        }
-        return array;
-    }
 }

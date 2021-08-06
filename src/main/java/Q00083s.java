@@ -24,7 +24,7 @@ public class Q00083s {
             while (temp.next != null && temp.val == temp.next.val) {
                 temp = temp.next;
             }
-            if (temp != curr) curr.next = temp.next;
+            if (temp != curr) curr.next = temp.next; // 将与curr值相同的断开
             curr = curr.next;
         }
         return head;

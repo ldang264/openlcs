@@ -2,9 +2,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import tool.TreeNode;
 
-public class Q00101sDFSTest {
+public class Q00101sTest {
 
-    Q00101s_DFS btIS = new Q00101s_DFS();
+    Q00101s q00101s = new Q00101s();
 
     @Test
     public void isSymmetric() {
@@ -25,7 +25,7 @@ public class Q00101sDFSTest {
         t4.right = t7;
         t5.left = t8;
         t5.right = t9;
-        Assert.assertFalse(btIS.isSymmetric(t1));
+        Assert.assertFalse(q00101s.isSymmetric(t1));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class Q00101sDFSTest {
         t2.right = t5;
         t3.left = t6;
         t3.right = t7;
-        Assert.assertTrue(btIS.isSymmetric(t1));
+        Assert.assertTrue(q00101s.isSymmetric(t1));
     }
     @Test
     public void test2() {
@@ -56,7 +56,7 @@ public class Q00101sDFSTest {
         TreeNode t5 = new TreeNode(2);
         t2.left = t4;
         t3.left = t5;
-        Assert.assertFalse(btIS.isSymmetric(t1));
+        Assert.assertFalse(q00101s.isSymmetric(t1));
     }
 
     @Test
@@ -74,7 +74,7 @@ public class Q00101sDFSTest {
         TreeNode t7 = new TreeNode(2);
         t4.left = t6;
         t5.left = t7;
-        Assert.assertFalse(btIS.isSymmetric(t1));
+        Assert.assertFalse(q00101s.isSymmetric(t1));
     }
 
     @Test
@@ -100,6 +100,6 @@ public class Q00101sDFSTest {
         t5.right = t9;
         t7.left = t10;
         t7.right = t11;
-        Assert.assertFalse(btIS.isSymmetric(t1));
+        Assert.assertFalse(q00101s.isSymmetric(t1));
     }
 }

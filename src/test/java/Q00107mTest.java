@@ -2,9 +2,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import tool.TreeNode;
 
-public class Q00107sTest {
+public class Q00107mTest {
 
-    Q00107s lob = new Q00107s();
+    Q00107m lob = new Q00107m();
 
     @Test
     public void levelOrderBottom() {

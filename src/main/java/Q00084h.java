@@ -39,44 +39,4 @@ public class Q00084h {
         }
         return ans;
     }
-
-    public int largestRectangleArea1(int[] heights) {
-        if (heights.length == 0) return 0;
-        int[] right = new int[heights.length]; // 存放右边界
-        Deque<Integer> stack = new LinkedList<>(); // 单调递增栈
-        // 找右界
-        for (int i = 0; i < heights.length; i++) {
-            while (stack.size() > 0 && heights[i] < heights[stack.peek()]) { // 找到了更小的
-                int index = stack.pop();
-                right[index] = i - 1; // 更新右界
-            }
-            stack.push(i);
-        }
-        if (stack.size() > 0) {
-            int index = stack.pop();
-            right[index] = index;
-            while (stack.size() > 0) {
-                right[stack.pop()] = index;
-            }
-        }
-        // 找左界
-        int ans = 0;
-        for (int i = heights.length - 1; i >= 0; i--) {
-            while (stack.size() > 0 && heights[i] < heights[stack.peek()]) { // 找到了更小的
-                int index = stack.pop();
-                ans = Math.max(ans, (right[index] - i) * heights[index]);
-            }
-            stack.push(i);
-        }
-        if (stack.size() > 0) {
-            int max = stack.pop();
-            ans = Math.max(ans, (right[max] - max + 1) * heights[max]);
-            while (stack.size() > 0) {
-                int k = stack.pop();
-                ans = Math.max(ans, (right[k] - max + 1) * heights[k]);
-            }
-        }
-        return ans;
-    }
-
 }
