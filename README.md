@@ -11,7 +11,8 @@
 - Testing them of benchmark
 
 ## OpenSource Framework
-- Spring
+- Spring(SpringBoot,SpringCloud)
 - Netty
 - Redis
 - Kafka
+- MySQL
