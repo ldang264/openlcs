@@ -12,7 +12,7 @@
 
 ## OpenSource Framework
 - Spring(SpringBoot,SpringCloud)
-- Netty
-- Redis
+- Netty(TimeWheel)
+- Redis(Distributed Lock)
 - Kafka
 - MySQL
