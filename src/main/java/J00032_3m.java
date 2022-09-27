@@ -55,7 +55,7 @@ public class J00032_3m {
                     list.add(node.right);
                 }
             }
-            reverse = !reverse;
+            reverse = !reverse; // 控制左右方向
             ans.add(row);
             size = list.size();
         }
