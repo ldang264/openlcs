@@ -11,7 +11,7 @@
  *   [18, 21, 23, 26, 30]
  * ]
  * 给定 target=5，返回true。
- * 给定target=20，返回false。
+ * 给定 target=20，返回false。
  *
  * 来源：力扣（LeetCode）
  * 链接：https://leetcode-cn.com/problems/sorted-matrix-search-lcci
@@ -20,7 +20,9 @@
 public class J00010_09m {
     public boolean searchMatrix(int[][] matrix, int target) {
         int m, n;
-        if (matrix == null || (m = matrix.length) == 0 || (n = matrix[0].length) == 0) return false;
+        if (matrix == null || (m = matrix.length) == 0 || (n = matrix[0].length) == 0) {
+            return false;
+        }
         int i = m - 1;
         int j = 0;
         // 从左下角开始找
