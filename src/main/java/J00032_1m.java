@@ -31,13 +31,17 @@ public class J00032_1m {
         List<Integer> list = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
-        while (queue.size() > 0) {
+        while (queue.size() > 0) { // 遍历到队列为空结束
             int size = queue.size();
             while (size-- > 0) {
                 TreeNode node = queue.poll();
-                list.add(node.val);
-                if (node.left != null) queue.offer(node.left);
-                if (node.right != null) queue.offer(node.right);
+                list.add(node.val); // 依次入队
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
             }
         }
         int[] ans = new int[list.size()];
