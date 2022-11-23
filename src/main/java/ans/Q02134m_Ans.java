@@ -44,9 +44,9 @@ nums[i] 为 0 或者 1
 链接：https://leetcode.cn/problems/minimum-swaps-to-group-all-1s-together-ii
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
-class Q02134m_Ans {
+public class Q02134m_Ans {
     public int minSwaps(int[] nums) {
-        int ones = Arrays.stream(nums).sum();
+        int ones = Arrays.stream(nums).sum(); // 求和
         int n = nums.length, res = nums.length, cnt = 0;
         for (int i = 0, j = 0; i < n; i++) {
             while (j - i < ones) {
