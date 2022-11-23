@@ -41,4 +41,43 @@ moveCost[i].length == n
 
 来源：力扣（LeetCode）
 链接：https://leetcode.cn/problems/minimum-path-cost-in-a-grid
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。*/
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+*/
+/**
+作者：shou-hu-zhe-t
+链接：https://leetcode.cn/problems/minimum-path-cost-in-a-grid/solution/by-shou-hu-zhe-t-tj7l/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+*/
+class Q02304m_Ans {
+    public int minPathCost(int[][] grid, int[][] moveCost) {
+		int n = grid.length, m = grid[0].length;
+		int[][] dp = new int[n][m];//dp[i][j]表示以gril[i][j]结尾的路径的最小值
+		int ans = Integer.MAX_VALUE;
+		for (int i = 0; i < dp.length; i++) {
+			Arrays.fill(dp[i], Integer.MAX_VALUE);
+		}
+		for (int j = 0; j < m; j++) {
+			dp[0][j] = grid[0][j];
+		}
+		for (int i = 1; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				for (int k = 0; k < m; k++) {
+					/**
+					 * dp[i - 1][k] 从dp[i-1][k]到dp[i][j]
+					 * moveCost[grid[i - 1][k]][j] 从dp[i-1][k]到dp[i][j]的路径的值
+					 * grid[i][j]  该点的值
+					 */
+					dp[i][j] = Math.min(dp[i - 1][k] + moveCost[grid[i - 1][k]][j] + grid[i][j],
+						 dp[i][j]);
+				}
+			}
+		}
+		n--;//为了方便枚举终点的路径最小值
+		for (int j = 0; j < m; j++) {
+			ans = Math.min(ans, dp[n][j]);//寻找达到尾部的最小值
+		}
+		return ans;
+
+	}
+}
