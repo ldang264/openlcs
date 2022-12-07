@@ -36,3 +36,15 @@ nums 是范围 [0, n - 1] 内所有数字组成的一个排列
 链接：https://leetcode.cn/problems/global-and-local-inversions
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 **/
+class Q00775m_Ans {
+    public boolean isIdealPermutation(int[] nums) {
+        int n = nums.length, minSuff = nums[n - 1];
+        for (int i = n - 3; i >= 0; i--) {
+            if (nums[i] > minSuff) {
+                return false;
+            }
+            minSuff = Math.min(minSuff, nums[i + 1]);
+        }
+        return true;
+    }
+}
