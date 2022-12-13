@@ -34,3 +34,78 @@ words[i] 仅由小写英文字母组成
 链接：https://leetcode.cn/problems/Jf1JuT
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
+class Solution {
+    static final int VISITING = 1, VISITED = 2;
+    Map<Character, List<Character>> edges = new HashMap<Character, List<Character>>();
+    Map<Character, Integer> states = new HashMap<Character, Integer>();
+    boolean valid = true;
+    char[] order;
+    int index;
+
+    public String alienOrder(String[] words) {
+        int length = words.length;
+        for (String word : words) {
+            int wordLength = word.length();
+            for (int j = 0; j < wordLength; j++) {
+                char c = word.charAt(j);
+                edges.putIfAbsent(c, new ArrayList<Character>());
+            }
+        }
+        for (int i = 1; i < length && valid; i++) {
+            addEdge(words[i - 1], words[i]);
+        }
+        order = new char[edges.size()];
+        index = edges.size() - 1;
+        Set<Character> letterSet = edges.keySet();
+        for (char u : letterSet) {
+            if (!states.containsKey(u)) {
+                dfs(u);
+            }
+        }
+        if (!valid) {
+            return "";
+        }
+        return new String(order);
+    }
+
+    public void addEdge(String before, String after) {
+        int length1 = before.length(), length2 = after.length();
+        int length = Math.min(length1, length2);
+        int index = 0;
+        while (index < length) {
+            char c1 = before.charAt(index), c2 = after.charAt(index);
+            if (c1 != c2) {
+                edges.get(c1).add(c2);
+                break;
+            }
+            index++;
+        }
+        if (index == length && length1 > length2) {
+            valid = false;
+        }
+    }
+
+    public void dfs(char u) {
+        states.put(u, VISITING);
+        List<Character> adjacent = edges.get(u);
+        for (char v : adjacent) {
+            if (!states.containsKey(v)) {
+                dfs(v);
+                if (!valid) {
+                    return;
+                }
+            } else if (states.get(v) == VISITING) {
+                valid = false;
+                return;
+            }
+        }
+        states.put(u, VISITED);
+        order[index] = u;
+        index--;
+    }
+}
+
+作者：LeetCode-Solution
+链接：https://leetcode.cn/problems/Jf1JuT/solution/wai-xing-wen-zi-dian-by-leetcode-solutio-to66/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
