@@ -1,3 +1,4 @@
+package ans;
 /**
 现有一种使用英语字母的外星文语言，这门语言的字母顺序与英语顺序不同。
 给定一个字符串列表 words ，作为这门语言的词典，words 中的字符串已经 按这门新语言的字母顺序进行了排序 。
@@ -34,7 +35,7 @@ words[i] 仅由小写英文字母组成
 链接：https://leetcode.cn/problems/Jf1JuT
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
-class Solution {
+class J00114h_Ans {
     static final int VISITING = 1, VISITED = 2;
     Map<Character, List<Character>> edges = new HashMap<Character, List<Character>>();
     Map<Character, Integer> states = new HashMap<Character, Integer>();
@@ -104,8 +105,3 @@ class Solution {
         index--;
     }
 }
-
-作者：LeetCode-Solution
-链接：https://leetcode.cn/problems/Jf1JuT/solution/wai-xing-wen-zi-dian-by-leetcode-solutio-to66/
-来源：力扣（LeetCode）
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
