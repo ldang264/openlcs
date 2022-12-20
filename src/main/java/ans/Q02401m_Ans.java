@@ -4,18 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Q02401m_Ans {
-    boolean check(List<String> list, String s, int[] cnt) {
-        int n = s.length();
-        boolean f = true;
-        for (int i = n - 1, j = 0; i >= 0; --i, ++j) {
-            if (s.charAt(i) == '1' && cnt[j] == 1) {
-                f = false;
-                break;
-            }
-        }
-        return f;
-    }
-
+    
     public int longestNiceSubarray(int[] nums) {
         int[] cnt = new int[32];
         List<String> list = new ArrayList<>();
@@ -46,4 +35,17 @@ public class Q02401m_Ans {
         }
         return ans;
     }
+    
+    private boolean check(List<String> list, String s, int[] cnt) {
+        int n = s.length();
+        boolean f = true;
+        for (int i = n - 1, j = 0; i >= 0; --i, ++j) {
+            if (s.charAt(i) == '1' && cnt[j] == 1) {
+                f = false;
+                break;
+            }
+        }
+        return f;
+    }
+
 }
