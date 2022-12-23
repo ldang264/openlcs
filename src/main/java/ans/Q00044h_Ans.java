@@ -1,5 +1,7 @@
 package ans;
-
+/**
+* 动态规划
+*/
 public class Q00044h_Ans {
     public boolean isMatch(String s, String p) {
         int m = s.length();
