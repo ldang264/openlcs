@@ -73,4 +73,8 @@ public class Q00044h_Ans {
         }
         return dp[m][n];
     }
+    
+    public static void main(String[] args) {
+        // test here   
+    }
 }
