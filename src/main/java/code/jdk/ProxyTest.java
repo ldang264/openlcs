@@ -7,34 +7,34 @@ import java.lang.reflect.Proxy;
 public class ProxyTest {
 
     public static void main(String[] args) {
-        IVehical car = new Car();
+        IVehicle car = new Car();
 
-        IVehical vehical = (IVehical) Proxy.newProxyInstance(car.getClass().getClassLoader(), Car.class.getInterfaces(), new VehicalInvacationHandler(car));
-        vehical.run();
+        IVehicle vehicle = (IVehicle) Proxy.newProxyInstance(car.getClass().getClassLoader(), Car.class.getInterfaces(), new VehicleInvacationHandler(car));
+        vehicle.run();
     }
 
-    public static class VehicalInvacationHandler implements InvocationHandler {
+    public static class VehicleInvacationHandler implements InvocationHandler {
 
-        private final IVehical vehical;
+        private final IVehicle vehicle;
 
-        public VehicalInvacationHandler(IVehical vehical) {
-            this.vehical = vehical;
+        public VehicleInvacationHandler(IVehicle vehicle) {
+            this.vehicle = vehicle;
         }
 
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             System.out.println("---------before-------");
-            Object invoke = method.invoke(vehical, args);
+            Object invoke = method.invoke(vehicle, args);
             System.out.println("---------after-------");
 
             return invoke;
         }
     }
 
-    public interface IVehical {
+    public interface IVehicle {
         void run();
     }
 
-    public static class Car implements IVehical {
+    public static class Car implements IVehicle {
         public void run() {
             System.out.println("Car会跑");
         }

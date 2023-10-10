@@ -15,6 +15,10 @@ public class TokenRateLimit {
 
     private volatile AtomicInteger currentPermits; // 当前剩余总个数
 
+    /**
+     * 根据准入许可证数建立限流器
+     * @param permits 准入许可证数
+     */
     public TokenRateLimit(int permits) {
         if (permits <= 0) throw new IllegalStateException(permits + " <= 0!");
 
