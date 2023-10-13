@@ -38,7 +38,7 @@ package todo;
  * 链接：https://leetcode-cn.com/problems/maximum-sum-circular-subarray
  * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
  */
-public class Q00918m {
+public class Q00918m_Todo {
 
     public int maxSubarraySumCircular(int[] A) {
         int max = A[0], sum = A[0], dp = A[0]; // 当前最大和，元素当前总和，选取当前元素的最大和
