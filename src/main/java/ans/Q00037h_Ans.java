@@ -95,6 +95,7 @@ public class Q00037h_Ans {
         set.add('9');
     }
 
+    // 递归
     public void dfs(char[][] board, int pos) {
         if (pos == spaces.size()) {
             valid = true;
