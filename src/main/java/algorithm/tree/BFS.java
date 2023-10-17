@@ -23,10 +23,12 @@ public class BFS {
             //poll方法相当于移除队列头部的元素
             TreeNode node = queue.poll();
             System.out.println(node.val);
-            if (node.left != null)
+            if (node.left != null) {
                 queue.add(node.left);
-            if (node.right != null)
+            }
+            if (node.right != null) {
                 queue.add(node.right);
+            }
         }
     }
 }
