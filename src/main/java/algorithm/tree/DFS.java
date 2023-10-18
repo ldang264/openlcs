@@ -6,6 +6,7 @@ import java.util.*;
 
 /**
  * 深度优先搜索
+ * 三种遍历算法
  */
 public class DFS {
 
