@@ -59,6 +59,9 @@ public class J00036m_Ans {
         dfs(curRoot.right);
     }
 
+    /**
+    * 内部类
+    */
     static class Node {
         public int val;
         public Node left;
