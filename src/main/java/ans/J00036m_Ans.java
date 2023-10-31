@@ -42,11 +42,11 @@ public class J00036m_Ans {
         }
 
         dfs(curRoot.left);
-    /*
+        /*
         判断当前是否是第一个节点(最小节点)：
             若是，则让 head 指向 当前节点
             若不是，则让 前驱节点的右子指针 指向 当前节点
-    */
+        */
         if (preNode == null) {
             head = curRoot;
         } else {
