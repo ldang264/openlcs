@@ -4,7 +4,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Arrays;
-
+/**
+* 快速排序测试用例
+*/
 public class QuickSortTest {
 
     @Test
