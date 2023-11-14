@@ -7,6 +7,9 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
+/**
+* 选择排序测试用例
+*/
 public class SelectionSortTest {
 
     @Test
