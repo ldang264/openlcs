@@ -43,13 +43,14 @@ public class TokenRateLimit {
     }
 
     public void acquire() {
-        while (currentPermits.get() == 0) { // 令牌空了的时候，直接自旋等待令牌桶添加
-            //
+        while (currentPermits.get() == 0) {
+            // 令牌空了的时候，直接自旋等待令牌桶添加
         }
         currentPermits.decrementAndGet(); // 发一个令牌
         System.out.println(System.currentTimeMillis() + "获得令牌");
     }
 
+    // main函数测试限流器
     public static void main(String[] args) {
         TokenRateLimit tokenRateLimit = new TokenRateLimit(10); // 一百毫秒放一个
         for (int i = 0; i < 20; i++) {
