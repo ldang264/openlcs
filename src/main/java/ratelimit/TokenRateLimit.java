@@ -20,7 +20,7 @@ public class TokenRateLimit {
      * @param permits 准入许可证数
      */
     public TokenRateLimit(int permits) {
-        if (permits <= 0) throw new IllegalStateException(permits + " <= 0!");
+        if (permits <= 0) throw new IllegalStateException(permits + " <= 0!"); // 参数校验
 
         this.permits = permits;
         init();
