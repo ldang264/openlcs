@@ -23,7 +23,7 @@ def binarySearch (arr, l, r, x):
         return -1
   
 # 测试数组
-arr = [ 2, 3, 4, 10, 40 ] 
+arr = [ 2, 3, 4, 10, 40, 28 ] 
 x = 10
   
 # 函数调用
