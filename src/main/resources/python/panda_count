@@ -1,0 +1,23 @@
+In [68]: s = pd.Series(np.random.randint(0, 7, size=10))
+
+In [69]: s
+Out[69]: 
+0    4
+1    2
+2    1
+3    2
+4    6
+5    4
+6    4
+7    6
+8    4
+9    4
+dtype: int64
+
+In [70]: s.value_counts()
+Out[70]: 
+4    5
+2    2
+6    2
+1    1
+Name: count, dtype: int64
