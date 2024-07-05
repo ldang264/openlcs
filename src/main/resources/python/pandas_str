@@ -1,0 +1,14 @@
+In [71]: s = pd.Series(["A", "B", "C", "Aaba", "Baca", np.nan, "CABA", "dog", "cat"])
+
+In [72]: s.str.lower()
+Out[72]: 
+0       a
+1       b
+2       c
+3    aaba
+4    baca
+5     NaN
+6    caba
+7     dog
+8     cat
+dtype: object
