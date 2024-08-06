@@ -142,3 +142,42 @@ Out[26]:
 2000-01-06  5 -0.673690 -1.478427  0.524988
 2000-01-07  6  0.404705 -1.715002 -1.039268
 2000-01-08  7 -0.370647 -1.344312  0.844885
+
+In [107]: dfd = pd.DataFrame({'A': [1, 2, 3],
+   .....:                     'B': [4, 5, 6]},
+   .....:                    index=list('abc'))
+   .....: 
+
+In [108]: dfd
+Out[108]: 
+   A  B
+a  1  4
+b  2  5
+c  3  6
+
+In [109]: dfd.loc[dfd.index[[0, 2]], 'A']
+Out[109]: 
+a    1
+c    3
+Name: A, dtype: int64
+
+In [110]: dfd.iloc[[0, 2], dfd.columns.get_loc('A')]
+Out[110]: 
+a    1
+c    3
+Name: A, dtype: int64
+
+In [111]: dfd.iloc[[0, 2], dfd.columns.get_indexer(['A', 'B'])]
+Out[111]: 
+   A  B
+a  1  4
+c  3  6
+
+In [112]: s = pd.Series([1, 2, 3])
+
+In [113]: s.reindex([1, 2, 3])
+Out[113]: 
+1    2.0
+2    3.0
+3    NaN
+dtype: float64
