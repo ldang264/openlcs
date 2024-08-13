@@ -239,3 +239,51 @@ File ~/work/pandas/pandas/pandas/core/indexes/base.py:4429, in Index.reindex(sel
    4431     indexer, _ = self.get_indexer_non_unique(target)
 
 ValueError: cannot reindex on an axis with duplicate labels
+
+In [122]: s = pd.Series([0, 1, 2, 3, 4, 5])
+
+# When no arguments are passed, returns 1 row.
+In [123]: s.sample()
+Out[123]: 
+4    4
+dtype: int64
+
+# One may specify either a number of rows:
+In [124]: s.sample(n=3)
+Out[124]: 
+0    0
+4    4
+1    1
+dtype: int64
+
+# Or a fraction of the rows:
+In [125]: s.sample(frac=0.5)
+Out[125]: 
+5    5
+3    3
+1    1
+dtype: int64
+
+In [126]: s = pd.Series([0, 1, 2, 3, 4, 5])
+
+# Without replacement (default):
+In [127]: s.sample(n=6, replace=False)
+Out[127]: 
+0    0
+1    1
+5    5
+3    3
+2    2
+4    4
+dtype: int64
+
+# With replacement:
+In [128]: s.sample(n=6, replace=True)
+Out[128]: 
+0    0
+4    4
+3    3
+2    2
+4    4
+4    4
+dtype: int64
