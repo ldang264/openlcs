@@ -287,3 +287,14 @@ Out[128]:
 4    4
 4    4
 dtype: int64
+
+In [134]: df2 = pd.DataFrame({'col1': [9, 8, 7, 6],
+   .....:                     'weight_column': [0.5, 0.4, 0.1, 0]})
+   .....: 
+
+In [135]: df2.sample(n=3, weights='weight_column')
+Out[135]: 
+   col1  weight_column
+1     8            0.4
+0     9            0.5
+2     7            0.1
