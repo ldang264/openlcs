@@ -401,3 +401,29 @@ In [168]: df2[criterion & (df2['b'] == 'x')]
 Out[168]: 
        a  b         c
 3  three  x  0.361719
+
+In [170]: df = pd.DataFrame([[1, 2], [3, 4], [5, 6]],
+   .....:                   index=list('abc'),
+   .....:                   columns=['A', 'B'])
+   .....: 
+
+In [171]: s = (df['A'] > 2)
+
+In [172]: s
+Out[172]: 
+a    False
+b     True
+c     True
+Name: A, dtype: bool
+
+In [173]: df.loc[s, 'B']
+Out[173]: 
+b    4
+c    6
+Name: B, dtype: int64
+
+In [174]: df.iloc[s.values, 1]
+Out[174]: 
+b    4
+c    6
+Name: B, dtype: int64
