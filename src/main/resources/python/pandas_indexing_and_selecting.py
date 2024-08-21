@@ -335,3 +335,69 @@ Out[162]:
 5    2
 6    3
 dtype: int64
+
+In [158]: s = pd.Series(range(-3, 4))
+
+In [159]: s
+Out[159]: 
+0   -3
+1   -2
+2   -1
+3    0
+4    1
+5    2
+6    3
+dtype: int64
+
+In [160]: s[s > 0]
+Out[160]: 
+4    1
+5    2
+6    3
+dtype: int64
+
+In [161]: s[(s < -1) | (s > 0.5)]
+Out[161]: 
+0   -3
+1   -2
+4    1
+5    2
+6    3
+dtype: int64
+
+In [162]: s[~(s < 0)]
+Out[162]: 
+3    0
+4    1
+5    2
+6    3
+dtype: int64
+
+In [164]: df2 = pd.DataFrame({'a': ['one', 'one', 'two', 'three', 'two', 'one', 'six'],
+   .....:                     'b': ['x', 'y', 'y', 'x', 'y', 'x', 'x'],
+   .....:                     'c': np.random.randn(7)})
+   .....: 
+
+# only want 'two' or 'three'
+In [165]: criterion = df2['a'].map(lambda x: x.startswith('t'))
+
+In [166]: df2[criterion]
+Out[166]: 
+       a  b         c
+2    two  y  0.041290
+3  three  x  0.361719
+4    two  y -0.238075
+
+# equivalent but slower
+In [167]: df2[[x.startswith('t') for x in df2['a']]]
+Out[167]: 
+       a  b         c
+2    two  y  0.041290
+3  three  x  0.361719
+4    two  y -0.238075
+
+# Multiple criteria
+In [168]: df2[criterion & (df2['b'] == 'x')]
+Out[168]: 
+       a  b         c
+3  three  x  0.361719
