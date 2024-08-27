@@ -1,3 +1,31 @@
+In [181]: s_mi = pd.Series(np.arange(6),
+   .....:                  index=pd.MultiIndex.from_product([[0, 1], ['a', 'b', 'c']]))
+   .....: 
+
+In [182]: s_mi
+Out[182]: 
+0  a    0
+   b    1
+   c    2
+1  a    3
+   b    4
+   c    5
+dtype: int64
+
+In [183]: s_mi.iloc[s_mi.index.isin([(1, 'a'), (2, 'b'), (0, 'c')])]
+Out[183]: 
+0  c    2
+1  a    3
+dtype: int64
+
+In [184]: s_mi.iloc[s_mi.index.isin(['a', 'c', 'e'], level=1)]
+Out[184]: 
+0  a    0
+   c    2
+1  a    3
+   c    5
+dtype: int64
+
 In [1]: dates = pd.date_range('1/1/2000', periods=8)
 
 In [2]: df = pd.DataFrame(np.random.randn(8, 4),
