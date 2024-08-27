@@ -1,3 +1,17 @@
+In [185]: df = pd.DataFrame({'vals': [1, 2, 3, 4], 'ids': ['a', 'b', 'f', 'n'],
+   .....:                    'ids2': ['a', 'n', 'c', 'n']})
+   .....: 
+
+In [186]: values = ['a', 'b', 1, 3]
+
+In [187]: df.isin(values)
+Out[187]: 
+    vals    ids   ids2
+0   True   True   True
+1  False   True  False
+2   True  False  False
+3  False  False  False
+
 In [181]: s_mi = pd.Series(np.arange(6),
    .....:                  index=pd.MultiIndex.from_product([[0, 1], ['a', 'b', 'c']]))
    .....: 
