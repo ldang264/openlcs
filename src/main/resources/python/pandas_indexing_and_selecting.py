@@ -427,3 +427,29 @@ Out[174]:
 b    4
 c    6
 Name: B, dtype: int64
+
+In [175]: s = pd.Series(np.arange(5), index=np.arange(5)[::-1], dtype='int64')
+
+In [176]: s
+Out[176]: 
+4    0
+3    1
+2    2
+1    3
+0    4
+dtype: int64
+
+In [177]: s.isin([2, 4, 6])
+Out[177]: 
+4    False
+3    False
+2     True
+1    False
+0     True
+dtype: bool
+
+In [178]: s[s.isin([2, 4, 6])]
+Out[178]: 
+2    2
+0    4
+dtype: int64
