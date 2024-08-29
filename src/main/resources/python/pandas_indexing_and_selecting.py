@@ -1,3 +1,28 @@
+In [231]: df = pd.DataFrame(np.random.randint(n / 2, size=(n, 2)), columns=list('bc'))
+
+In [232]: df.index.name = 'a'
+
+In [233]: df
+Out[233]: 
+   b  c
+a      
+0  0  4
+1  0  1
+2  3  4
+3  4  3
+4  1  4
+5  0  3
+6  0  1
+7  3  4
+8  2  3
+9  1  1
+
+In [234]: df.query('a < b and b < c')
+Out[234]: 
+   b  c
+a      
+2  3  4
+
 In [226]: n = 10
 
 In [227]: df = pd.DataFrame(np.random.rand(n, 3), columns=list('abc'))
