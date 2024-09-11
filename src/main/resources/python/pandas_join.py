@@ -55,3 +55,16 @@ Out[94]:
 1  A1  B1  K1  C1  D1
 2  A2  B2  K0  C0  D0
 3  A3  B3  K1  C1  D1
+
+In [95]: result = pd.merge(
+   ....:     left, right, left_on="key", right_index=True, how="left", sort=False
+   ....: )
+   ....: 
+
+In [96]: result
+Out[96]: 
+    A   B key   C   D
+0  A0  B0  K0  C0  D0
+1  A1  B1  K1  C1  D1
+2  A2  B2  K0  C0  D0
+3  A3  B3  K1  C1  D1
