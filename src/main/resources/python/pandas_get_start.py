@@ -37,3 +37,22 @@ Out[10]:
 1  1.0 2013-01-02  1.0  3  train  foo
 2  1.0 2013-01-02  1.0  3   test  foo
 3  1.0 2013-01-02  1.0  3  train  foo
+
+In [141]: if pd.Series([False, True, False]):
+   .....:      print("I was true")
+   .....: 
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+<ipython-input-141-b27eb9c1dfc0> in ?()
+----> 1 if pd.Series([False, True, False]):
+      2      print("I was true")
+
+~/work/pandas/pandas/pandas/core/generic.py in ?(self)
+   1575     @final
+   1576     def __nonzero__(self) -> NoReturn:
+-> 1577         raise ValueError(
+   1578             f"The truth value of a {type(self).__name__} is ambiguous. "
+   1579             "Use a.empty, a.bool(), a.item(), a.any() or a.all()."
+   1580         )
+
+ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
