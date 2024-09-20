@@ -1,3 +1,21 @@
+In [9]: df2 = pd.DataFrame({"A": [0, 1, 2]}, index=["a", "a", "b"])
+
+In [10]: df2
+Out[10]: 
+   A
+a  0
+a  1
+b  2
+
+In [11]: df2.loc["b", "A"]  # a scalar
+Out[11]: 2
+
+In [12]: df2.loc["a", "A"]  # a Series
+Out[12]: 
+a    0
+a    1
+Name: A, dtype: int64
+
 In [1]: import pandas as pd
 
 In [2]: import numpy as np
