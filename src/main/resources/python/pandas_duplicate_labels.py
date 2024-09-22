@@ -1,3 +1,66 @@
+In [29]: s1 = pd.Series(0, index=["a", "b"]).set_flags(allows_duplicate_labels=False)
+
+In [30]: s1
+Out[30]: 
+a    0
+b    0
+dtype: int64
+
+In [31]: s1.head().rename({"a": "b"})
+---------------------------------------------------------------------------
+DuplicateLabelError                       Traceback (most recent call last)
+Cell In[31], line 1
+----> 1 s1.head().rename({"a": "b"})
+
+File ~/work/pandas/pandas/pandas/core/series.py:5090, in Series.rename(self, index, axis, copy, inplace, level, errors)
+   5083     axis = self._get_axis_number(axis)
+   5085 if callable(index) or is_dict_like(index):
+   5086     # error: Argument 1 to "_rename" of "NDFrame" has incompatible
+   5087     # type "Union[Union[Mapping[Any, Hashable], Callable[[Any],
+   5088     # Hashable]], Hashable, None]"; expected "Union[Mapping[Any,
+   5089     # Hashable], Callable[[Any], Hashable], None]"
+-> 5090     return super()._rename(
+   5091         index,  # type: ignore[arg-type]
+   5092         copy=copy,
+   5093         inplace=inplace,
+   5094         level=level,
+   5095         errors=errors,
+   5096     )
+   5097 else:
+   5098     return self._set_name(index, inplace=inplace, deep=copy)
+
+File ~/work/pandas/pandas/pandas/core/generic.py:1140, in NDFrame._rename(self, mapper, index, columns, axis, copy, inplace, level, errors)
+   1138     return None
+   1139 else:
+-> 1140     return result.__finalize__(self, method="rename")
+
+File ~/work/pandas/pandas/pandas/core/generic.py:6262, in NDFrame.__finalize__(self, other, method, **kwargs)
+   6255 if other.attrs:
+   6256     # We want attrs propagation to have minimal performance
+   6257     # impact if attrs are not used; i.e. attrs is an empty dict.
+   6258     # One could make the deepcopy unconditionally, but a deepcopy
+   6259     # of an empty dict is 50x more expensive than the empty check.
+   6260     self.attrs = deepcopy(other.attrs)
+-> 6262 self.flags.allows_duplicate_labels = other.flags.allows_duplicate_labels
+   6263 # For subclasses using _metadata.
+   6264 for name in set(self._metadata) & set(other._metadata):
+
+File ~/work/pandas/pandas/pandas/core/flags.py:96, in Flags.allows_duplicate_labels(self, value)
+     94 if not value:
+     95     for ax in obj.axes:
+---> 96         ax._maybe_check_unique()
+     98 self._allows_duplicate_labels = value
+
+File ~/work/pandas/pandas/pandas/core/indexes/base.py:715, in Index._maybe_check_unique(self)
+    712 duplicates = self._format_duplicate_message()
+    713 msg += f"\n{duplicates}"
+--> 715 raise DuplicateLabelError(msg)
+
+DuplicateLabelError: Index has duplicates.
+      positions
+label          
+b        [0, 1]
+
 In [9]: df2 = pd.DataFrame({"A": [0, 1, 2]}, index=["a", "a", "b"])
 
 In [10]: df2
