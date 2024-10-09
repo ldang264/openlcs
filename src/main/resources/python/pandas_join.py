@@ -1,3 +1,21 @@
+In [87]: result = left.join(right, how="outer")
+
+In [88]: result
+Out[88]: 
+      A    B    C    D
+K0   A0   B0   C0   D0
+K1   A1   B1  NaN  NaN
+K2   A2   B2   C2   D2
+K3  NaN  NaN   C3   D3
+
+In [89]: result = left.join(right, how="inner")
+
+In [90]: result
+Out[90]: 
+     A   B   C   D
+K0  A0  B0  C0  D0
+K2  A2  B2  C2  D2
+
 In [83]: left = pd.DataFrame(
    ....:     {"A": ["A0", "A1", "A2"], "B": ["B0", "B1", "B2"]}, index=["K0", "K1", "K2"]
    ....: )
