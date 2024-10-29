@@ -1,3 +1,37 @@
+In [21]: pd.concat([df[["A"]], df[["B", "C"]]], axis=1).dtypes
+Out[21]: 
+A     Int64
+B     int64
+C    object
+dtype: object
+
+In [22]: df["A"].astype(float)
+Out[22]: 
+0    1.0
+1    2.0
+2    NaN
+Name: A, dtype: float64
+
+In [23]: df.sum(numeric_only=True)
+Out[23]: 
+A    3
+B    5
+dtype: Int64
+
+In [24]: df.sum()
+Out[24]: 
+A      3
+B      5
+C    aab
+dtype: object
+
+In [25]: df.groupby("B").A.sum()
+Out[25]: 
+B
+1    3
+3    0
+Name: A, dtype: Int64
+
 In [12]: s = pd.Series([1, 2, None], dtype="Int64")
 
 # arithmetic
