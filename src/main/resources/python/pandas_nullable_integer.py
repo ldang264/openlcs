@@ -1,3 +1,17 @@
+In [7]: pd.Series([True, False, np.nan], dtype="object") & True
+Out[7]: 
+0     True
+1    False
+2    False
+dtype: bool
+
+In [8]: pd.Series([True, False, np.nan], dtype="boolean") & True
+Out[8]: 
+0     True
+1    False
+2     <NA>
+dtype: boolean
+
 In [21]: pd.concat([df[["A"]], df[["B", "C"]]], axis=1).dtypes
 Out[21]: 
 A     Int64
