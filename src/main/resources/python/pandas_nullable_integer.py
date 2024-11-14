@@ -1,3 +1,75 @@
+True & True
+
+True
+
+True & False
+
+False
+
+True & NA
+
+NA
+
+False & False
+
+False
+
+False & NA
+
+False
+
+NA & NA
+
+NA
+
+True | True
+
+True
+
+True | False
+
+True
+
+True | NA
+
+True
+
+False | False
+
+False
+
+False | NA
+
+NA
+
+NA | NA
+
+NA
+
+True ^ True
+
+False
+
+True ^ False
+
+True
+
+True ^ NA
+
+NA
+
+False ^ False
+
+False
+
+False ^ NA
+
+NA
+
+NA ^ NA
+
+NA
+
 In [7]: pd.Series([True, False, np.nan], dtype="object") & True
 Out[7]: 
 0     True
