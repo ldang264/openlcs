@@ -1,3 +1,17 @@
+In [40]: df = pd.DataFrame(np.random.rand(10, 5), columns=["A", "B", "C", "D", "E"])
+
+In [41]: df.plot.box();
+
+In [42]: color = {
+   ....:     "boxes": "DarkGreen",
+   ....:     "whiskers": "DarkOrange",
+   ....:     "medians": "DarkBlue",
+   ....:     "caps": "Gray",
+   ....: }
+   ....: 
+
+In [43]: df.plot.box(color=color, sym="r+");
+
 In [3]: np.random.seed(123456)
 
 In [4]: ts = pd.Series(np.random.randn(1000), index=pd.date_range("1/1/2000", periods=1000))
