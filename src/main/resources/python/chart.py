@@ -1,3 +1,13 @@
+In [42]: color = {
+   ....:     "boxes": "DarkGreen",
+   ....:     "whiskers": "DarkOrange",
+   ....:     "medians": "DarkBlue",
+   ....:     "caps": "Gray",
+   ....: }
+   ....: 
+
+In [43]: df.plot.box(color=color, sym="r+");
+
 In [40]: df = pd.DataFrame(np.random.rand(10, 5), columns=["A", "B", "C", "D", "E"])
 
 In [41]: df.plot.box();
