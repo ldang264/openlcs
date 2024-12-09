@@ -1,3 +1,36 @@
+In [16]: s = pd.Series([np.nan, 1, 2, np.nan, np.nan, 3])
+
+In [17]: s.rolling(window=3, min_periods=1).sum()
+Out[17]: 
+0    NaN
+1    1.0
+2    3.0
+3    3.0
+4    2.0
+5    3.0
+dtype: float64
+
+In [18]: s.rolling(window=3, min_periods=2).sum()
+Out[18]: 
+0    NaN
+1    NaN
+2    3.0
+3    3.0
+4    NaN
+5    NaN
+dtype: float64
+
+# Equivalent to min_periods=3
+In [19]: s.rolling(window=3, min_periods=None).sum()
+Out[19]: 
+0   NaN
+1   NaN
+2   NaN
+3   NaN
+4   NaN
+5   NaN
+dtype: float64
+
 In [8]: def weighted_mean(x):
    ...:     arr = np.ones((1, x.shape[1]))
    ...:     arr[:, :2] = (x[:, :2] * x[:, 2]).sum(axis=0) / x[:, 2].sum()
